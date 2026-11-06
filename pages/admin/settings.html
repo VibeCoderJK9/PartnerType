@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_ustawienia_systemu">PartnerType — System settings</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/profile.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <!-- Despite the filename, this file owns the shared tab strip (.page-tabs,
+       .tab-pane) plus the tier and bonus card styling this page renders. Without
+       it all three tab panes stay display:block, so the tabs look like dead
+       buttons and the tier/bonus sections render unstyled. -->
+  <link rel="stylesheet" href="../../css/commissions.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="admin-settings">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+        <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg><span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <svg class="nav-icon" data-icon="bar-chart-3" aria-hidden="true"></svg><span data-i18n="nav_analytics">Analytics</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_management">Management</span>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg><span data-i18n="nav_leads">Leads</span>
+      </a>
+      <a href="partners.html" class="nav-item">
+        <svg class="nav-icon" data-icon="handshake" aria-hidden="true"></svg><span data-i18n="nav_partners">Partners</span>
+      </a>
+      <a href="commissions.html" class="nav-item">
+        <svg class="nav-icon" data-icon="coins" aria-hidden="true"></svg><span data-i18n="nav_commissions">Commissions</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg><span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_system">System</span>
+      <a href="audit.html" class="nav-item">
+        <svg class="nav-icon" data-icon="history" aria-hidden="true"></svg><span data-i18n="nav_audit">Audit Log</span>
+      </a>
+      <a href="settings.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="settings" aria-hidden="true"></svg><span data-i18n="nav_settings">Settings</span>
+      </a>
+      <a href="settings.html#plugins" class="nav-item">
+        <svg class="nav-icon" data-icon="puzzle" aria-hidden="true"></svg><span data-i18n="nav_plugins">Plugins</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg><span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="users.html" class="nav-item">
+        <svg class="nav-icon" data-icon="users" aria-hidden="true"></svg><span data-i18n="nav_users">Users</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg><span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">MK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"><span class="page-title" data-i18n="st_settings">Settings</span></div>
+      <div class="header-right">
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">MK</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 class="page-heading" data-i18n="st_system_settings">System settings</h1>
+          <p data-i18n="konfiguracja_platformy_prowizje_i_dane_firmy" class="page-subheading">Platform configuration, commissions and company details</p>
+        </div>
+        <div class="page-header-actions">
+          <button data-i18n="zapisuje_dane_firmy_i_konfiguracje_leadow" data-i18n-attr="title" class="btn btn-primary" id="save-all-btn"
+                  title="Saves company details and lead configuration">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="st_save_settings">Save settings</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SETTINGS NAVIGATION
+           Eight panes, so eight tiles with a line each saying what is inside.
+           They used to be eight bare words in one fit-content row: the owner
+           twice reported a built feature as missing (Products, and the extra
+           registration questions) because he could not find which word held
+           it. A subtitle is the whole fix -- he picked this over regrouping
+           them, so the eight stay eight. -->
+      <div data-i18n="sekcje_ustawien" data-i18n-attr="aria-label" class="settings-tiles" role="tablist" aria-label="Settings sections">
+        <button class="settings-tile active" data-tab="tab-general" data-icon="settings">
+          <span class="settings-tile-label"><span data-i18n="ogolne">General</span></span>
+          <span data-i18n="firma_waluta_linki_partnerow" class="settings-tile-sub">company, currency, partner links</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-leads" data-icon="clipboard-list">
+          <span class="settings-tile-label"><span data-i18n="konfiguracja_leadow">Lead configuration</span></span>
+          <span data-i18n="prowizja_automatyczna_termin_rozpatrzenia" class="settings-tile-sub">automatic commission, decision deadline</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-duplicates" data-icon="shuffle">
+          <span class="settings-tile-label"><span data-i18n="kolejkowanie_duplikatow">Duplicate queueing</span></span>
+          <span data-i18n="co_gdy_dwoch_partnerow_zglosi_tego_samego_klient" class="settings-tile-sub">what happens when two partners submit the same client</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-stages" data-icon="arrow-right">
+          <span class="settings-tile-label"><span data-i18n="etapy_leada">Lead stages</span></span>
+          <span data-i18n="etapy_zaproszenia_i_twoj_lejek_sprzedazowy" class="settings-tile-sub">intake stages and your sales funnel</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-tiers" data-icon="users">
+          <span class="settings-tile-label"><span data-i18n="poziomy_partnerow">Partner tiers</span></span>
+          <span data-i18n="stawki_prowizji_dla_kazdego_poziomu" class="settings-tile-sub">commission rates for every tier</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-bonuses" data-icon="gift">
+          <span class="settings-tile-label"><span data-i18n="baza_bonusow">Bonus catalogue</span></span>
+          <span class="settings-tile-sub" data-i18n="st_bonus_tab_subtitle">percentage and cash bonuses to assign</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-registration" data-icon="user-plus">
+          <span class="settings-tile-label"><span data-i18n="st_registration_form">Registration form</span></span>
+          <span data-i18n="o_co_pytasz_partnera_i_o_co_pytasz_przy_leadzie" class="settings-tile-sub">what you ask a partner and what you ask about a lead</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-products" data-icon="package">
+          <span class="settings-tile-label"><span data-i18n="st_products">Products</span></span>
+          <span data-i18n="katalog_tego_co_partner_moze_zglaszac" class="settings-tile-sub">the catalogue of what a partner can submit</span>
+        </button>
+        <button class="settings-tile" data-tab="tab-blocks" data-icon="puzzle">
+          <span class="settings-tile-label"><span data-i18n="st_blocks">Plugins</span></span>
+          <span data-i18n="st_blocks_sub" class="settings-tile-sub">fit the system to your process</span>
+        </button>
+        <!-- Integracje: admin only. Hidden until the admin-only
+             GET /api/integrations/settings answers 200 -- js/admin-integrations.js
+             un-hides it; a manager never sees it. -->
+        <button class="settings-tile" data-tab="tab-integrations" data-icon="bot" id="integrations-tile" hidden>
+          <span class="settings-tile-label"><span data-i18n="st_integrations">Integrations</span></span>
+          <span data-i18n="st_integrations_sub" class="settings-tile-sub">Claude, API keys and outside access</span>
+        </button>
+      </div>
+
+      <!-- TAB: GENERAL (Company details + Partner links) -->
+      <div id="tab-general" class="tab-pane active">
+
+        <div class="form-hint" style="margin:0 0 16px" data-i18n="st_general_save_hint">The “Save settings” button at the top saves the company details and security in this tab. The logo is saved as soon as you choose the file.</div>
+
+        <div class="profile-grid">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div class="panel">
+              <div class="panel-header"><div data-i18n="dane_firmy" class="panel-title">Company details</div></div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="st_platform_name">Platform name</label>
+                  <input data-i18n="partner_center" data-i18n-attr="placeholder" type="text" id="s-company-name" class="form-input" placeholder="PartnerType">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="st_contact_email">Contact e-mail</label>
+                  <input data-i18n="hello_firma_pl" data-i18n-attr="placeholder" type="email" id="s-company-email" class="form-input" placeholder="hello@company.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="st_website_url">Website URL</label>
+                  <input type="url" id="s-company-url" class="form-input" placeholder="https://">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="st_currency">Currency</label>
+                  <select id="s-currency" class="form-select">
+                    <option value="PLN" data-i18n="currency_pln">PLN — Polish Zloty</option>
+                    <option value="EUR" data-i18n="currency_eur">EUR — Euro</option>
+                    <option value="USD" data-i18n="currency_usd">USD — US Dollar</option>
+                    <option value="GBP" data-i18n="currency_gbp">GBP — Pound Sterling</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- The producer's logo (api/branding.py, js/branding.js): shown on
+                 the partners' sign-in page, in the menu and in the e-mails.
+                 Saved at once on choosing the file -- it is not part of
+                 "Zapisz ustawienia", which only carries text fields. -->
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title" data-i18n="st_logo_title">Company logo</div></div>
+              <div class="panel-body">
+                <div class="logo-setting">
+                  <div class="logo-setting-preview">
+                    <img id="s-logo-img" alt="" hidden>
+                    <span id="s-logo-empty" data-i18n="st_logo_none">No logo</span>
+                  </div>
+                  <div class="logo-setting-body">
+                    <p class="form-hint" data-i18n="st_logo_hint">Shown to your partners on the sign-in page, in the menu and in the system's e-mails. PNG or JPG, up to 200 KB, ideally square.</p>
+                    <div class="logo-setting-actions">
+                      <label class="btn btn-secondary" for="s-logo-file"><span data-i18n="st_logo_choose">Choose file</span></label>
+                      <input type="file" id="s-logo-file" accept="image/png,image/jpeg" hidden>
+                      <button type="button" class="btn btn-ghost" id="s-logo-remove" data-i18n="st_logo_remove" hidden>Remove logo</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <!-- Partner links. Mail server settings belong to the operator, not
+                 the producer. -->
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title" data-i18n="st_partner_links">Links for partners</div></div>
+              <div class="panel-body">
+                <div class="form-hint" style="margin-bottom:16px" data-i18n="st_partner_links_hint">Send this link to your partners or put it on your website. Everyone who registers with it joins only your partner base, and the account waits for your approval.</div>
+                <div class="form-group">
+                  <label class="form-label" for="s-register-link" data-i18n="st_register_link">Partner registration</label>
+                  <div style="display:flex;gap:10px">
+                    <input type="text" id="s-register-link" class="form-input" readonly style="flex:1">
+                    <button type="button" class="btn btn-secondary" data-copy-link="s-register-link" data-i18n="action_copy">Copy</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="s-login-link" data-i18n="st_login_link">Sign-in</label>
+                  <div style="display:flex;gap:10px">
+                    <input type="text" id="s-login-link" class="form-input" readonly style="flex:1">
+                    <button type="button" class="btn btn-secondary" data-copy-link="s-login-link" data-i18n="action_copy">Copy</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="s-partner-terms-url" data-i18n="st_partner_terms_url">Partner programme terms (address)</label>
+                  <input type="url" id="s-partner-terms-url" class="form-input" data-i18n="ph_terms_url" data-i18n-attr="placeholder" placeholder="https://yourcompany.com/terms" maxlength="500">
+                  <div class="form-hint" data-i18n="st_partner_terms_url_hint">Partners see this link on the sign-up form. Without an address, the words “partner programme terms” stay plain text. Save with “Save settings”.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Moved here from Lead configuration: who
+                 may sign in without a second factor is not a lead setting. -->
+            <div class="panel">
+              <div class="panel-header"><div data-i18n="st_security_title" class="panel-title">Security</div></div>
+              <div class="panel-body">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+                  <div>
+                    <div data-i18n="st_mfa_required_title" class="text-sm font-medium text-primary">Require a second factor from the team</div>
+                    <div data-i18n="st_mfa_required_hint" class="text-xs text-tertiary" style="margin-top:2px">Moderators and observers see all the data. With this on, they cannot get in without a code from an app. It does not apply to you — your own account stays your choice.</div>
+                  </div>
+                  <label class="toggle-switch" style="flex-shrink:0">
+                    <input type="checkbox" id="s-mfa-required">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: LEADS (Lead configuration) -->
+      <div id="tab-leads" class="tab-pane">
+
+        <div class="form-hint" style="margin:0 0 16px" data-i18n="st_tab_save_hint">The “Save settings” button at the top saves this tab.</div>
+
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div class="panel">
+            <div class="panel-header"><div data-i18n="konfiguracja_leadow" class="panel-title">Lead configuration</div></div>
+            <div class="panel-body">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+                <div>
+                  <div data-i18n="auto_prowizja_przy_akceptacji" class="text-sm font-medium text-primary">Auto commission on acceptance</div>
+                  <div data-i18n="system_naliczy_prowizje_wedlug_poziomu_partnera" class="text-xs text-tertiary" style="margin-top:2px">The system will calculate the commission from the partner's tier</div>
+                </div>
+                <label class="toggle-switch" style="flex-shrink:0">
+                  <input type="checkbox" id="s-auto-commission">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="form-group" style="margin-top:20px">
+                <label data-i18n="termin_rozpatrzenia_leada_dni" class="form-label" for="s-action-days">Lead decision deadline (days)</label>
+                <input type="number" id="s-action-days" class="form-input" min="1" max="90" step="1"
+                       data-settings-key="lead_action_days" style="max-width:160px">
+                <div class="form-hint" data-i18n="st_lead_deadline_hint">The number of days you have to accept or reject a submission. After that, the lead is marked overdue on the dashboard and lead list.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB: DUPLICATES (Duplicate queueing) -->
+      <div id="tab-duplicates" class="tab-pane">
+
+        <div class="form-hint" style="margin:0 0 16px" data-i18n="st_queue_save_hint">This tab has its own save button — “Save queueing” below.</div>
+
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <!-- QUEUE CONFIGURATION -->
+          <div class="panel">
+            <div class="panel-header"><div data-i18n="kolejkowanie_duplikatow" class="panel-title">Duplicate queueing</div></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label data-i18n="polityka_duplikatow" class="form-label" for="s-queue-policy">Duplicate policy</label>
+                <select id="s-queue-policy" class="form-select" data-settings-key="lead_duplicate_policy">
+                  <option value="queue" data-i18n="st_queue_option_queue">Queue submissions</option>
+                  <option value="reject" data-i18n="st_queue_option_reject">Reject duplicates</option>
+                  <option value="allow" data-i18n="st_queue_option_allow">Give everyone the full rate</option>
+                </select>
+                <div data-i18n="co_zrobic_z_kolejnym_zgloszeniem_tego_samego_kli" class="form-hint">What to do with a repeat submission of the same client (same tax ID or website).</div>
+              </div>
+              <div class="form-group">
+                <label data-i18n="maksymalna_liczba_zgloszen_w_kolejce" class="form-label" for="s-queue-max">Maximum submissions in the queue</label>
+                <input type="number" id="s-queue-max" class="form-input" min="1" max="5" step="1" data-settings-key="lead_queue_max">
+                <div data-i18n="liczba_calkowita_od_1_do_5" class="form-hint">A whole number from 1 to 5.</div>
+              </div>
+              <div class="form-group">
+                <label data-i18n="modyfikator_stawki_wg_kolejnosci_zgloszenia" class="form-label">Rate modifier by submission order</label>
+                <div class="form-hint" style="margin-bottom:8px" data-i18n="st_queue_rate_hint">Each value is a percentage of the partner's own tier rate, not a percentage of the deal value. The final position is always 0%.</div>
+                <div id="queue-shares-list" data-settings-key="lead_queue_shares" style="display:flex;flex-wrap:wrap;gap:12px"></div>
+              </div>
+              <div id="queue-summary" class="text-sm text-secondary" style="margin-top:4px;display:flex;flex-direction:column;gap:2px"></div>
+              <div id="queue-save-error" class="form-hint" role="alert" style="color:var(--error-400);margin-top:8px" hidden></div>
+              <div style="margin-top:12px">
+                <button data-i18n="zapisz_kolejkowanie" type="button" class="btn btn-primary" id="save-queue-btn">Save queueing</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: STAGES (Lead stages) -->
+      <div id="tab-stages" class="tab-pane">
+
+        <div class="panel">
+          <div class="panel-header"><div data-i18n="etapy_leada" class="panel-title">Lead stages</div></div>
+          <div class="panel-body">
+            <!-- Three sections, in the order a lead actually travels: the fixed
+                 registration stages (accepted, rejected, needs information),
+                 then the sales funnel, then the two terminals. Commission is
+                 projected at every stage and recorded on the win. -->
+            <div style="margin-bottom:20px">
+              <div data-i18n="etapy_zaproszenia_stale" class="text-xs text-tertiary" style="margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">
+                Intake stages (fixed)
+              </div>
+              <div data-i18n="zanim_lead_wejdzie_do_twojego_lejka_decydujesz_c" class="form-hint" style="margin-bottom:10px">
+                Before a lead enters your funnel you decide whether to accept it. These four stages cannot be changed — each one fires a notification and a log entry.
+              </div>
+              <div id="stage-registration-list" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+            </div>
+
+            <div data-i18n="twoj_lejek_sprzedazowy" class="text-xs text-tertiary" style="margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">
+              Your sales funnel
+            </div>
+            <div class="form-hint" id="stage-save-hint" style="margin-bottom:16px" data-i18n="st_stage_funnel_hint">You define these stages yourself — a partner moves their lead through them on the board. Commission is shown at every stage, but only becomes payable after a win. Changes are saved automatically when you leave a field, confirmed by a “Saved” marker.</div>
+
+            <label class="en-switch" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer">
+              <input type="checkbox" id="stage-en-toggle">
+              <span data-i18n="st_show_english_names" class="text-sm text-secondary">Show the English names</span>
+            </label>
+
+            <ol id="stage-list" aria-live="polite" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px"></ol>
+
+            <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border-subtle)">
+              <div data-i18n="etapy_koncowe_stale" class="text-xs text-tertiary" style="margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Final stages (fixed)</div>
+              <div class="form-hint" style="margin-bottom:10px" data-i18n="st_terminal_hint">Every sale ends at either Won or Lost. Won sends the commission for settlement, while Lost closes the lead without commission. The names, colours and roles of these two stages are fixed.</div>
+              <div id="stage-terminal-list" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+            </div>
+
+            <div id="stage-save-error" class="form-hint" role="alert" style="color:var(--error-400);margin-top:12px;display:flex;align-items:center;gap:10px" hidden>
+              <span id="stage-error-text"></span>
+              <button data-i18n="sprobuj_ponownie" type="button" class="btn btn-ghost btn-sm" id="stage-error-retry">Try again</button>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:12px;margin-top:16px">
+              <button type="button" class="btn btn-secondary" id="add-stage-btn">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span data-i18n="st_add_stage">Add stage</span>
+              </button>
+              <span id="stage-count" class="text-sm text-tertiary"></span>
+            </div>
+          </div>
+        </div>
+
+        <template id="stage-row-template">
+          <li class="stage-row panel" style="padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <input type="color" class="stage-color" data-field="color" title="Stage colour" data-i18n="st_stage_color" data-i18n-attr="title" style="width:32px;height:32px;padding:0;border:none;border-radius:4px;cursor:pointer;background:transparent;flex-shrink:0">
+            <input type="text" class="form-input stage-name" data-field="name" placeholder="Stage name" data-i18n="st_stage_name" data-i18n-attr="placeholder,title" title="Stage name" style="flex:1;min-width:140px">
+            <input type="text" class="form-input stage-name-en" data-field="name_en" placeholder="Stage name in English" data-i18n="st_stage_name_en" data-i18n-attr="placeholder" style="flex:1;min-width:140px" hidden>
+            <div style="display:flex;gap:4px;flex-shrink:0">
+              <button data-i18n="przesun_etap_w_gore" data-i18n-attr="title,aria-label" type="button" class="btn btn-ghost btn-sm stage-move-up" data-action="move-up" aria-label="Move stage up" title="Move stage up">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+              </button>
+              <button data-i18n="przesun_etap_w_dol" data-i18n-attr="title,aria-label" type="button" class="btn btn-ghost btn-sm stage-move-down" data-action="move-down" aria-label="Move stage down" title="Move stage down">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+              </button>
+            </div>
+            <span class="stage-saved" hidden style="display:inline-flex;align-items:center;gap:4px;font-size:0.8rem;color:var(--success-400);flex-shrink:0"></span>
+            <button data-i18n="usun_etap" data-i18n-attr="title,aria-label" type="button" class="btn btn-ghost btn-sm stage-remove" data-action="remove-stage" aria-label="Delete stage" title="Delete stage" style="color:var(--danger-500);flex-shrink:0">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </li>
+        </template>
+
+      </div>
+
+      <!-- TAB: TIERS -->
+      <div id="tab-tiers" class="tab-pane">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div class="text-sm text-secondary" data-i18n="st_tiers_hint">Define up to 5 tiers with individual rates. Click a field to edit it.</div>
+          </div>
+          <button class="btn btn-primary" id="add-tier-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="st_add_tier">Add tier</span>
+          </button>
+        </div>
+        <label class="en-switch" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer">
+          <input type="checkbox" id="tier-en-toggle">
+          <span data-i18n="st_show_english_names" class="text-sm text-secondary">Show the English names</span>
+        </label>
+        <div class="tiers-grid" id="tiers-grid">
+          <div style="padding:32px;text-align:center"><span class="spinner"></span></div>
+        </div>
+      </div>
+
+      <!-- TAB: BONUS DEFINITIONS -->
+      <div id="tab-bonuses" class="tab-pane">
+
+        <!-- Percent bonuses -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div>
+            <div class="bonus-section-title" style="margin:0" data-i18n="st_percent_bonuses">Percentage bonuses</div>
+            <div class="text-xs text-tertiary" id="percent-bonus-summary"></div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="add-percent-btn">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="st_add_percent_bonus">+ Bonus %</span>
+          </button>
+        </div>
+        <label class="en-switch" style="display:inline-flex;align-items:center;gap:8px;margin:12px 0;cursor:pointer">
+          <input type="checkbox" id="bonus-en-toggle">
+          <span data-i18n="st_show_english_names" class="text-sm text-secondary">Show the English names</span>
+        </label>
+
+        <div class="bonus-defs-grid" id="bonus-percent-grid">
+          <div style="padding:24px;text-align:center"><span class="spinner"></span></div>
+        </div>
+
+        <!-- Cash bonuses -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:24px 0 4px">
+          <div>
+            <div data-i18n="bonusy_gotowkowe" class="bonus-section-title" style="margin:0">Cash bonuses</div>
+            <div class="text-xs text-tertiary" id="cash-bonus-summary"></div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="add-cash-btn">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="st_add_cash_bonus">+ PLN bonus</span>
+          </button>
+        </div>
+        <div class="bonus-defs-grid" id="bonus-cash-grid">
+          <div style="padding:24px;text-align:center"><span class="spinner"></span></div>
+        </div>
+
+      </div>
+
+      <!-- TAB: PRODUCTS (Product catalogue) -->
+      <div id="tab-products" class="tab-pane">
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div data-i18n="katalog_z_ktorego_partnerzy_wybieraja_produkt_pr" class="text-sm text-secondary">The catalogue partners pick a product from when submitting a lead.</div>
+          </div>
+          <button class="btn btn-primary" id="add-product-btn" type="button">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="st_add_product">Add product</span>
+          </button>
+        </div>
+
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+          <div class="kpi-card purple">
+            <div class="kpi-value" id="kpi-products-total">—</div>
+            <div data-i18n="produktow_w_katalogu" class="kpi-label">Products in the catalogue</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-value" id="kpi-products-offered">—</div>
+            <div data-i18n="oferowanych_partnerom" class="kpi-label">Offered to partners</div>
+          </div>
+          <div class="kpi-card orange">
+            <div class="kpi-value" id="kpi-products-hidden">—</div>
+            <div data-i18n="ukrytych_przed_partnerami" class="kpi-label">Hidden from partners</div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="table-header">
+            <div>
+              <div data-i18n="katalog_produktow" class="table-title">Product catalogue</div>
+              <div class="text-xs text-tertiary" id="products-count-label">—</div>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="search-filter">
+              <svg class="search-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input data-i18n="szukaj_produktu_kodu" data-i18n-attr="placeholder" type="text" id="products-search" placeholder="Search product, code...">
+            </div>
+            <select data-i18n="filtr_widocznosci" data-i18n-attr="aria-label" class="form-select filter-select" id="products-filter-offered" aria-label="Visibility filter">
+              <option value="" data-i18n="st_all">All</option>
+              <option value="1" data-i18n="st_offered">Offered to partners</option>
+              <option value="0" data-i18n="st_hidden">Hidden from partners</option>
+            </select>
+          </div>
+
+          <div id="products-loading-state" class="empty-state">
+            <div class="spinner"></div>
+            <p data-i18n="ladowanie_katalogu" class="text-tertiary">Loading catalogue…</p>
+          </div>
+
+          <div id="products-empty-state" class="empty-state" hidden>
+            <h3 data-i18n="katalog_jest_pusty">The catalogue is empty</h3>
+            <p data-i18n="dopoki_nie_dodasz_produktu_partnerzy_nie_moga_zg" class="text-tertiary">Until you add a product, partners cannot submit a lead — the submission form requires choosing one from this list.</p>
+          </div>
+
+          <div id="products-error-state" class="empty-state" role="alert" hidden>
+            <p data-i18n="nie_udalo_sie_zaladowac_danych_sprobuj_ponownie" class="text-tertiary">Could not load the data. Please try again.</p>
+            <button data-i18n="sprobuj_ponownie" type="button" id="products-retry-btn" class="btn btn-secondary btn-sm">Try again</button>
+          </div>
+
+          <div id="products-table-wrapper" class="table-scroll" hidden>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-i18n="st_product">Product</th>
+                  <th data-i18n="st_code">Code</th>
+                  <th data-i18n="st_category">Category</th>
+                  <th data-i18n="st_base_price">Base price</th>
+                  <th data-i18n="oferowany_partnerom">Offered to partners</th>
+                  <th data-i18n="akcje">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: REGISTRATION FORM -->
+      <!-- TAB: BLOCKS — per-producer add-ons, drawn by js/admin-blocks.js -->
+      <div id="tab-blocks" class="tab-pane">
+        <div class="form-hint" style="margin:0 0 16px" data-i18n="st_blocks_intro">Plugins are small features that fit PartnerType to the way you run your partners. Every plugin is off by default and runs only in your installation. Save each plugin with its own Save button.</div>
+        <div id="blocks-list" style="display:flex;flex-direction:column;gap:20px"></div>
+      </div>
+
+      <!-- TAB: INTEGRATIONS — drawn by js/admin-integrations.js, admin only -->
+      <div id="tab-integrations" class="tab-pane" hidden>
+        <div class="form-hint" style="margin:0 0 16px" data-i18n="st_integrations_intro">Decide here whether Claude and other programs may read data from PartnerType. Each person sees through them only what they see when signed in.</div>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div id="int-switches"></div>
+          <div id="int-connect"></div>
+          <div id="int-connections"></div>
+          <div id="int-keys"></div>
+          <div id="int-fields"></div>
+          <div id="int-log"></div>
+        </div>
+      </div>
+
+      <div id="tab-registration" class="tab-pane">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title" data-i18n="st_registration_fields_title">Extra registration form fields</div>
+              <div data-i18n="imie_firma_e_mail_i_telefon_sa_zawsze_wymagane_p" class="text-xs text-tertiary">
+                Name, company, e-mail and phone are always required. Below you can add up to 5 questions of your own and switch on the ones a partner has to answer. Question up to 100 characters, answer up to 200.
+              </div>
+            </div>
+            <button data-i18n="dodaj_pole" class="btn btn-secondary btn-sm" id="add-reg-field-btn" type="button">Add field</button>
+          </div>
+          <div class="panel-body">
+            <div id="reg-fields-error" class="text-sm" role="alert" hidden style="color:var(--error-400);margin-bottom:12px"></div>
+            <label class="en-switch" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer">
+              <input type="checkbox" id="reg-en-toggle">
+              <span data-i18n="st_show_english_names" class="text-sm text-secondary">Show the English names</span>
+            </label>
+            <ol id="reg-fields-list" aria-live="polite" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px"></ol>
+            <p data-i18n="nie_dodano_jeszcze_zadnych_pol_partner_wypelni_t" class="text-xs text-tertiary" id="reg-fields-empty" style="margin:8px 0 0">
+              No fields added yet — a partner fills in only the four mandatory ones.
+            </p>
+          </div>
+        </div>
+
+        <!-- Deliberately a separate panel from the one above: those questions
+             ask a prospective PARTNER about themselves, these ask about a
+             DEAL. Same tab because both answer "what does my form ask?", but
+             never the same list. -->
+        <div class="panel" style="margin-top:20px">
+          <div class="panel-header">
+            <div>
+              <div data-i18n="dodatkowe_pola_zgloszenia_leada" class="panel-title">Extra lead submission fields</div>
+              <div data-i18n="o_co_partner_ma_zostac_zapytany_przy_zglaszaniu_" class="text-xs text-tertiary">
+                What a partner should be asked when submitting a client. Up to 50 fields of type text, number or yes/no. Tick „Partner can edit” if they should be able to correct the answer after submitting.
+              </div>
+            </div>
+            <button data-i18n="dodaj_pole" class="btn btn-secondary btn-sm" id="add-lead-field-btn" type="button">Add field</button>
+          </div>
+          <div class="panel-body">
+            <div id="lead-fields-error" class="text-sm" role="alert" hidden style="color:var(--error-400);margin-bottom:12px"></div>
+            <div id="lead-fields-loading" class="text-xs text-tertiary" style="margin:0 0 8px" data-i18n="st_loading_fields">Loading fields…</div>
+            <label class="en-switch" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer">
+              <input type="checkbox" id="lead-fields-en-toggle">
+              <span data-i18n="st_show_english_names" class="text-sm text-secondary">Show the English names</span>
+            </label>
+            <ol id="lead-fields-list" aria-live="polite" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px"></ol>
+            <p data-i18n="nie_dodano_jeszcze_zadnych_pol_zgloszenie_pyta_t" class="text-xs text-tertiary" id="lead-fields-empty" style="margin:8px 0 0" hidden>
+              No fields added yet — the form asks only for client details and the product.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Add / edit product (moved here from the standalone products.html page;
+     modals in this codebase live at the end of the body outside the page
+     container, alongside where a static modal would otherwise sit) -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="product-modal-title" data-i18n="st_new_product">New product</div>
+      <button class="modal-close" id="product-modal-close" type="button" aria-label="Close product dialog" data-i18n="st_close_product" data-i18n-attr="aria-label">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="modal-product-id">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="form-group">
+          <label class="form-label" for="p-name"><span data-i18n="st_product_name">Product name</span> <span class="required">*</span></label>
+          <input data-i18n="np_wdrozenie_erp" data-i18n-attr="placeholder" type="text" id="p-name" class="form-input" placeholder="e.g. ERP rollout">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="p-name-en" data-i18n="st_product_name_en">Product name in English</label>
+          <input type="text" id="p-name-en" class="form-input" maxlength="200" data-i18n="st_product_name_en" data-i18n-attr="placeholder" placeholder="Product name in English">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label class="form-label" for="p-code" data-i18n="st_code">Code</label>
+            <input type="text" id="p-code" class="form-input" placeholder="ERP-01">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-category" data-i18n="st_category">Category</label>
+            <select id="p-category" class="form-select">
+              <!-- value = what is stored; the label is translated separately. -->
+              <option value="Wdrożenie" data-i18n="products_category_rollout">Rollout</option>
+              <option value="Licencja" data-i18n="products_category_licence">Licence</option>
+              <option value="Usługa" data-i18n="products_category_service">Service</option>
+              <option value="Wsparcie" data-i18n="products_category_support">Support</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="cena_bazowa_zl" class="form-label" for="p-price">Base price (PLN)</label>
+          <input data-i18n="np_40000" data-i18n-attr="placeholder" type="number" id="p-price" class="form-input" min="0" step="100" placeholder="e.g. 40000">
+          <div data-i18n="podpowiedz_dla_partnera_wartosc_leada_nadal_wpis" class="form-hint">A hint for the partner — they still enter the lead value themselves.</div>
+        </div>
+        <label class="form-label" for="p-offered" style="display:flex;align-items:center;gap:10px;cursor:pointer">
+          <input type="checkbox" id="p-offered" checked>
+          <span data-i18n="oferuj_partnerom_produkt_pojawi_sie_na_liscie_pr">Offer to partners — the product appears in the list when submitting a lead</span>
+        </label>
+        <div class="form-error" id="product-modal-error" hidden></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button data-i18n="anuluj" type="button" class="btn btn-secondary" id="product-cancel-btn">Cancel</button>
+      <button data-i18n="zapisz_produkt" type="button" class="btn btn-primary" id="product-save-btn">Save product</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invite a channel manager: the Team tab's own invitation door,
+     separate from the partner invite modal on pages/admin/users.html --
+     mirrors that modal's structure, but with its own element ids, no role
+     selector (the server always forces role=manager on this path), and no
+     company/level/bio fields, since a team member is not a partner. -->
+<div class="toast-container" id="toast-container"></div>
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/admin-shell.js"></script>
+<script src="../../js/admin-products.js"></script>
+<script src="../../js/admin-blocks.js"></script>
+<script src="../../js/admin-integrations.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

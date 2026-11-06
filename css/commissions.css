@@ -1,0 +1,740 @@
+/* ============================================================
+   PARTNERTYPE — COMMISSIONS v2
+   Tier badges, bonus chips, slide panel, tab navigation
+   ============================================================ */
+
+/* ─── Page Tabs ─────────────────────────────────────────── */
+
+.page-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+/* ─── SETTINGS TILES ─────────────────────────────────
+   Settings has eight panes. As eight bare words in one fit-content row they
+   ran off the side of the screen and told the reader nothing: the owner twice
+   reported a built feature as missing -- the Products catalogue, and the extra
+   registration questions -- because he could not tell which word held it. Each
+   tile now carries a line saying what is inside. He chose keeping the eight
+   over regrouping them into three, so eight it is; the grid wraps instead of
+   overflowing.
+   ──────────────────────────────────────────────────────────── */
+.settings-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.settings-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font: inherit;
+  color: var(--text-secondary);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.settings-tile:hover { border-color: var(--border-strong); background: var(--bg-hover); }
+.settings-tile:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 2px; }
+/* The selected pane is marked by a brand edge rather than a fill: eight filled
+   tiles with one slightly different fill is not a readable selection. */
+.settings-tile.active {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 1px var(--brand-600);
+  color: var(--text-primary);
+}
+.settings-tile-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.settings-tile-label svg { flex: none; }
+.settings-tile-sub {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-tertiary);
+}
+
+.page-tab {
+  /* Explicit row layout rather than relying on inline flow: the icon SVGs
+     inside these buttons compute to display:block, which stacked them above
+     their label and left every tab looking half-broken. */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.page-tab:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+.page-tab.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fadeSlideDown 0.2s ease; }
+
+/* ─── Tier Cards ─────────────────────────────────────────── */
+
+.tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tier-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: relative;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.tier-card:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-md);
+}
+
+.tier-card.inactive { opacity: 0.5; }
+
+.tier-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.tier-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.tier-name-input {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  padding: 2px 4px;
+  width: 120px;
+  transition: border-color 0.15s;
+}
+.tier-name-input:focus {
+  outline: none;
+  border-bottom-color: var(--brand-400);
+  background: var(--brand-50);
+}
+
+.tier-rate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tier-rate-input {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed transparent;
+  width: 70px;
+  padding: 2px 4px;
+  transition: border-color 0.15s;
+}
+.tier-rate-input:focus {
+  outline: none;
+  border-bottom-color: var(--brand-400);
+  background: var(--brand-50);
+}
+
+.tier-rate-unit {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.tier-partner-count {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.tier-color-picker {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255,255,255,0.15);
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  background: none;
+}
+input[type="color"] { width: 100%; height: 100%; padding: 0; border: none; cursor: pointer; }
+
+.tier-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.tier-save-btn {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--brand-500);
+  color: var(--on-brand);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.tier-save-btn:hover { background: var(--brand-600); }
+
+.tier-delete-btn {
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  color: var(--error-400);
+  background: transparent;
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tier-delete-btn:hover { background: rgba(239,68,68,0.1); }
+
+.add-tier-btn {
+  border: 2px dashed var(--border-default);
+  background: transparent;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.18s;
+  min-height: 140px;
+}
+.add-tier-btn:hover:not(:disabled) {
+  border-color: var(--brand-400);
+  color: var(--brand-400);
+  background: var(--brand-50);
+}
+.add-tier-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ─── Bonus Definition Cards ─────────────────────────────── */
+
+.bonus-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: none; /* normal letter case */
+  letter-spacing: 0;
+  color: var(--text-tertiary);
+  margin: 20px 0 10px;
+}
+
+.bonus-defs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.bonus-def-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.18s;
+  position: relative;
+}
+.bonus-def-card:hover { border-color: var(--border-default); }
+
+.bonus-type-pill {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+.bonus-type-pill.percent { background: var(--brand-100); color: var(--brand-700); }
+.bonus-type-pill.cash    { background: rgba(16,185,129,.15); color: var(--success-400); }
+
+.bonus-def-name-input {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  padding: 2px 4px;
+  width: 100%;
+  transition: border-color 0.15s;
+  padding-right: 60px;
+}
+.bonus-def-name-input:focus { outline: none; border-bottom-color: var(--brand-400); }
+
+.bonus-value-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bonus-value-input {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed transparent;
+  width: 80px;
+  color: var(--text-primary);
+  transition: border-color 0.15s;
+}
+.bonus-value-input:focus { outline: none; border-bottom-color: var(--brand-400); }
+
+.bonus-value-unit { font-size: 0.9rem; color: var(--text-secondary); font-weight: 600; }
+
+.bonus-desc-input {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  width: 100%;
+  padding: 2px 4px;
+  transition: border-color 0.15s;
+}
+.bonus-desc-input:focus { outline: none; border-bottom-color: var(--brand-400); }
+
+.bonus-def-footer {
+  display: flex;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.add-bonus-btn {
+  border: 2px dashed var(--border-default);
+  background: transparent;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.18s;
+  min-height: 80px;
+}
+.add-bonus-btn:hover:not(:disabled) {
+  border-color: var(--brand-400);
+  color: var(--brand-400);
+  background: var(--brand-50);
+}
+.add-bonus-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ─── Partner Commission Table ───────────────────────────── */
+
+.partner-comm-table .tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.partner-comm-table .tier-badge:hover { opacity: 0.8; }
+
+.bonus-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.bonus-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: var(--brand-100);
+  color: var(--brand-700);
+  border: 1px solid var(--brand-200);
+}
+.bonus-chip.cash {
+  background: rgba(16,185,129,.1);
+  color: var(--success-400);
+  border-color: rgba(16,185,129,.2);
+}
+
+.total-rate-cell {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.total-rate-sub {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+/* ─── Slide Panel ────────────────────────────────────────── */
+
+.slide-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  backdrop-filter: blur(2px);
+}
+.slide-overlay.open { opacity: 1; pointer-events: auto; }
+
+.slide-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 420px;
+  background: var(--bg-card);
+  border-left: 1px solid var(--border-subtle);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.slide-panel.open { transform: translateX(0); }
+
+.slide-panel-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.slide-panel-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.slide-panel-sub   { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 2px; }
+
+.slide-panel-close {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.15s;
+}
+.slide-panel-close:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.slide-panel-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.slide-panel-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ─── Bonus Toggles in Slide Panel ──────────────────────── */
+
+.bonus-toggle-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-radius: var(--radius-sm);
+}
+.bonus-toggle-item:last-child { border-bottom: none; }
+
+.bonus-toggle-item:hover { background: var(--bg-hover); }
+
+.bonus-toggle-check {
+  width: 18px; height: 18px;
+  accent-color: var(--brand-500);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.bonus-toggle-info { flex: 1 }
+.bonus-toggle-name { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.bonus-toggle-desc { font-size: 0.72rem; color: var(--text-tertiary); margin-top: 2px; }
+
+.bonus-toggle-value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bonus-custom-input {
+  width: 64px;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  text-align: right;
+  transition: border-color 0.15s;
+}
+.bonus-custom-input:focus { outline: none; border-color: var(--brand-400); }
+.bonus-custom-input:disabled { opacity: 0.4; }
+
+.bonus-unit-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  min-width: 24px;
+}
+
+/* ─── Summary box in slide panel ────────────────────────── */
+
+.commission-summary {
+  /* A large surface: grey, not honey (the brand keeps honey for small
+     elements). */
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.commission-summary-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: none; /* normal letter case */
+  letter-spacing: 0;
+  color: var(--brand-700);
+  margin-bottom: 10px;
+}
+
+.commission-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 0.82rem;
+}
+.commission-summary-row.total {
+  border-top: 1px solid var(--brand-200);
+  margin-top: 8px;
+  padding-top: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.commission-summary-row.total .val { color: var(--brand-700); }
+
+/* ─── Bulk bar for partners ─────────────────────────────── */
+
+.partner-bulk-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--gray-950);
+  border-top: 1px solid var(--brand-500);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(100%);
+  transition: transform 0.25s cubic-bezier(0.175,0.885,0.32,1.15);
+  box-shadow: none;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+.partner-bulk-bar.visible { transform: translateY(0); }
+
+.pbulk-count {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  flex: 1;
+}
+.pbulk-count span {
+  background: var(--brand-500);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+  margin-right: 6px;
+}
+
+.pbulk-select {
+  padding: 7px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: white;
+  cursor: pointer;
+}
+.pbulk-select option { background: var(--gray-950); color: white; }
+
+.pbulk-btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.2);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pbulk-apply { background: var(--brand-500); color: var(--on-brand); }
+.pbulk-apply:hover { background: var(--brand-600); }
+.pbulk-clear { background: transparent; color: rgba(255,255,255,.6); }
+.pbulk-clear:hover { color: white; }
+
+
+/* ─── PAYOUT LINES ─────────────────────────────
+   One row per period inside the payout panel: what it is, how much, and the
+   single button that settles it. A row, not a card -- these are read down a
+   column and compared, and the producer has to be able to tell "September" from
+   "Q3" at a glance before clicking something irreversible.
+   ──────────────────────────────────────────────────────────── */
+.payout-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.payout-line:last-child { border-bottom: 0; }
+.payout-line > :first-child { flex: 1; min-width: 0; }
+.payout-line-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.payout-line-amount {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: normal; /* Schibsted: tabular figures also widen the comma and dot ("88 , 9%") */
+  white-space: nowrap;
+}
+/* The yearly roll-up is a total, not a period anyone can act on. */
+.payout-line-year .payout-line-title { color: var(--text-secondary); font-weight: 500; }
+.payout-line-year { background: var(--bg-tertiary); padding-inline: 10px; }
+
+/* ─── EVIDENCE PERIODS ─────────────────────────
+   Three columns side by side rather than one after another: what was paid for
+   in a month, in a quarter, and who was paid are three readings of the same money that should be comparable at a
+   glance, not scrolled between.
+   ─────────────────────────────────────────────────────────── */
+.evidence-periods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+/* ─── PARTNER — ROZLICZENIA W CZASIE ───────────────────────────
+   On a partner's own earnings screen: how much has been paid out, how much is waiting and how much is still only claimed — per month,
+   quarter, year or in total. Four figures on one strip, then the table the
+   period picker drives. */
+.earn-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+@media (max-width: 900px) {
+  .earn-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .earn-kpi-grid { grid-template-columns: 1fr; }
+}
+
+.earn-kpi {
+  background: var(--bg-card);
+  padding: 16px 18px;
+  min-width: 0;
+}
+
+.earn-kpi-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none; /* normal letter case */
+  color: var(--text-tertiary);
+}
+
+.earn-kpi-value {
+  margin-top: 6px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.earn-kpi-value.is-paid { color: var(--success-400); }
+.earn-kpi-value.is-due  { color: var(--brand-700); }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_moje_wynagrodzenie">PartnerType — My earnings</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/commissions.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="partner-earnings">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_leads_section">Leads</span>
+      <a href="new-lead.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-plus" aria-hidden="true"></svg>
+        <span data-i18n="nav_new_lead">Submit Lead</span>
+      </a>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg>
+        <span data-i18n="nav_my_leads">My leads</span>
+      </a>
+      <a href="earnings.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="wallet" aria-hidden="true"></svg>
+        <span data-i18n="nav_earnings">Earnings</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg>
+        <span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg>
+        <span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg>
+        <span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">P</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"><span data-i18n="earn_heading" class="page-title">My earnings</span></div>
+      <div class="header-right">
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">P</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn" id="earnings-content">
+      <div style="text-align:center;padding:80px"><span class="spinner"></span></div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/partner.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/partner-earnings.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

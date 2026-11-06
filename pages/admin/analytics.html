@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_raporty">PartnerType — Reports</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="admin-analytics">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+        <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg><span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="analytics.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="bar-chart-3" aria-hidden="true"></svg><span data-i18n="nav_analytics">Analytics</span>
+      </a>
+      
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_management">Management</span>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg><span data-i18n="nav_leads">Leads</span>
+      </a>
+      <a href="partners.html" class="nav-item">
+        <svg class="nav-icon" data-icon="handshake" aria-hidden="true"></svg><span data-i18n="nav_partners">Partners</span>
+      </a>
+      <a href="commissions.html" class="nav-item">
+        <svg class="nav-icon" data-icon="coins" aria-hidden="true"></svg><span data-i18n="nav_commissions">Commissions</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg><span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_system">System</span>
+      <a href="audit.html" class="nav-item">
+        <svg class="nav-icon" data-icon="history" aria-hidden="true"></svg><span data-i18n="nav_audit">Audit Log</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="settings" aria-hidden="true"></svg><span data-i18n="nav_settings">Settings</span>
+      </a>
+      <a href="settings.html#plugins" class="nav-item">
+        <svg class="nav-icon" data-icon="puzzle" aria-hidden="true"></svg><span data-i18n="nav_plugins">Plugins</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg><span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="users.html" class="nav-item">
+        <svg class="nav-icon" data-icon="users" aria-hidden="true"></svg><span data-i18n="nav_users">Users</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg><span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">MK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"></div>
+      <div class="header-right">
+        <a href="/api/export/leads" class="btn-export" download style="margin-right:8px">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span data-i18n="export_csv">Export CSV</span>
+        </a>
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">MK</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="kpi-grid" id="analytics-kpis" style="margin-bottom:24px"></div>
+
+      <!-- Channel health. These are the standard partner-channel measures; each carries its own
+           one-line definition, because a figure whose meaning the reader has to
+           guess is worse than no figure -- and because "16% aktywacji" reads as
+           a failure until you know it counts partners who have not yet
+           submitted anything. -->
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-header">
+          <div>
+            <div data-i18n="zdrowie_kanalu_partnerskiego" class="panel-title">Partner channel health</div>
+            <div data-i18n="standardowe_miary_programu_partnerskiego_liczone" class="text-xs text-tertiary" style="margin-top:2px">Standard partner programme measures, computed from your own data</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="channel-metrics" id="channel-metrics"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+        <div class="panel">
+          <div class="panel-header"><div data-i18n="leady_w_czasie" class="panel-title">Leads over time</div><div data-i18n="ostatnie_6_miesiecy" class="text-xs text-tertiary">Last 6 months</div></div>
+          <div class="panel-body">
+            <div class="chart-container" style="height:220px">
+              <canvas data-i18n="liczba_leadow_w_ostatnich_szesciu_miesiacach" data-i18n-attr="aria-label" id="an-line" class="chart-canvas" style="height:220px" role="img" aria-label="Number of leads over the last six months"></canvas>
+              <p data-i18n="brak_danych_o_leadach_w_wybranym_okresie" class="empty-state text-sm text-secondary" id="an-line-empty" hidden>No lead data for the selected period.</p>
+            </div>
+            <div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--brand-500)"></div><span data-i18n="leady">Leads</span></div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div data-i18n="rozklad_leadow" class="panel-title">Lead distribution</div>
+              <div data-i18n="caly_lejek_zgloszenia_przed_decyzja_etapy_sprzed" class="text-xs text-tertiary" style="margin-top:2px">The whole funnel: submissions awaiting a decision, sales stages, wins and losses</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="donut-wrap">
+              <div class="chart-container" style="height:180px;width:180px;flex-shrink:0">
+                <canvas data-i18n="rozklad_leadow_zgloszenia_etapy_lejka_wygrane_i_" data-i18n-attr="aria-label" id="an-donut" class="chart-canvas" style="height:180px" role="img" aria-label="Lead distribution: submissions, funnel stages, wins and losses"></canvas>
+                <p data-i18n="brak_danych_o_statusach_leadow" class="empty-state text-sm text-secondary" id="an-donut-empty" hidden>No lead status data.</p>
+              </div>
+              <div class="donut-legend" id="an-donut-legend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-header"><div data-i18n="top_5_partnerow" class="panel-title">Top 5 partners</div><div data-i18n="liczba_zgloszonych_leadow" class="text-xs text-tertiary">Number of leads submitted</div></div>
+        <div class="panel-body"><div class="chart-container" style="height:200px">
+          <canvas data-i18n="porownanie_liczby_leadow_pieciu_najaktywniejszyc" data-i18n-attr="aria-label" id="an-bars" class="chart-canvas" style="height:200px" role="img" aria-label="Lead counts of the five most active partners"></canvas>
+          <p data-i18n="brak_danych_do_rankingu_partnerow" class="empty-state text-sm text-secondary" id="an-bars-empty" hidden>No data for the partner ranking.</p>
+        </div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div data-i18n="ranking_partnerow" class="panel-title">Partner ranking</div>
+            <div data-i18n="wedlug_sprzedazy_z_wygranych_transakcji" class="text-xs text-tertiary" style="margin-top:2px">By revenue from won deals</div>
+          </div>
+        </div>
+        <div class="panel-body" style="padding:0">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr><th>#</th><th data-i18n="partner">Partner</th><th data-i18n="poziom_partnera">Partner tier</th><th data-i18n="leady_ogolem">Leads total</th><th data-i18n="an_accepted">Accepted</th><th data-i18n="an_conversion">Conversion</th><th data-i18n="sprzedaz">Revenue</th><th data-i18n="prowizja">Commission</th></tr>
+              </thead>
+              <tbody id="an-partners-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="toast-container" id="toast-container"></div>
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/admin-shell.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/analytics.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/analytics-empty-states.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

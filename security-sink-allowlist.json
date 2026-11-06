@@ -1,0 +1,264 @@
+{
+  "version": 1,
+  "findings": [
+    {
+      "path": "js/agent.js",
+      "kind": "inner-html",
+      "snippet_hash": "e9d29f67661c08da",
+      "rationale": "Reviewed fixed widget chrome; no user, API, or model value enters this trusted markup.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/app.js",
+      "kind": "inner-html",
+      "snippet_hash": "a1ac8fe3ec7c0177",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/app.js",
+      "kind": "inner-html",
+      "snippet_hash": "ce61d2694abd3a32",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/app.js",
+      "kind": "inner-html",
+      "snippet_hash": "de2e04fdd89fe718",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/app.js",
+      "kind": "inner-html",
+      "snippet_hash": "e43d1b068e7e83db",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/auth.js",
+      "kind": "inner-html",
+      "snippet_hash": "0518da30831dcc8c",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/auth.js",
+      "kind": "inner-html",
+      "snippet_hash": "b2764c7b41b27fee",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/auth.js",
+      "kind": "inner-html",
+      "snippet_hash": "be2bff330cadb704",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "dynamic-event-handler",
+      "snippet_hash": "475a85c18f40de26",
+      "rationale": "Reviewed code-owned listener/property binding; no persisted value enters executable source.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "dynamic-event-handler",
+      "snippet_hash": "594142ab70a903f7",
+      "rationale": "Reviewed code-owned local function declaration (const onConfirm = ...) wired via addEventListener inside the retroactive-rate-change confirmation modal; no persisted or request-controlled value enters handler source. Detector false-positive on the identifier name, not an inline HTML event attribute.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "dynamic-event-handler",
+      "snippet_hash": "b5685504f71472e0",
+      "rationale": "Reviewed code-owned local function declaration (const onCancel = ...) wired via addEventListener inside the retroactive-rate-change confirmation modal; no persisted or request-controlled value enters handler source. Detector false-positive on the identifier name, not an inline HTML event attribute.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "081417c9d8842b3e",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "122c7f6ea1821d42",
+      "rationale": "Reviewed fixed row template for the per-lead commission ledger: lead.id, client_name and partner_name are each passed through escHtml before interpolation; lead.value and the commission total are numeric values routed through finiteValue().toLocaleString(), never raw API strings.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "2a03fbffd33215fe",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "31592eb3c004ed25",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "33ddd201fa8e5059",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "669d52374763eb06",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "a16f2e5787e7b5eb",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "a7df54122c150ec8",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/commissions.js",
+      "kind": "inner-html",
+      "snippet_hash": "de4d554e1b6c6a40",
+      "rationale": "Spinner markup plus a label taken from the translation dictionary; no user, API or model value reaches it.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/leads6.js",
+      "kind": "inner-html",
+      "snippet_hash": "1b0971e3e92e60a0",
+      "rationale": "Reviewed post-remediation sink: dynamic values are context-encoded or drawn from fixed application enums, and malicious rendering fixtures cover the boundary.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/leads6.js",
+      "kind": "inner-html",
+      "snippet_hash": "7714d0e7b66ef08e",
+      "rationale": "Reviewed post-remediation sink: dynamic values are context-encoded or drawn from fixed application enums, and malicious rendering fixtures cover the boundary.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/leads6.js",
+      "kind": "inner-html",
+      "snippet_hash": "d230522795672be4",
+      "rationale": "Reviewed post-remediation sink: dynamic values are context-encoded or drawn from fixed application enums, and malicious rendering fixtures cover the boundary.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/leads6.js",
+      "kind": "inner-html",
+      "snippet_hash": "e0c9cf5141fe8752",
+      "rationale": "Reviewed post-remediation sink: dynamic values are context-encoded or drawn from fixed application enums, and malicious rendering fixtures cover the boundary.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/notifications.js",
+      "kind": "inner-html",
+      "snippet_hash": "2405c096ee5dc3c3",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/notifications.js",
+      "kind": "inner-html",
+      "snippet_hash": "dae60963bcaf0601",
+      "rationale": "Reviewed static UI markup or fixed-enum presentation owned by production code.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/partner.js",
+      "kind": "dynamic-event-handler",
+      "snippet_hash": "15488f89dfe67b9e",
+      "rationale": "Assigns a function reference to an event property, not a string of code; nothing is evaluated.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/partner.js",
+      "kind": "dynamic-event-handler",
+      "snippet_hash": "a6f7a0d5ccba46e1",
+      "rationale": "Assigns a function reference to an event property, not a string of code; nothing is evaluated.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/partner.js",
+      "kind": "inner-html",
+      "snippet_hash": "3a52324c026e10da",
+      "rationale": "The 'answer a request for information' dialog (ensureAnswerDialog). The full template is fixed, static markup with zero ${...} interpolation -- no lead field, partner input, or API value is spliced into this string; only literal Polish copy, a maxlength-bounded textarea, and element ids the code itself later reads via getElementById.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/profile.js",
+      "kind": "inner-html",
+      "snippet_hash": "0b6fabd153cee05b",
+      "rationale": "Reviewed post-remediation sink: dynamic values are context-encoded or drawn from fixed application enums, and malicious rendering fixtures cover the boundary.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/profile.js",
+      "kind": "inner-html",
+      "snippet_hash": "8b8b3ffe331e4825",
+      "rationale": "Reviewed post-remediation sink: dynamic values are context-encoded or drawn from fixed application enums, and malicious rendering fixtures cover the boundary.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/settings.js",
+      "kind": "inner-html",
+      "snippet_hash": "1b93a9dac527f988",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/settings.js",
+      "kind": "inner-html",
+      "snippet_hash": "215e5ecc8cf1f4de",
+      "rationale": "Spinner markup plus a label taken from the translation dictionary; no user, API or model value reaches it.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/settings.js",
+      "kind": "inner-html",
+      "snippet_hash": "743c389b0fd2baeb",
+      "rationale": "Spinner markup plus a label taken from the translation dictionary; no user, API or model value reaches it.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/settings.js",
+      "kind": "inner-html",
+      "snippet_hash": "792ca00d84df6278",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/settings.js",
+      "kind": "inner-html",
+      "snippet_hash": "bd20069be129152a",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    },
+    {
+      "path": "js/settings.js",
+      "kind": "inner-html",
+      "snippet_hash": "db320b9a7178b28a",
+      "rationale": "Reviewed fixed structure with API values context-encoded, validated, or written through DOM properties.",
+      "disposition": "trusted-static-markup"
+    }
+  ]
+}

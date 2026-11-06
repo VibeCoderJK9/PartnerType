@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "key": "contact",
+    "name": "Nawi\u0105zanie kontaktu",
+    "sort_order": 0,
+    "kind": "progress",
+    "is_terminal": 0,
+    "color": "#94a3b8",
+    "active": 1,
+    "name_en": ""
+  },
+  {
+    "id": 2,
+    "key": "presentation",
+    "name": "Prezentacja",
+    "sort_order": 1,
+    "kind": "progress",
+    "is_terminal": 0,
+    "color": "#3b82f6",
+    "active": 1,
+    "name_en": ""
+  },
+  {
+    "id": 3,
+    "key": "offer",
+    "name": "Oferta",
+    "sort_order": 2,
+    "kind": "progress",
+    "is_terminal": 0,
+    "color": "#8b5cf6",
+    "active": 1,
+    "name_en": ""
+  },
+  {
+    "id": 4,
+    "key": "negotiation",
+    "name": "Negocjacje",
+    "sort_order": 3,
+    "kind": "progress",
+    "is_terminal": 0,
+    "color": "#f59e0b",
+    "active": 1,
+    "name_en": ""
+  },
+  {
+    "id": 5,
+    "key": "won",
+    "name": "Wygrany",
+    "sort_order": 4,
+    "kind": "win",
+    "is_terminal": 1,
+    "color": "#c026d3",
+    "active": 1,
+    "name_en": ""
+  },
+  {
+    "id": 6,
+    "key": "lost",
+    "name": "Przegrany",
+    "sort_order": 5,
+    "kind": "lose",
+    "is_terminal": 1,
+    "color": "#334155",
+    "active": 1,
+    "name_en": ""
+  }
+]

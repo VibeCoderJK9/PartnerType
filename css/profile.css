@@ -1,0 +1,276 @@
+/* ============================================================
+   PARTNERTYPE — PROFILE & REGISTER STYLES
+   ============================================================ */
+
+/* ─── Profile Layout ──────────────────────────────────────── */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .profile-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Avatar Card ─────────────────────────────────────────── */
+.avatar-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 24px;
+}
+
+.avatar-xl {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-full);
+  background: var(--brand-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--on-brand);
+  letter-spacing: -1px;
+  box-shadow: none;
+  position: relative;
+}
+
+.avatar-xl-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--brand-300);
+  animation: ring-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.05); }
+}
+
+.avatar-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.avatar-company {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.avatar-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.avatar-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+
+.avatar-meta-row svg {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+/* ─── Password strength ───────────────────────────────────── */
+.password-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--border-subtle);
+  transition: background 0.3s;
+}
+
+.strength-bar.weak   { background: var(--error-400); }
+.strength-bar.medium { background: var(--warning-400); }
+.strength-bar.strong { background: var(--success-400); }
+
+.strength-label {
+  font-size: 0.75rem;
+  margin-top: 4px;
+  transition: color 0.3s;
+}
+
+/* ─── User Management Table extras ───────────────────────────  */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.status-dot.active    { background: var(--success-400); box-shadow: 0 0 6px rgba(16,185,129,0.5); }
+.status-dot.pending   { background: var(--warning-400); box-shadow: 0 0 6px rgba(245,158,11,0.5); }
+.status-dot.suspended { background: var(--error-400);   box-shadow: 0 0 6px rgba(239,68,68,0.5); }
+
+/* ─── Register page ──────────────────────────────────────── */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.register-brand {
+  width: 380px;
+  flex-shrink: 0;
+  /* Sharp Business, same slab as .auth-brand on the login screen — this was
+     still var(--gray-950) with hardcoded white text from the old Nebula
+     theme, so on light mode the registration page looked like another app. */
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-subtle);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative glow blobs from the old Nebula theme — removed, not recoloured */
+.register-brand::before,
+.register-brand::after {
+  display: none;
+}
+
+.register-form-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 48px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .register-brand { display: none; }
+  .register-form-area { padding: 24px 20px; align-items: flex-start; }
+}
+
+.register-form-wrap {
+  width: 100%;
+  max-width: 560px;
+}
+
+.register-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 32px;
+}
+
+.register-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.register-step.active { color: var(--brand-400); font-weight: 600; }
+.register-step.done   { color: var(--success-400); }
+
+.register-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.register-step-done-icon { display: none; }
+.register-step.done .register-step-num { display: none; }
+.register-step.done .register-step-done-icon { display: flex; }
+
+.register-step-divider {
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0 12px;
+}
+
+/* ─── Success screen ─────────────────────────────────────── */
+.success-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  gap: 24px;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  background: rgba(16,185,129,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: success-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes success-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ─── Users filter row ─────────────────────────────────────── */
+.users-filter-grid {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ─── COMPANY LOGO (Settings → General) ───────────────────────
+   The producer's own logo, previewed at the size the sign-in page and the
+   menu use it. */
+.logo-setting { display: flex; gap: 20px; align-items: flex-start; }
+.logo-setting-preview {
+  width: 88px; height: 88px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-primary); border: 1px dashed var(--border-default);
+  color: var(--text-tertiary); font-size: 0.75rem; text-align: center; padding: 8px;
+}
+.logo-setting-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.logo-setting-body { display: flex; flex-direction: column; gap: 12px; }
+.logo-setting-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.logo-setting-actions .btn { cursor: pointer; }

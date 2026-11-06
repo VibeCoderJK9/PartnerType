@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_historia_zmian">PartnerType — Audit log</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/bulk.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="admin-audit">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+        <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg><span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <svg class="nav-icon" data-icon="bar-chart-3" aria-hidden="true"></svg><span data-i18n="nav_analytics">Analytics</span>
+      </a>
+      
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_management">Management</span>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg><span data-i18n="nav_leads">Leads</span>
+      </a>
+      <a href="partners.html" class="nav-item">
+        <svg class="nav-icon" data-icon="handshake" aria-hidden="true"></svg><span data-i18n="nav_partners">Partners</span>
+      </a>
+      <a href="commissions.html" class="nav-item">
+        <svg class="nav-icon" data-icon="coins" aria-hidden="true"></svg><span data-i18n="nav_commissions">Commissions</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg><span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_system">System</span>
+      <a href="audit.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="history" aria-hidden="true"></svg><span data-i18n="nav_audit">Audit Log</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="settings" aria-hidden="true"></svg><span data-i18n="nav_settings">Settings</span>
+      </a>
+      <a href="settings.html#plugins" class="nav-item">
+        <svg class="nav-icon" data-icon="puzzle" aria-hidden="true"></svg><span data-i18n="nav_plugins">Plugins</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg><span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="users.html" class="nav-item">
+        <svg class="nav-icon" data-icon="users" aria-hidden="true"></svg><span data-i18n="nav_users">Users</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg><span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">MK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"><span class="page-title" data-i18n="audit_title">Change history</span></div>
+      <div class="header-right">
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">MK</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 class="page-heading" data-i18n="audit_title">Change history</h1>
+          <p class="page-subheading"><span data-i18n="audit_subtitle">Who changed system data and when</span> — <span id="audit-total" class="text-primary"></span></p>
+        </div>
+      </div>
+
+      <!-- Filter panel -->
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-body" style="padding:16px 20px">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end">
+            <div class="filter-group">
+              <div class="filter-label" data-i18n="akcje">Actions</div>
+              <select id="audit-action-filter" class="form-select" style="width:180px;font-size:0.8rem">
+                <option value="" data-i18n="audit_activity">Actions on data</option>
+                <option value="@all" data-i18n="audit_all_with_sessions">Everything, with sign-ins</option>
+                <option value="lead.create" data-i18n="audit_create">Lead created</option>
+                <option value="lead.accepted" data-i18n="audit_accepted">Accepted</option>
+                <option value="lead.rejected" data-i18n="audit_rejected">Rejected</option>
+                <option value="lead.commission" data-i18n="audit_commission">Commission change</option>
+                <option value="lead.bulk" data-i18n="audit_bulk">Bulk action</option>
+                <option value="@sessions" data-i18n="audit_sessions">Sign-ins and sign-outs</option>
+                <option value="settings" data-i18n="audit_settings">Settings</option>
+                <option value="export" data-i18n="audit_export">Export</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <div data-i18n="uzytkownik" class="filter-label">User</div>
+              <input data-i18n="szukaj_po_nazwie" data-i18n-attr="placeholder" type="text" id="audit-user-filter" class="form-input" placeholder="Search by name..." style="width:160px;font-size:0.8rem">
+            </div>
+            <div class="filter-group">
+              <div data-i18n="data_od" class="filter-label">Date from</div>
+              <input type="date" id="audit-date-from" class="form-input" style="width:150px;font-size:0.8rem">
+            </div>
+            <div class="filter-group">
+              <div data-i18n="data_do" class="filter-label">Date to</div>
+              <input type="date" id="audit-date-to" class="form-input" style="width:150px;font-size:0.8rem">
+            </div>
+            <div style="display:flex;gap:8px;align-self:flex-end">
+              <button class="btn btn-primary btn-sm" id="audit-apply-btn" data-i18n="audit_search">Search</button>
+              <button data-i18n="wyczysc" class="btn btn-ghost btn-sm" id="audit-clear-btn">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="panel">
+        <div class="panel-body" style="padding:0">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-i18n="audit_when">When</th>
+                  <th data-i18n="audit_who">Who</th>
+                  <th data-i18n="audit_change">Change</th>
+                  <th data-i18n="audit_object">Object</th>
+                  <th>ID</th>
+                  <th data-i18n="poprzednia_nowa_wartosc_i_komentarz">Previous / new value and comment</th>
+                  <th data-i18n="audit_ip">IP address</th>
+                </tr>
+              </thead>
+              <tbody id="audit-tbody">
+                <tr><td colspan="7" style="text-align:center;padding:40px"><span class="spinner"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border-subtle)">
+          <div class="text-sm text-tertiary" id="audit-pager-info"></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost btn-sm" id="audit-prev-btn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-chevron-left" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg><span data-i18n="audit_previous">Previous</span></button>
+            <button class="btn btn-ghost btn-sm" id="audit-next-btn"><span data-i18n="audit_next">Next</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-chevron-right" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/admin-shell.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/audit.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

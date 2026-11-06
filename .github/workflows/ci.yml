@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend tests (PostgreSQL)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Full backend suite in Docker with a throwaway PostgreSQL
+        run: ./scripts/test-postgres.sh
+
+  frontend:
+    name: Frontend tests and HTML-sink gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run
+      - run: node scripts/security-sink-audit.mjs
+
+  operations:
+    name: Operator tooling tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: python -m pytest tests_operations -o addopts=''

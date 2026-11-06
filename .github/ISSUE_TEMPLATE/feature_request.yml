@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest an improvement or a new plugin.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What do you or your partners struggle with today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Proposed solution
+  - type: dropdown
+    id: where
+    attributes:
+      label: Could this be a plugin ("block")?
+      options: ["Yes", "No, it needs a core change", "Not sure"]

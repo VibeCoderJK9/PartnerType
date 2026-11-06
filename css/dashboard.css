@@ -1,0 +1,1063 @@
+/* ============================================================
+   PARTNERTYPE — DASHBOARD LAYOUT
+   Sidebar + header + main content
+   ============================================================ */
+
+/* ─── APP SHELL ───────────────────────────────────────────── */
+body {
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* ─── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-subtle);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: transform var(--transition-normal);
+  overflow: hidden;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.sidebar-logo-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--brand-500);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+/* The wordmark must never break mid-name. The menu is 196px and the logo row
+   holds only the mark and the name now -- the collapse toggle moved to the
+   footer -- so 24px of padding, a 28px icon and one 8px gap leave about 136px,
+   comfortably more than "PartnerType" needs on one line. */
+.sidebar-logo-text {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/* Sidebar Nav */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-tertiary);
+  padding: 8px 8px 6px;
+  margin-top: 8px;
+}
+
+.sidebar-section-label:first-child {
+  margin-top: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  border: 1px solid transparent;
+  position: relative;
+  user-select: none;
+}
+
+.nav-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background: var(--brand-100);
+  color: var(--brand-700);
+  border-color: var(--brand-200);
+}
+
+.nav-item.active .nav-icon {
+  color: var(--brand-400);
+}
+
+/* A section outside the acting role's scope. Shown rather than
+   hidden so an observer can see where the application continues without
+   being able to go there; api/authz.py refuses the same requests anyway, so
+   this is presentation, never the control itself. The :hover override has to
+   come after .nav-item:hover above to win on equal specificity. */
+.nav-item-disabled,
+.nav-item-disabled:hover {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-tertiary);
+  pointer-events: auto; /* keep the title tooltip reachable */
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.nav-badge {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--brand-500);
+  color: var(--on-brand);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.sidebar-user:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+}
+
+.sidebar-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-user-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-role {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* ─── MAIN AREA ───────────────────────────────────────────── */
+.main-area {
+  flex: 1;
+  min-width: 0;
+  margin-left: var(--sidebar-width);
+  /* The chat dock takes its width out of the centre column rather than floating
+     over it, as in Stripe: opening the chat narrows the page instead of
+     covering it. */
+  margin-right: var(--chat-width);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  transition: margin-right var(--transition-normal), margin-left var(--transition-normal);
+}
+
+/* ─── TOP HEADER ──────────────────────────────────────────── */
+.top-header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  gap: 24px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.page-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.header-search {
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+}
+
+.header-search .input-icon {
+  left: 12px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+}
+
+.header-search input {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 8px 16px 8px 38px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+.header-search input::placeholder { color: var(--text-tertiary); }
+.header-search input:focus {
+  border-color: var(--brand-500);
+  background: var(--bg-hover);
+  box-shadow: 0 0 0 3px var(--brand-100);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  background: transparent;
+  position: relative;
+}
+.header-action-btn:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  background: var(--brand-400);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--bg-secondary);
+}
+
+/* Lang toggle in header */
+.header-lang {
+  display: flex;
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.header-lang-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  background: transparent;
+  border: none;
+}
+.header-lang-btn.active {
+  /* A selected segment, not a second honey button next to "Submit a lead". */
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 1px var(--border-default);
+  border-radius: var(--radius-full);
+}
+
+/* ─── PAGE CONTENT ────────────────────────────────────────── */
+.page-content {
+  flex: 1;
+  padding: 22px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ─── PAGE HEADER ─────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.page-header-left {}
+
+.page-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+
+.page-subheading {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ─── KPI CARDS ───────────────────────────────────────────── */
+/* Hairline grid: 1px gap over a border-colored background reads as hairlines
+   between cells — the one deliberate exception to the 4px spacing scale. Cell padding stays on-scale (22px, within the 16-24px range). */
+.kpi-grid {
+  display: grid;
+  /* 190px so five cards still fit one row on a laptop; auto-fit reflows to
+     3+2 below that rather than squeezing all five. */
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1px;
+  background: var(--border-default);
+  border: 1px solid var(--border-default);
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: var(--radius-xs);
+  padding: 22px;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--kpi-color-a);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.kpi-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-card:hover::before { opacity: 1; }
+
+.kpi-card.purple  { --kpi-color-a: var(--brand-400); --kpi-color-b: var(--brand-600); }
+.kpi-card.green   { --kpi-color-a: var(--success-400); --kpi-color-b: var(--success-600); }
+.kpi-card.orange  { --kpi-color-a: var(--warning-400); --kpi-color-b: var(--warning-600); }
+.kpi-card.red     { --kpi-color-a: var(--error-400); --kpi-color-b: var(--error-600); }
+.kpi-card.blue    { --kpi-color-a: var(--info-400); --kpi-color-b: var(--info-500); }
+
+.kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.kpi-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* One calm tone instead of five pastel colours: the icon only hints at what
+   the number is about, and colour is kept for statuses and the main button. */
+.kpi-card.purple .kpi-icon,
+.kpi-card.green  .kpi-icon,
+.kpi-card.orange .kpi-icon,
+.kpi-card.red    .kpi-icon,
+.kpi-card.blue   .kpi-icon { background: var(--bg-tertiary); color: var(--text-secondary); }
+
+.kpi-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.kpi-trend.up   { color: var(--success-400); }
+.kpi-trend.down { color: var(--error-400); }
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 6px;
+}
+
+.kpi-value.is-money {
+  /* Money KPIs carry far longer strings than counts ("1 250 000 PLN" vs "12")
+     and .kpi-card clips its overflow, so a fixed 2rem cut the value off in a
+     narrow column instead of wrapping. Scales with the viewport, never below
+     legible and never above the count cards. */
+  font-size: clamp(1.375rem, 0.8rem + 1.6vw, 2rem);
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.kpi-label {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ─── DATA TABLE ──────────────────────────────────────────── */
+/* Hairline grid: the container border and every row divider use the same
+   #d8dce2 border-default token so row edges read as a continuous hairline
+   grid, matching the KPI row treatment above. */
+.table-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xs);
+  /* See .panel above: `hidden` would break the sticky scroll rail. */
+  overflow: clip;
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.table-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.table-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  font-size: 0.8125rem;
+  padding: 7px 32px 7px 12px;
+  height: 34px;
+  border-radius: var(--radius-md);
+}
+
+.search-filter {
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-filter input {
+  width: 100%;
+  /* Like the other fields in the same filter row (dropdowns are white). */
+  background: var(--bg-field);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 7px 12px 7px 34px;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  outline: none;
+  height: 34px;
+  transition: all var(--transition-fast);
+}
+.search-filter input:focus {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 2px var(--brand-100);
+}
+.search-filter input::placeholder { color: var(--text-tertiary); }
+.search-filter { position: relative; }
+.search-filter .search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Compact cells, so the rows a producer wants to compare stay above the
+   fold. Header and body share the horizontal value
+   so columns stay aligned. */
+.data-table th {
+  /* Normal letter case, as in Stripe and Linear: spaced small caps shout
+     above every column and read worse. */
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 8px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 9px 14px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-default);
+  transition: background var(--transition-fast);
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+.data-table tbody tr {
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.data-table tbody tr:hover td {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.data-table .cell-primary {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.data-table .cell-mono {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.8125rem;
+}
+
+/* Row actions
+   These used to be opacity:0 until the row was hovered. On a projector, and
+   for anyone who does not think to hover, the Actions column simply looked
+   empty -- so the buttons stay visible and hover only strengthens them. */
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+.data-table tbody tr:hover .row-actions {
+  opacity: 1;
+}
+
+/* Row arrived at from a link elsewhere (e.g. the partner ranking on the
+   analytics page). Fades so it draws the eye without staying loud. */
+@keyframes row-highlight-fade {
+  0%, 55% { background: var(--brand-100); }
+  100%    { background: transparent; }
+}
+.data-table tbody tr.row-highlight td {
+  animation: row-highlight-fade 3.5s ease-out forwards;
+}
+
+/* Sticky Actions column.
+   The leads table is wider than its overflow-x container, which pushed the
+   Actions cell past the right edge of the window: the buttons rendered but
+   could not be seen or clicked without scrolling sideways first. Pinning the
+   last column keeps them reachable at any window width. */
+.data-table--sticky-actions th:last-child,
+.data-table--sticky-actions td:last-child {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+}
+.data-table--sticky-actions th:last-child {
+  background: var(--bg-tertiary);
+}
+.data-table--sticky-actions td:last-child {
+  background: var(--bg-card);
+  box-shadow: -6px 0 8px -6px rgb(0 0 0 / 18%);
+}
+
+/* Table pagination */
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-top: 1px solid var(--border-subtle);
+  gap: 16px;
+}
+
+.pagination-info {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.pagination-btns {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  background: transparent;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+.page-btn:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+.page-btn.active {
+  background: var(--brand-500);
+  color: var(--on-brand);
+  border-color: var(--brand-600);
+}
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── CONTENT GRID ────────────────────────────────────────── */
+.content-grid {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr: a bare 1fr track has an automatic minimum of its
+     content width, so the wide table and chart in the left column pushed the
+     track past the available space and shoved the right-hand panels
+     ("Recent activity", "Top partners") off the edge of the window. */
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+.content-grid.full { grid-template-columns: minmax(0, 1fr); }
+
+/* ─── PANEL SECTIONS ──────────────────────────────────────── */
+.panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  /* clip, NOT hidden: `hidden` makes this a scroll container, which stops
+     position:sticky working for anything inside it -- including the horizontal
+     scroll rail on the tables. `clip` clips without that side effect. Nothing
+     changes visually either way, because every radius in this theme is 0. */
+  overflow: clip;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.panel-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.panel-body {
+  padding: 16px 18px;
+}
+
+/* ─── ACTIVITY LIST ───────────────────────────────────────── */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--transition-fast);
+}
+
+.activity-item:last-child { border-bottom: none; }
+
+.activity-item:hover { background: var(--bg-tertiary); }
+
+.activity-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.activity-body { flex: 1; min-width: 0; }
+
+.activity-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.activity-text strong { color: var(--text-primary); font-weight: 600; }
+
+.activity-time {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+}
+
+/* ─── MOBILE ──────────────────────────────────────────────── */
+.mobile-header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-xl);
+  }
+  .main-area {
+    margin-left: 0;
+  }
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .top-header { display: none; }
+  .page-content { padding: 20px 16px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .content-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ─── CHANNEL HEALTH METRICS ────────────────────────
+   Each measure carries its own definition line, so the grid is a list of
+   explained figures rather than a wall of percentages. The definition is the
+   point: "16% aktywacji" reads as a failure until you know it counts partners
+   who have not submitted anything yet.
+   ─────────────────────────────────────────────────────────── */
+.channel-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+  gap: 18px 24px;
+}
+.channel-metric-value {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: normal; /* Schibsted: tabular figures also widen the comma and dot ("88 , 9%") */
+  line-height: 1.2;
+}
+.channel-metric-value.is-empty { color: var(--text-tertiary); font-weight: 600; }
+.channel-metric-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 3px;
+}
+.channel-metric-note {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+
+/* ─── HORIZONTAL TABLE SCROLLING ──────────────────────────────
+   A wide table must always offer a way to scroll sideways, also to somebody
+   without a trackpad who has scrolled down the page.
+
+   Two separate problems, and one CSS property does not solve either:
+
+   1. macOS hides overlay scrollbars until you scroll. With a trackpad you swipe
+      sideways and never notice; with a plain mouse there is nothing to grab.
+      `-webkit-appearance: none` on the scrollbar pseudo-element forces a real,
+      permanently drawn bar instead of the overlay one.
+
+   2. A wide table's own scrollbar sits at its BOTTOM edge, which on a long
+      table is below the fold. So the
+      rail below is a second, sticky scrollbar pinned to the top of the visible
+      scroll area, kept in sync with the table both ways
+      (Ui.attachTableScroll in js/utils.js).
+   ─────────────────────────────────────────────────────────── */
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.table-scroll-rail {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  /* Hidden until the table is actually wider than its container -- a scrollbar
+     for content that fits is noise. */
+  display: none;
+}
+.table-scroll-rail[data-overflowing="true"] { display: block; }
+.table-scroll-rail-inner { height: 1px; }
+
+.table-scroll-rail,
+.table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) var(--bg-tertiary);
+}
+.table-scroll-rail::-webkit-scrollbar,
+.table-scroll::-webkit-scrollbar {
+  -webkit-appearance: none;
+  height: 11px;
+}
+.table-scroll-rail::-webkit-scrollbar-track,
+.table-scroll::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+.table-scroll-rail::-webkit-scrollbar-thumb,
+.table-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border: 2px solid var(--bg-secondary);
+  border-radius: var(--radius-full);
+}
+.table-scroll-rail::-webkit-scrollbar-thumb:hover,
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ─── FUNNEL POSITION CELL ──────────────────────
+   The lead table shows where each lead sits in the funnel. A stage name alone does
+   not answer it -- "Oferta" says nothing about whether that is halfway or nearly
+   closed -- so the cell carries the stage, the position, and a segmented bar
+   that shows the same thing without being read.
+   ─────────────────────────────────────────────────────────── */
+.funnel-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+  min-width: 118px;
+}
+.funnel-steps {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+  max-width: 110px;
+}
+.funnel-step {
+  flex: 1;
+  height: 3px;
+  background: var(--bg-tertiary);
+}
+
+
+/* ─── COLLAPSED NAVIGATION RAIL ──────────────────
+   The menu can be collapsed and expanded.
+
+   Collapsed, every label is hidden and only the icon remains, centred. The label
+   is not deleted -- it moves into the anchor's `title`, so hovering says what the
+   icon is, and it stays in the accessible name for a screen reader. An icon rail
+   whose icons cannot be identified is worse than no rail.
+   ─────────────────────────────────────────────────────────── */
+/* Sits in the sidebar footer, above the user block, and says what it does.
+   Full width so it reads as the sidebar's own control rather than something
+   floating beside the account. */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.sidebar-toggle:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+.sidebar-toggle:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 2px; }
+
+/* ─── Collapsing the menu ──────────────────────────────
+   Collapsing the menu hides the labels and keeps the icons where they are.
+   Nothing is re-centred: every icon stays on the 26px axis, the middle of the
+   52px rail, also when the menu is expanded. Collapsing only narrows the bar;
+   labels fade and slide under its edge, and the gaps between groups stay.
+     logo:   12px indent + 28px mark            -> centre 26px
+     menu:   7px + 1px border + 9px + 18px      -> centre 26px
+     footer: 7px + 1px + 10px + 15px arrow      -> centre 26px
+             (the avatar is hidden; collapsed, the sign-out icon stays)
+   ─────────────────────────────────────────────────────────── */
+.sidebar { transition: transform var(--transition-normal), width var(--transition-normal); }
+.sidebar-nav { padding-inline: 7px; overflow-x: hidden; }
+.nav-item { padding: 9px; overflow: hidden; white-space: nowrap; }
+.nav-item .nav-icon { flex-shrink: 0; }
+.sidebar-footer { padding-inline: 7px; }
+.sidebar-user { padding: 6px 8px; overflow: hidden; }
+.sidebar-user-role { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-toggle { justify-content: flex-start; padding: 6px 10px; overflow: hidden; white-space: nowrap; }
+.sidebar-toggle svg { flex-shrink: 0; }
+
+.sidebar-logo-text,
+.sidebar-section-label,
+.nav-item span,
+.nav-badge,
+.sidebar-user-info,
+.sidebar-toggle span {
+  white-space: nowrap;
+  transition: opacity 160ms ease;
+}
+
+:root[data-nav="collapsed"] .sidebar-logo-text,
+:root[data-nav="collapsed"] .sidebar-section-label,
+:root[data-nav="collapsed"] .nav-item span,
+:root[data-nav="collapsed"] .nav-badge,
+:root[data-nav="collapsed"] .sidebar-user-info,
+:root[data-nav="collapsed"] .sidebar-toggle span {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Long lists still scroll up and down in the rail, without a bar. */
+:root[data-nav="collapsed"] .sidebar-nav { scrollbar-width: none; }
+:root[data-nav="collapsed"] .sidebar-nav::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar, .main-area { transition: none; }
+  .sidebar-logo-text, .sidebar-section-label, .nav-item span, .nav-badge,
+  .sidebar-user-info, .sidebar-toggle span { transition: none; }
+}
+
+/* No slide animation on the very first paint: the stored preference is applied
+   from js/app.js, which runs after the document is parsed, so without this the
+   rail would visibly swing shut on every page load. */
+:root:not(.nav-ready) .sidebar,
+:root:not(.nav-ready) .main-area { transition: none !important; }

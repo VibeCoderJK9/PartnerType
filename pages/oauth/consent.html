@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="oauth_page_title">PartnerType — Connect an application</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/auth.css">
+  <link rel="stylesheet" href="../../css/profile.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body>
+
+<!-- Consent for "Connect to PartnerType".
+     /oauth/authorize parks the request and sends the browser here; this page
+     reads it with a same-origin fetch (the SameSite=Strict session cookie is
+     only sent that way) and answers with a JSON POST. There is deliberately no
+     <form>: CSP form-action 'self' would block the final redirect to the
+     application, so js/oauth-consent.js navigates there itself, and only to
+     the address the server returned. Everything the application chose about
+     itself is written as text by the controller, never as markup. -->
+<div class="register-page" id="oauth-consent">
+  <div class="register-form-area" style="position:relative">
+
+    <div class="auth-lang-switcher">
+      <button class="lang-btn lang-switcher-btn active" data-lang="pl">PL</button>
+      <button class="lang-btn lang-switcher-btn" data-lang="en" style="margin-left:6px">EN</button>
+    </div>
+
+    <div class="register-form-wrap" style="max-width:480px">
+
+      <div style="margin-bottom:28px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+          <div style="width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0">
+            <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius:8px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius:8px;">
+          </div>
+          <span data-i18n="partner_center" style="font-size:1.125rem;font-weight:800;color:var(--text-primary)">PartnerType</span>
+        </div>
+        <h1 data-i18n="oauth_title" style="font-size:1.5rem;font-weight:800;color:var(--text-primary);margin-bottom:6px">An application wants to connect to your account</h1>
+        <p data-i18n="oauth_intro" style="font-size:0.9375rem;color:var(--text-secondary);line-height:1.6">Check who is asking for access. Allow it only if you started connecting yourself.</p>
+      </div>
+
+      <!-- Filled in only once the server confirmed the request. -->
+      <div id="oauth-details" hidden>
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <div class="card" style="padding:18px 20px">
+            <div data-i18n="oauth_client_label" class="text-xs" style="color:var(--text-tertiary);margin-bottom:4px">Application</div>
+            <div id="oauth-client-name" style="font-size:1.125rem;font-weight:700;color:var(--text-primary);overflow-wrap:anywhere"></div>
+            <div data-i18n="oauth_client_self_declared" class="text-xs" style="color:var(--text-tertiary);margin-top:2px">name given by the application, not verified by PartnerType</div>
+
+            <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-subtle)">
+              <div data-i18n="oauth_redirect_label" class="text-xs" style="color:var(--text-tertiary);margin-bottom:4px">After you decide, you return to</div>
+              <div id="oauth-redirect-host" style="font-size:1.375rem;font-weight:800;color:var(--text-primary);overflow-wrap:anywhere"></div>
+            </div>
+          </div>
+
+          <div id="oauth-punycode-warning" role="note" hidden style="padding:12px 14px;background:var(--warning-bg);border:1px solid rgba(245,158,11,0.25);border-radius:var(--radius-md);font-size:0.875rem;color:var(--text-primary);line-height:1.5">
+            <span data-i18n="oauth_punycode_warning">This address contains an encoded international name (xn--). It may imitate a familiar domain. Allow it only if you know this exact address.</span>
+          </div>
+
+          <div id="oauth-loopback-warning" role="note" hidden style="padding:12px 14px;background:var(--warning-bg);border:1px solid rgba(245,158,11,0.25);border-radius:var(--radius-md);font-size:0.875rem;color:var(--text-primary);line-height:1.5">
+            <span data-i18n="oauth_loopback_warning">This application runs on this computer. Allow it only if you started it yourself a moment ago.</span>
+          </div>
+
+          <div>
+            <div data-i18n="oauth_scope_label" class="text-xs" style="color:var(--text-tertiary);margin-bottom:4px">Access</div>
+            <p data-i18n="oauth_scope_read" style="font-size:0.9375rem;font-weight:600;color:var(--text-primary)">Read your PartnerType data within your role</p>
+          </div>
+
+          <p id="oauth-signed-in" class="text-sm" style="color:var(--text-secondary)"></p>
+
+          <div role="note" style="padding:12px 14px;background:var(--warning-bg);border:1px solid rgba(245,158,11,0.25);border-radius:var(--radius-md);font-size:0.875rem;color:var(--text-primary);line-height:1.5">
+            <span data-i18n="oauth_eu_warning">Claude and ChatGPT process data outside the European Union. Whatever the application reads leaves PartnerType.</span>
+          </div>
+        </div>
+      </div>
+
+      <p id="oauth-status" aria-live="polite" style="margin-top:20px;font-size:0.9375rem;color:var(--text-secondary);line-height:1.6"></p>
+      <a id="oauth-profile-link" class="btn btn-secondary" href="/pages/admin/profile.html" hidden style="margin-top:12px" data-i18n="oauth_open_profile">Go to your profile</a>
+
+      <div style="display:flex;gap:12px;margin-top:24px">
+        <button type="button" id="oauth-deny" class="btn btn-secondary btn-lg" style="flex:1" hidden data-i18n="oauth_deny">Deny</button>
+        <button type="button" id="oauth-allow" class="btn btn-primary btn-lg" style="flex:1" hidden data-i18n="oauth_allow">Allow</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<!-- app.js is what reveals the page: it adds body.ready, which the anti-flash
+     rule in <head> waits for. Without it this page renders at opacity 0. -->
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/oauth-consent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

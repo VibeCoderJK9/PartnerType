@@ -1,0 +1,28 @@
+# Always launch with a unique project name; test data never uses app volumes.
+services:
+  db:
+    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
+    environment:
+      POSTGRES_DB: ph_test_control
+      POSTGRES_USER: ph_test_owner
+      POSTGRES_PASSWORD: isolated-test-owner-only
+    tmpfs:
+      - /var/lib/postgresql/data
+    volumes:
+      - ./deploy/test-init.sh:/docker-entrypoint-initdb.d/test.sh:ro
+    healthcheck:
+      test: [CMD, pg_isready, -U, ph_test_owner, -d, ph_test_control]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  tests:
+    build:
+      context: .
+      target: test
+    environment:
+      PARTNERTYPE_ENV: test
+      PARTNERTYPE_TEST_ADMIN_URL: postgresql://ph_test_owner:isolated-test-owner-only@db/ph_test_control
+      PARTNERTYPE_TEST_APP_PASSWORD: isolated-test-app-only
+    depends_on:
+      db:
+        condition: service_healthy

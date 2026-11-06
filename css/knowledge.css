@@ -1,0 +1,85 @@
+/* ============================================================
+   PARTNERTYPE — KNOWLEDGE BASE (pages/*/knowledge.html)
+   ============================================================ */
+
+.kb-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.kb-search { max-width: 360px; flex: 1 1 240px; }
+
+.kb-usage { flex: 0 0 260px; }
+.kb-usage-text { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; text-align: right; }
+.kb-usage-bar { height: 6px; border-radius: 999px; background: var(--bg-tertiary); overflow: hidden; }
+.kb-usage-fill { height: 100%; width: 0; background: var(--brand-500); border-radius: inherit; transition: width 0.3s ease; }
+.kb-usage-full .kb-usage-fill { background: var(--error-400); }
+
+.kb-note { margin: -8px 0 20px; }
+
+.kb-list { display: flex; flex-direction: column; gap: 12px; }
+
+.kb-card {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.kb-kind {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+.kb-kind-pdf { background: rgba(229, 83, 75, 0.12); color: #c8433b; }
+.kb-kind-docx { background: rgba(43, 108, 210, 0.12); color: #2b6cd2; }
+.kb-kind-xlsx { background: rgba(33, 150, 83, 0.12); color: #1f8a4c; }
+.kb-kind-pptx { background: rgba(218, 147, 72, 0.16); color: var(--brand-500); }
+
+.kb-card-body { min-width: 0; }
+.kb-card-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.kb-card-title { margin: 0; font-size: 0.98rem; font-weight: 600; color: var(--text-primary); overflow-wrap: anywhere; }
+.kb-card-description { margin: 4px 0 0; color: var(--text-secondary); font-size: 0.875rem; white-space: pre-line; overflow-wrap: anywhere; }
+.kb-card-meta { margin-top: 6px; overflow-wrap: anywhere; }
+.kb-card-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.kb-card-actions .btn { display: inline-flex; align-items: center; gap: 6px; }
+.kb-delete:hover { color: var(--error-400); }
+
+.kb-empty, .kb-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 24px;
+  text-align: center;
+  color: var(--text-tertiary);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-xl);
+}
+.kb-empty p { margin: 0; max-width: 420px; }
+
+.kb-form { display: flex; flex-direction: column; gap: 16px; }
+
+@media (max-width: 720px) {
+  .kb-card { grid-template-columns: 44px 1fr; }
+  .kb-kind { width: 44px; height: 44px; }
+  .kb-card-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .kb-usage { flex-basis: 100%; }
+  .kb-usage-text { text-align: left; }
+}

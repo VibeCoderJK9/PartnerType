@@ -1,0 +1,28 @@
+/* ============================================================
+   PARTNERTYPE — ANTI-FLASH
+   ============================================================
+
+   The page's background before anything else has loaded, and the hold that
+   keeps the body invisible until the interface is ready.
+
+   Why it exists: without a background on <html>, the browser paints white
+   while the real stylesheets are still arriving, so every navigation in dark
+   mode starts with a white flash. `body { opacity: 0 }` then holds the page
+   back until js/app.js adds `body.ready` — which it does once translations are
+   applied, so nobody reads a screen of Polish keys on their way to English.
+
+   This must load FIRST and render-blocking, before the other stylesheets;
+   js/theme-boot.js sets the `data-theme` attribute it keys off.
+
+   These four rules live in one file rather than an inline <style> block in
+   every page: inline styles would force `style-src 'unsafe-inline'`, and
+   copies in every page drift apart. Values below come
+   from --bg-primary in css/theme-v1.1.2.css; they are literals because this
+   file loads before the one that defines the variable.
+   ============================================================ */
+
+html[data-theme="dark"]  { background: #10141a; }
+html[data-theme="light"] { background: #f6f9ff; }
+
+body       { opacity: 0; transition: opacity .15s ease; }
+body.ready { opacity: 1; }

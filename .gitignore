@@ -1,0 +1,32 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+node_modules/
+coverage/
+.DS_Store
+
+# Local scratch output (load-test reports and similar)
+.artifacts/
+# Local database backups
+backups/
+# Editor and assistant local state
+.claude/
+.vscode/
+.idea/
+
+# Per-instance data and credentials remain local.
+.venv/
+instances/
+.env
+.env.*
+*.db
+*.db-*
+*.dump
+*.age
+*.pem
+*.key
+
+# Local operator binaries (age)
+tools/bin/

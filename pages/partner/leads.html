@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_moje_leady">PartnerType — My leads</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="partner-leads">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_leads_section">Leads</span>
+      <a href="new-lead.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-plus" aria-hidden="true"></svg>
+        <span data-i18n="nav_new_lead">Submit Lead</span>
+      </a>
+      <a href="leads.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg>
+        <span data-i18n="nav_my_leads">My leads</span>
+      </a>
+      <a href="earnings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="wallet" aria-hidden="true"></svg>
+        <span data-i18n="nav_earnings">Earnings</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg>
+        <span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg>
+        <span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg>
+        <span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">KN</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"><span data-i18n="moje_leady" class="page-title">My leads</span></div>
+      <div class="header-right">
+        <div class="header-lang">
+          <button class="header-lang-btn active" data-lang="pl">PL</button>
+          <button class="header-lang-btn" data-lang="en">EN</button>
+        </div>
+        <a href="new-lead.html" class="btn btn-primary btn-sm">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-i18n="zglos_lead">Submit a lead</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 data-i18n="moje_leady" class="page-heading">My leads</h1>
+          <p data-i18n="historia_zgloszonych_klientow_i_status_prowizji" class="page-subheading">History of submitted clients and commission status</p>
+        </div>
+        <!-- Registration/Sales view split: the partner's own
+             accepted deals live on the Sales board; pending/needs_info/
+             rejected submissions stay in Registration. Default view is
+             Sales for a partner -- see js/partner.js::bindLeadsViewToggle. -->
+        <div data-i18n="widok_leadow" data-i18n-attr="aria-label" class="view-toggle" role="group" aria-label="Lead view">
+          <button data-i18n="pt_registration_view" type="button" class="view-toggle-btn" id="view-registration-btn" aria-pressed="false">Registration</button>
+          <button data-i18n="pt_sales_view" type="button" class="view-toggle-btn" id="view-sales-btn" aria-pressed="true">Sales</button>
+        </div>
+      </div>
+
+      <div id="leads-registration-view" hidden>
+        <div class="table-container">
+          <div class="filter-bar">
+            <div class="search-filter">
+              <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input data-i18n="szukaj_klienta_firmy" data-i18n-attr="placeholder" type="text" id="leads-search" placeholder="Search client, company...">
+            </div>
+            <!-- Options beyond "Wszystkie statusy" are populated at runtime
+                 from the registration axis (pending/needs_info/rejected) --
+                 see js/partner.js::populateRegistrationFilter. -->
+            <select class="form-select filter-select" id="filter-status">
+              <option value="" data-i18n="all_statuses">All statuses</option>
+            </select>
+          </div>
+
+          <div id="leads-loading-state" class="empty-state">
+            <p data-i18n="wczytywanie_leadow" class="text-sm text-secondary">Loading leads…</p>
+          </div>
+
+          <div id="leads-empty-state" class="empty-state" hidden>
+            <div class="empty-state-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            </div>
+            <h3 data-i18n="nie_masz_jeszcze_zadnych_leadow" class="text-sm font-medium text-primary">You have no leads yet</h3>
+            <p class="text-sm text-secondary">
+              <span data-i18n="pt_leads_empty_hint">Submit your first client to see its status and commission here.</span>
+              <a data-i18n="zglos_lead" href="new-lead.html">Submit a lead</a>
+            </p>
+          </div>
+
+          <!-- Distinct from #leads-empty-state above: a partner whose leads are ALL
+               accepted also has zero rows here, but has NOT "not submitted
+               a lead yet" -- see js/partner.js::registrationEmptyState. -->
+          <div id="leads-no-registration-state" class="empty-state" hidden>
+            <div class="empty-state-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            </div>
+            <h3 class="text-sm font-medium text-primary" data-i18n="registration_none_pending_heading">No submissions to review</h3>
+            <p class="text-sm text-secondary" data-i18n="registration_none_pending_body">All your submissions have already been reviewed. Check the Sales tab to see your accepted leads.</p>
+          </div>
+
+          <div id="leads-error-state" class="empty-state" hidden>
+            <p data-i18n="nie_udalo_sie_zaladowac_danych_sprobuj_ponownie" class="text-sm text-secondary">Could not load the data. Please try again.</p>
+            <button data-i18n="sprobuj_ponownie" type="button" id="leads-retry-btn" class="btn btn-secondary btn-sm">Try again</button>
+          </div>
+
+          <div id="leads-table-wrapper" class="table-scroll" hidden>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-i18n="klient_firma">Client / Company</th>
+                  <th data-i18n="data">Date</th>
+                  <th data-i18n="status">Status</th>
+                  <th data-i18n="wartosc">Value</th>
+                  <th data-i18n="prowizja">Commission</th>
+                  <th data-i18n="pt_last_change">Last change</th>
+                  <th data-i18n="wymagane_dzialanie">Action required</th>
+                </tr>
+              </thead>
+              <tbody id="leads-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="leads-sales-view">
+        <!-- Leads whose commission the producer has already paid out drop off
+             the board and live on the Wynagrodzenie screen from then on
+            . This line is what keeps that from looking
+             like data loss. -->
+        <p id="kanban-settled-note" class="kanban-settled-note" hidden>
+          <span id="kanban-settled-text"></span>
+          <a href="earnings.html" data-i18n="pt_settled_go">Open earnings</a>
+        </p>
+
+        <div id="kanban-loading-state" class="empty-state">
+          <p data-i18n="ladowanie_leadow" class="text-sm text-secondary">Loading leads…</p>
+        </div>
+
+        <div id="kanban-empty-state" class="empty-state" hidden>
+          <div class="empty-state-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+          </div>
+          <h3 data-i18n="brak_zaakceptowanych_leadow" class="text-sm font-medium text-primary">No accepted leads</h3>
+          <p data-i18n="zaakceptowane_zgloszenia_pojawia_sie_tutaj_spraw" class="text-sm text-secondary">Accepted submissions appear here. Check the Registration tab or submit a lead.</p>
+        </div>
+
+        <div id="kanban-no-stages-state" class="empty-state" hidden>
+          <p data-i18n="brak_dostepnego_etapu_sprzedazy_producent_musi_s" class="text-sm text-secondary">No sales stage available. The vendor has to configure stages before a lead can be accepted or moved.</p>
+        </div>
+
+        <div id="kanban-error-state" class="empty-state" hidden>
+          <p data-i18n="nie_udalo_sie_zaladowac_danych_sprobuj_ponownie" class="text-sm text-secondary">Could not load the data. Please try again.</p>
+          <button data-i18n="sprobuj_ponownie" type="button" id="kanban-retry-btn" class="btn btn-secondary btn-sm">Try again</button>
+        </div>
+
+        <div id="kanban-board-wrapper" hidden>
+          <div class="kanban-board" id="kanban-board"></div>
+          <div class="kanban-unknown" id="kanban-unknown-section" hidden>
+            <div data-i18n="etap_niedostepny" class="kanban-unknown-heading">Stage unavailable</div>
+            <div id="kanban-unknown-cards"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/lead-fields.js"></script>
+<script src="../../js/partner-lead-details.js"></script>
+<script src="../../js/partner.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

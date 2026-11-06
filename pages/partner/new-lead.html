@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_zglos_nowy_lead">PartnerType — Submit a new lead</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="partner-new-lead">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_leads_section">Leads</span>
+      <a href="new-lead.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="circle-plus" aria-hidden="true"></svg>
+        <span data-i18n="nav_new_lead">Submit Lead</span>
+      </a>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg>
+        <span data-i18n="nav_my_leads">My leads</span>
+      </a>
+      <a href="earnings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="wallet" aria-hidden="true"></svg>
+        <span data-i18n="nav_earnings">Earnings</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg>
+        <span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg>
+        <span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg>
+        <span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">KN</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left">
+        <a href="leads.html" class="btn btn-ghost btn-sm" style="gap:6px">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          <span data-i18n="action_back">Back</span>
+        </a>
+        <span data-i18n="zglos_nowy_lead" class="page-title" style="margin-left:8px">Submit a new lead</span>
+      </div>
+      <div class="header-right">
+        <div class="header-lang">
+          <button class="header-lang-btn active" data-lang="pl">PL</button>
+          <button class="header-lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 class="page-heading" data-i18n="form_lead_title">Submit new lead</h1>
+          <p data-i18n="wypelnij_dane_kontaktowe_potencjalnego_klienta" class="page-subheading">Fill in the prospective client's contact details</p>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <!-- Form -->
+        <div class="panel">
+          <div class="panel-header">
+            <div data-i18n="dane_klienta" class="panel-title">Client details</div>
+            <span data-i18n="pt_required_fields" class="badge badge-neutral text-xs">* required fields</span>
+          </div>
+          <div class="panel-body">
+            <form id="new-lead-form" novalidate>
+              <div style="display:flex;flex-direction:column;gap:20px">
+
+                <!-- Row: Name + Company -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                  <div class="form-group">
+                    <label class="form-label" for="lead-client-name"><span data-i18n="form_lead_client_name">Contact name</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <input type="text" id="lead-client-name" class="form-input" data-i18n-attr="placeholder" data-i18n="form_lead_client_name_ph" placeholder="John Smith" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="lead-company"><span data-i18n="form_lead_company">Company name</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                      <input type="text" id="lead-company" class="form-input" data-i18n-attr="placeholder" data-i18n="form_lead_company_ph" placeholder="Acme Corp" required>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row: Email + Phone -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                  <div class="form-group">
+                    <label class="form-label" for="lead-email"><span data-i18n="form_lead_client_email">Contact email</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                      <input data-i18n="jan_firma_pl" data-i18n-attr="placeholder" type="email" id="lead-email" class="form-input" placeholder="john@company.com" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="lead-phone" data-i18n="form_lead_client_phone">Phone number</label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                      <input type="tel" id="lead-phone" class="form-input" placeholder="+48 600 100 200">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sector -->
+                <div class="form-group">
+                  <label class="form-label" for="lead-sector" data-i18n="form_lead_sector">Industry</label>
+                  <select id="lead-sector" class="form-select">
+                    <option value="" data-i18n="sector_choose">Select industry...</option>
+                    <option value="IT" data-i18n="sector_it">IT / Technology</option>
+                    <option value="Produkcja" data-i18n="sector_production">Manufacturing / Industry</option>
+                    <option value="Handel" data-i18n="sector_commerce">Retail / E-commerce</option>
+                    <option value="Finanse" data-i18n="sector_finance">Finance / Banking</option>
+                    <option value="Medycyna" data-i18n="sector_medical">Medical / Health</option>
+                    <option value="Edukacja" data-i18n="sector_education">Education</option>
+                    <option value="Logistyka" data-i18n="sector_logistics">Logistics / Transport</option>
+                    <option value="Budownictwo" data-i18n="sector_construction">Construction / Real Estate</option>
+                    <option value="Inne" data-i18n="sector_other">Other</option>
+                  </select>
+                </div>
+
+                <!-- Row: NIP + Strona www -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                  <div class="form-group">
+                    <label class="form-label" for="lead-nip"><span data-i18n="form_lead_nip">Tax ID (NIP)</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                      <input type="text" id="lead-nip" class="form-input" placeholder="1234567890" required>
+                    </div>
+                    <div data-i18n="nip_10_cyfr_bez_myslnikow" class="form-hint">10 digits, no dashes and no PL prefix</div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="lead-website"><span data-i18n="form_lead_website">Website</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20 15.3 15.3 0 010-20z"/></svg>
+                      <input type="text" id="lead-website" class="form-input" data-i18n="ph_website" data-i18n-attr="placeholder" placeholder="example-shop.com" required>
+                    </div>
+                    <div data-i18n="pt_website_hint" class="form-hint">Domain only — no https:// and no www.</div>
+                  </div>
+                </div>
+
+                <!-- Duplicate check result -->
+                <div id="duplicate-warning" hidden style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:var(--radius-md);background:var(--warning-bg);border:1px solid var(--warning-400)">
+                  <p id="duplicate-warning-text" class="text-sm" style="margin:0;color:var(--text-primary)"></p>
+                  <span id="duplicate-warning-badge"></span>
+                </div>
+
+                <!-- Row: Product + Quantity -->
+                <div style="display:grid;grid-template-columns:1fr 160px;gap:16px">
+                  <div class="form-group">
+                    <label class="form-label" for="lead-product"><span data-i18n="form_lead_product">Product</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                      <select id="lead-product" class="form-select" required>
+                        <option value="" data-i18n="form_lead_product_placeholder">Choose a product...</option>
+                      </select>
+                    </div>
+                    <div data-i18n="lista_prowadzona_przez_producenta" class="form-hint">Maintained by the vendor</div>
+                    <div id="product-catalog-message" class="form-hint text-error" role="alert" hidden></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="lead-quantity"><span data-i18n="form_lead_quantity">Quantity</span> <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+                      <input data-i18n="np_1" data-i18n-attr="placeholder" type="number" id="lead-quantity" class="form-input" placeholder="e.g. 1" min="1" step="1" required>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Value -->
+                <div class="form-group">
+                  <label class="form-label" for="lead-value"><span data-i18n="form_lead_value">Estimated deal value (PLN)</span> <span class="required">*</span></label>
+                  <div class="input-wrapper">
+                    <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    <input data-i18n="np_50000" data-i18n-attr="placeholder" type="number" id="lead-value" class="form-input" placeholder="e.g. 50000" min="0" step="1000" required>
+                  </div>
+                  <!-- Not tagged data-i18n itself: applyTranslations assigns
+                       textContent, which would delete the two spans below. -->
+                  <div class="form-hint" id="value-preview-hint" style="display:none">
+                    <span data-i18n="pt_estimated_commission">Your estimated commission</span> (<span id="commission-rate-hint">—</span>): <strong id="commission-preview-hint" style="color:var(--success-400)">—</strong>
+                  </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="form-group">
+                  <label class="form-label" for="lead-notes" data-i18n="form_lead_notes">Notes / description</label>
+                  <textarea id="lead-notes" class="form-textarea" data-i18n-attr="placeholder" data-i18n="form_lead_notes_ph" placeholder="Describe the client&#x27;s needs, conversation context..." rows="4"></textarea>
+                  <div data-i18n="pt_notes_hint" class="form-hint">Optional — it helps the vendor verify the deal</div>
+                </div>
+
+                <!-- What the producer additionally asks about this deal
+                    . Rendered from the live schema, so a
+                     producer who defined nothing sees nothing here. -->
+                <div id="lead-custom-fields"></div>
+
+                <!-- Submit -->
+                <div style="display:flex;flex-direction:column;gap:8px;padding-top:8px">
+                  <p id="submit-blocked-reason" class="text-xs text-error" style="margin:0" hidden></p>
+                  <div style="display:flex;gap:12px">
+                    <a data-i18n="anuluj" href="leads.html" class="btn btn-secondary btn-lg">Cancel</a>
+                    <button type="submit" class="btn btn-primary btn-lg" style="flex:1" id="submit-lead-btn">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                      <span data-i18n="wyslij_zgloszenie">Send submission</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Sidebar: info -->
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <!-- Preview -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="podglad_prowizji" class="panel-title">Commission preview</div>
+            </div>
+            <div class="panel-body">
+              <div class="commission-box">
+                <div class="commission-label"><span data-i18n="pt_your_commission">Your commission</span> (<span id="commission-rate-label">—</span>)</div>
+                <div class="commission-value" id="value-preview">—</div>
+                <div class="commission-sub"><span data-i18n="pt_of_value">of the value</span> <span id="commission-source-value">—</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tips -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="wskazowki" class="panel-title">Tips</div>
+            </div>
+            <div class="panel-body">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;gap:10px">
+                  <div style="width:32px;height:32px;border-radius:50%;background:var(--brand-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.875rem;font-weight:700;color:var(--brand-700)">1</div>
+                  <div>
+                    <div data-i18n="podaj_dokladne_dane_kontaktu" class="text-sm font-medium text-primary">Give exact contact details</div>
+                    <div data-i18n="im_wiecej_informacji_tym_szybsza_weryfikacja" class="text-xs text-tertiary" style="margin-top:2px">The more information, the faster the review</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(16,185,129,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.875rem;font-weight:700;color:var(--success-400)">2</div>
+                  <div>
+                    <div data-i18n="opisz_potrzeby_klienta" class="text-sm font-medium text-primary">Describe the client's needs</div>
+                    <div data-i18n="notatki_pomagaja_lepiej_dopasowac_oferte" class="text-xs text-tertiary" style="margin-top:2px">Notes help tailor the offer</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(245,158,11,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.875rem;font-weight:700;color:var(--warning-400)">3</div>
+                  <div>
+                    <div data-i18n="realnie_ocen_wartosc_umowy" class="text-sm font-medium text-primary">Estimate the deal value realistically</div>
+                    <div data-i18n="prowizja_naliczana_od_ostatecznej_wartosci" class="text-xs text-tertiary" style="margin-top:2px">The commission is calculated from the final value</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLA info -->
+          <div style="padding:16px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:var(--radius-lg)">
+            <div data-i18n="pt_verification_time" style="font-size:0.8125rem;font-weight:600;color:var(--info-400);margin-bottom:6px">⏱ Verification time</div>
+            <div style="font-size:0.8125rem;color:var(--text-secondary);line-height:1.6">
+              <span data-i18n="pt_verification_note">An administrator verifies leads within 48 working hours of submission.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/lead-fields.js"></script>
+<script src="../../js/partner.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

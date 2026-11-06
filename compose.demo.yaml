@@ -1,0 +1,48 @@
+# Local demo: PostgreSQL, the app and a demo dataset, on http://localhost:8000.
+#
+#   docker compose -f compose.demo.yaml up --build
+#
+# The passwords below are fixed and public. The app listens on 127.0.0.1 only;
+# never expose this demo to a network or use it for real data. For a real
+# installation use tools/instance.py (see docs/operations/INSTANCES.md).
+name: partnertype-demo
+services:
+  db:
+    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
+    environment:
+      POSTGRES_DB: partnertype_demo
+      POSTGRES_USER: partnertype_demo_owner
+      POSTGRES_PASSWORD: local-demo-owner-only
+    volumes:
+      - ./deploy/demo-init.sh:/docker-entrypoint-initdb.d/demo.sh:ro
+      - demo-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, -U, partnertype_demo_owner, -d, partnertype_demo]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  app:
+    build:
+      context: .
+      target: test
+    environment:
+      PARTNERTYPE_ENV: development
+      PARTNERTYPE_INSTANCE_ID: demo
+      PARTNERTYPE_INSTANCE_NAME: PartnerType Demo
+      PARTNERTYPE_BASE_URL: http://localhost:8000
+      DATABASE_URL: postgresql://partnertype_demo_app:local-demo-app-only@db/partnertype_demo
+      MIGRATION_DATABASE_URL: postgresql://partnertype_demo_owner:local-demo-owner-only@db/partnertype_demo
+      PARTNERTYPE_DB_ROLE: partnertype_demo_app
+      PARTNERTYPE_SESSION_SECRET: local-demo-session-secret-not-for-real-use
+    # Migrate, (re)load the demo dataset, then serve.
+    command: >
+      sh -c "python -m tools.migrate
+      && python scripts/seed_demo.py
+      && exec gunicorn --config gunicorn.conf.py 'server:create_app()'"
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  demo-data:

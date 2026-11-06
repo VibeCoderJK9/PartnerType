@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_moj_profil">PartnerType — My profile</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/profile.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="partner-profile">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_leads_section">Leads</span>
+      <a href="new-lead.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-plus" aria-hidden="true"></svg>
+        <span data-i18n="nav_new_lead">Submit Lead</span>
+      </a>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg>
+        <span data-i18n="nav_my_leads">My leads</span>
+      </a>
+      <a href="earnings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="wallet" aria-hidden="true"></svg>
+        <span data-i18n="nav_earnings">Earnings</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg>
+        <span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg>
+        <span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg>
+        <span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">KN</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"><span data-i18n="moj_profil" class="page-title">My profile</span></div>
+      <div class="header-right">
+        <div class="header-lang">
+          <button class="header-lang-btn active" data-lang="pl">PL</button>
+          <button class="header-lang-btn" data-lang="en">EN</button>
+        </div>
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">KN</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 data-i18n="moj_profil" class="page-heading">My profile</h1>
+          <p data-i18n="zarzadzaj_swoimi_danymi_i_bezpieczenstwem_konta" class="page-subheading">Manage your details and account security</p>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+
+        <!-- ── LEFT: Avatar card ─────────────────────── -->
+        <div>
+          <div class="avatar-card">
+            <div>
+              <div class="avatar-name" id="profile-name">—</div>
+              <div class="avatar-company" id="profile-company">—</div>
+            </div>
+            <div class="avatar-meta">
+              <div class="avatar-meta-row">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span id="profile-email" style="font-size:0.8rem;word-break:break-all">—</span>
+              </div>
+              <div class="avatar-meta-row">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span id="profile-phone">—</span>
+              </div>
+              <div class="avatar-meta-row">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span id="profile-joined">—</span>
+              </div>
+            </div>
+            <div id="profile-level"></div>
+
+            <!-- No lead/acceptance figures here: the dashboard already carries
+                 them. -->
+          </div>
+        </div>
+
+        <!-- ── RIGHT: Forms ──────────────────────────── -->
+        <div style="display:flex;flex-direction:column;gap:24px">
+
+          <!-- Profile form -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="dane_profilu" class="panel-title">Profile details</div>
+            </div>
+            <div class="panel-body">
+              <form id="profile-form" novalidate>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+                  <div class="form-group">
+                    <label data-i18n="imie_i_nazwisko_2" class="form-label" for="pf-name">Full name</label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <input type="text" id="pf-name" class="form-input" data-i18n="ph_full_name" data-i18n-attr="placeholder" placeholder="Jane Smith">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label data-i18n="firma" class="form-label" for="pf-company">Company</label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                      <input data-i18n="twoja_firma" data-i18n-attr="placeholder" type="text" id="pf-company" class="form-input" placeholder="Your company">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="pf-email"><span data-i18n="pt_email">Email</span> <span data-i18n="nie_mozna_zmienic" class="text-tertiary text-xs font-normal">(cannot be changed)</span></label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                      <input type="email" id="pf-email" class="form-input" disabled style="opacity:0.5;cursor:not-allowed">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label data-i18n="label_phone" class="form-label" for="pf-phone">Phone</label>
+                    <div class="input-wrapper">
+                      <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      <input type="tel" id="pf-phone" class="form-input" placeholder="+48 600 100 200">
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:flex-end">
+                  <button type="submit" class="btn btn-primary" id="save-profile-btn">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="zapisz_zmiany">Save changes</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Password form -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="zmiana_hasla" class="panel-title">Change password</div>
+            </div>
+            <div class="panel-body">
+              <form id="password-form" novalidate>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                  <div class="form-group">
+                    <label data-i18n="biezace_haslo" class="form-label" for="pw-current">Current password</label>
+                    <input data-i18n="twoje_aktualne_haslo" data-i18n-attr="placeholder" type="password" id="pw-current" class="form-input" placeholder="Your current password">
+                  </div>
+                  <div class="form-group">
+                    <label data-i18n="nowe_haslo" class="form-label" for="pw-new">New password</label>
+                    <input data-i18n="min_8_znakow" data-i18n-attr="placeholder" type="password" id="pw-new" class="form-input" placeholder="Min. 8 characters">
+                    <div class="password-strength" style="margin-top:8px">
+                      <div class="strength-bar" id="psb1"></div>
+                      <div class="strength-bar" id="psb2"></div>
+                      <div class="strength-bar" id="psb3"></div>
+                      <div class="strength-bar" id="psb4"></div>
+                    </div>
+                    <div class="strength-label text-xs text-tertiary" id="pw-strength-label" style="margin-top:4px"></div>
+                  </div>
+                  <div class="form-group">
+                    <label data-i18n="powtorz_nowe_haslo" class="form-label" for="pw-new2">Repeat new password</label>
+                    <input data-i18n="powtorz_nowe_haslo" data-i18n-attr="placeholder" type="password" id="pw-new2" class="form-input" placeholder="Repeat new password">
+                  </div>
+                  <div id="pw-error" class="text-sm" style="color:var(--error-400);display:none"></div>
+                  <div style="display:flex;justify-content:flex-end">
+                    <button data-i18n="zmien_haslo" type="submit" class="btn btn-secondary" id="save-password-btn">Change password</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Two-factor -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="mfa_title" class="panel-title">Two-factor sign-in</div>
+            </div>
+            <div class="panel-body">
+              <div id="mfa-state" class="text-sm" style="color:var(--text-secondary)"></div>
+
+              <div id="mfa-setup" hidden style="margin-top:16px">
+                <p data-i18n="mfa_apps" class="text-sm" style="color:var(--text-secondary);margin-bottom:12px">Any app that generates sign-in codes works — Google Authenticator, Microsoft Authenticator, Authy, 1Password. This is the ordinary standard, not something of ours.</p>
+                <p data-i18n="mfa_step_scan" class="text-sm" style="color:var(--text-primary);font-weight:600;margin-bottom:8px">1. Scan this code with the app on your phone.</p>
+                <div id="mfa-qr" style="background:#fff;padding:12px;border-radius:var(--radius-md);width:max-content"></div>
+                <p class="text-xs" style="color:var(--text-tertiary);margin:10px 0">
+                  <span data-i18n="mfa_manual">Cannot scan? Enter it by hand:</span>
+                  <code id="mfa-secret" style="user-select:all"></code>
+                </p>
+                <div class="form-group" style="max-width:220px">
+                  <label data-i18n="mfa_scan" class="form-label" for="mfa-code">2. Type the six digits the app shows.</label>
+                  <input type="text" id="mfa-code" class="form-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000">
+                </div>
+                <button data-i18n="mfa_confirm_btn" type="button" class="btn btn-primary" id="mfa-confirm-btn">Turn on two-factor</button>
+                <p data-i18n="mfa_step_codes" class="text-xs" style="color:var(--text-tertiary);margin-top:10px">3. Save the backup codes shown at the end.</p>
+              </div>
+
+              <div id="mfa-codes" hidden style="margin-top:16px">
+                <p data-i18n="mfa_codes_intro" class="text-sm" style="color:var(--text-primary);font-weight:600">Write these backup codes down. This is the only time you will see them.</p>
+                <p data-i18n="mfa_codes_hint" class="text-xs" style="color:var(--text-tertiary);margin-bottom:10px">Each works once — use one if you lose access to your phone.</p>
+                <ul id="mfa-codes-list" style="list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:6px 24px;font-family:var(--font-mono,monospace)"></ul>
+              </div>
+
+              <div id="mfa-error" class="text-sm" style="color:var(--error-400);display:none;margin-top:12px"></div>
+              <div style="display:flex;gap:10px;margin-top:16px">
+                <button data-i18n="mfa_start_btn" type="button" class="btn btn-secondary" id="mfa-start-btn" hidden>Set up</button>
+                <button data-i18n="mfa_disable_btn" type="button" class="btn btn-secondary" id="mfa-disable-btn" hidden>Turn off</button>
+                <button data-i18n="mfa_new_codes_btn" type="button" class="btn btn-secondary" id="mfa-new-codes-btn" hidden>New backup codes</button>
+              </div>
+
+              <!-- Turning the factor off asks for a current code, the same as
+                   turning it on. It used to ask through window.prompt -- the one
+                   raw browser dialog left in the product, which looks like a
+                   fault rather than a step. -->
+              <!-- Eight codes run out; this hands over a fresh printed set without
+                   taking the factor off and putting it back on. -->
+              <div id="mfa-new-codes-form" hidden style="margin-top:12px">
+                <div class="form-group" style="max-width:220px">
+                  <label data-i18n="mfa_new_codes_prompt" class="form-label" for="mfa-new-codes-code">Enter a code from the app to issue new backup codes.</label>
+                  <input type="text" id="mfa-new-codes-code" class="form-input" inputmode="numeric" autocomplete="one-time-code" maxlength="9" placeholder="000000">
+                </div>
+                <button data-i18n="mfa_new_codes_confirm_btn" type="button" class="btn btn-primary" id="mfa-new-codes-confirm-btn">Issue new codes</button>
+              </div>
+
+              <div id="mfa-disable-form" hidden style="margin-top:12px">
+                <div class="form-group" style="max-width:220px">
+                  <label data-i18n="mfa_disable_prompt" class="form-label" for="mfa-disable-code">Enter a code from the app to turn two-factor off.</label>
+                  <input type="text" id="mfa-disable-code" class="form-input" inputmode="numeric" autocomplete="one-time-code" maxlength="9" placeholder="000000">
+                </div>
+                <button data-i18n="mfa_disable_confirm_btn" type="button" class="btn btn-danger" id="mfa-disable-confirm-btn">Turn two-factor off</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connect to Claude: own keys and connections, drawn by the
+               ClaudeConnect controller. Hidden until GET /api/integrations/me says
+               there is something to show. -->
+          <div class="panel" id="claude-connect" hidden>
+            <div class="panel-header">
+              <div data-i18n="connect_title" class="panel-title">Connect to Claude</div>
+            </div>
+            <div class="panel-body" id="claude-connect-body"></div>
+          </div>
+
+          <!-- Commission info -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="dostepne_poziomy_partnerskie" class="panel-title">Available partner tiers</div>
+            </div>
+            <div class="panel-body">
+              <!-- Filled from /api/tiers by js/profile.js. -->
+              <div id="tier-list" style="display:flex;flex-direction:column;gap:12px">
+                <div class="stat-row"><span data-i18n="pt_loading" class="stat-row-label text-tertiary">Loading…</span></div>
+              </div>
+              <div data-i18n="poziom_nadaje_administrator_na_podstawie_wynikow" style="margin-top:16px;padding:12px 14px;background:var(--bg-elevated);border-radius:var(--radius-md);font-size:0.8125rem;color:var(--text-tertiary);line-height:1.6">
+                An administrator assigns the tier based on sales results.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/partner.js"></script>
+<script src="../../js/profile.js"></script>
+<script src="../../js/claude-connect.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

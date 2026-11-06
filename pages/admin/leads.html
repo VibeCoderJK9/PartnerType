@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_zarzadzanie_leadami">PartnerType — Lead management</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/comments.css">
+  <link rel="stylesheet" href="../../css/bulk.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+  <link rel="stylesheet" href="../../css/assign-lead-modal.css">
+</head>
+<body data-page="admin-leads">
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+        <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg><span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <svg class="nav-icon" data-icon="bar-chart-3" aria-hidden="true"></svg><span data-i18n="nav_analytics">Analytics</span>
+      </a>
+      
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_management">Management</span>
+      <a href="leads.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg><span data-i18n="nav_leads">Leads</span>
+      </a>
+      <a href="partners.html" class="nav-item">
+        <svg class="nav-icon" data-icon="handshake" aria-hidden="true"></svg><span data-i18n="nav_partners">Partners</span>
+      </a>
+      <a href="commissions.html" class="nav-item">
+        <svg class="nav-icon" data-icon="coins" aria-hidden="true"></svg><span data-i18n="nav_commissions">Commissions</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg><span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_system">System</span>
+      <a href="audit.html" class="nav-item">
+        <svg class="nav-icon" data-icon="history" aria-hidden="true"></svg><span data-i18n="nav_audit">Audit Log</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="settings" aria-hidden="true"></svg><span data-i18n="nav_settings">Settings</span>
+      </a>
+      <a href="settings.html#plugins" class="nav-item">
+        <svg class="nav-icon" data-icon="puzzle" aria-hidden="true"></svg><span data-i18n="nav_plugins">Plugins</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg><span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="users.html" class="nav-item">
+        <svg class="nav-icon" data-icon="users" aria-hidden="true"></svg><span data-i18n="nav_users">Users</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg><span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">MK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left">
+        <span data-i18n="zarzadzanie_leadami" class="page-title">Lead management</span>
+      </div>
+      <div class="header-right">
+        <div class="header-lang">
+          <button class="header-lang-btn active" data-lang="pl">PL</button>
+          <button class="header-lang-btn" data-lang="en">EN</button>
+        </div>
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">MK</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 data-i18n="leady" class="page-heading">Leads</h1>
+          <p class="page-subheading"><span data-i18n="leads_desc">Manage and verify partner submissions</span></p>
+        </div>
+        <div class="page-header-actions">
+          <!-- Producer assignment. Hidden
+               for every non-admin session by js/admin-leads.js, matching the
+               server's own can_assign_lead(). -->
+          <button class="btn btn-primary" id="assign-lead-btn" type="button" hidden>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="assign_lead_btn">Assign a lead</span>
+          </button>
+          <a href="/api/export/leads" class="btn-export" id="export-leads-btn" download>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span data-i18n="export_csv">Export CSV</span>
+          </a>
+        </div>
+      </div>
+
+      <div data-i18n="filtry_leadow" data-i18n-attr="aria-label" class="filter-panel open" id="filter-panel" aria-label="Lead filters">
+        <div class="filter-group">
+          <label data-i18n="data_od" class="filter-label" for="filter-date-from">Date from</label>
+          <input type="date" id="filter-date-from" class="form-input">
+        </div>
+        <div class="filter-group">
+          <label data-i18n="data_do" class="filter-label" for="filter-date-to">Date to</label>
+          <input type="date" id="filter-date-to" class="form-input">
+        </div>
+        <div class="filter-group">
+          <label data-i18n="minimalna_wartosc" class="filter-label" for="filter-value">Minimum value</label>
+          <input type="number" id="filter-value" class="form-input" min="0" step="1000" placeholder="0 PLN">
+        </div>
+        <div class="filter-group">
+          <label data-i18n="leads_deadline" class="filter-label" for="filter-overdue">Deadline</label>
+          <label class="text-sm"><input type="checkbox" id="filter-overdue"> <span data-i18n="leads_overdue_only">Overdue only</span></label>
+        </div>
+        <div class="filter-group" style="align-self:flex-end">
+          <button data-i18n="wyczysc_filtry" class="btn btn-ghost btn-sm" id="filter-clear-btn" type="button">Clear filters</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <!-- Filter bar -->
+        <div class="filter-bar">
+          <div class="search-filter">
+            <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="leads-search" data-i18n-attr="placeholder" data-i18n="search_leads" placeholder="Search client, company, ID...">
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="status" class="filter-label" for="status-search-input">Status</label>
+            <div class="custom-select-wrapper" id="status-select-wrapper" style="width: 180px;">
+              <input type="hidden" id="filter-status" value="">
+              <input type="text" class="form-input filter-select" id="status-search-input" data-i18n-attr="placeholder" data-i18n="all_statuses" placeholder="All statuses" autocomplete="off">
+              <div class="custom-select-dropdown" id="status-dropdown-list"><!-- populated dynamically --></div>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="partner" class="filter-label" for="partner-search-input">Partner</label>
+            <div class="custom-select-wrapper" id="partner-select-wrapper">
+              <input type="hidden" id="filter-partner" value="">
+              <input type="text" class="form-input filter-select" id="partner-search-input" data-i18n-attr="placeholder" data-i18n="all_partners" placeholder="All partners" autocomplete="off">
+              <div class="custom-select-dropdown" id="partner-dropdown-list"><!-- populated dynamically --></div>
+            </div>
+          </div>
+
+          <span class="text-sm text-tertiary" style="margin-left:auto">
+            <span id="leads-count">—</span> <span id="leads-count-unit"></span>
+          </span>
+        </div>
+
+        <!-- Table -->
+        <div class="table-scroll">
+          <table class="data-table data-table--sticky-actions">
+            <thead id="leads-table-head">
+              <tr>
+                <th data-i18n="klient" data-sort="company">Client</th>
+                <th data-i18n="partner" data-sort="partner_company">Partner</th>
+                <th data-i18n="wiek_leada" data-sort="created_at">Lead age</th>
+                <th data-i18n="wartosc_zamowienia" data-sort="value">Order value</th>
+                <th data-i18n="wartosc_prowizji" data-sort="commission">Commission value</th>
+                <th data-i18n="status" data-sort="registration_status">Status</th>
+                <th data-i18n="leads_funnel_position" data-sort="status">Funnel position</th>
+                <th data-i18n="akcje">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+        </div>
+
+        <div id="leads-loading-state" aria-live="polite" hidden>
+          <div class="table-scroll">
+            <table data-i18n="ladowanie_kolejki_leadow" data-i18n-attr="aria-label" class="data-table" aria-label="Loading the lead queue">
+              <tbody>
+                <tr class="skeleton-row"><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td><td><span class="skeleton skeleton-text"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Two different nothings. A producer whose programme has no leads yet
+             and a producer whose filter matched none of ten thousand need
+             opposite next steps, and telling the second one that "all
+             submissions have been handled" is simply false. -->
+        <div id="leads-empty-state" class="empty-state" hidden>
+          <h2 id="leads-empty-title" data-i18n="brak_nowych_leadow">No new leads</h2>
+          <p id="leads-empty-body" data-i18n="wszystkie_zgloszenia_zostaly_obsluzone_nowe_lead">Every submission has been handled. New partner leads will appear here automatically.</p>
+        </div>
+        <div id="leads-error-state" class="empty-state" role="alert" hidden>
+          <p data-i18n="nie_udalo_sie_zaladowac_danych_sprobuj_ponownie">Could not load the data. Please try again.</p>
+          <button data-i18n="sprobuj_ponownie" class="btn btn-secondary" id="leads-retry-btn" type="button">Try again</button>
+        </div>
+
+        <!-- Pagination -->
+        <div class="table-pagination" id="pagination">
+          <span class="pagination-info">—</span>
+          <div class="pagination-btns"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Lead detail modal -->
+<div class="modal-overlay" id="lead-modal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-lead-name">Lead</div>
+        <div class="text-sm text-tertiary" id="modal-lead-id" style="margin-top:2px"></div>
+      </div>
+      <button data-i18n="zamknij_szczegoly_leada" data-i18n-attr="aria-label" class="modal-close" data-close-modal="lead-modal" aria-label="Close lead details">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="lead-detail-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div><div data-i18n="firma" class="form-label">Company</div><div class="text-sm text-primary font-medium" id="modal-lead-company">—</div></div>
+          <div><div data-i18n="leads_contact_person" class="form-label">Contact person</div><div class="text-sm" id="modal-lead-contact">—</div></div>
+          <div><div class="form-label">E-mail</div><div class="text-sm" id="modal-lead-email">—</div></div>
+          <div><div data-i18n="lead_phone" class="form-label">Phone</div><div class="text-sm" id="modal-lead-phone">—</div></div>
+          <div><div data-i18n="branza" class="form-label">Industry</div><div class="text-sm" id="modal-lead-sector">—</div></div>
+          <div><div class="form-label">NIP</div><div class="text-sm" id="modal-lead-nip">—</div></div>
+          <div><div data-i18n="leads_website" class="form-label">Website</div><div class="text-sm" id="modal-lead-website">—</div></div>
+          <div><div data-i18n="leads_product" class="form-label">Product</div><div class="text-sm" id="modal-lead-product">—</div></div>
+          <div><div data-i18n="ilosc" class="form-label">Quantity</div><div class="text-sm" id="modal-lead-quantity">—</div></div>
+          <div><div data-i18n="leads_notes" class="form-label">Notes</div><div class="text-sm" id="modal-lead-notes">—</div></div>
+          <div id="modal-queue-position" class="badge badge-warning" hidden></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div><div data-i18n="status" class="form-label">Status</div><div id="modal-lead-status"></div></div>
+          <div><div data-i18n="wartosc_umowy" class="form-label">Deal value</div><div class="text-sm font-bold" id="modal-lead-value">—</div></div>
+          <div><div data-i18n="partner" class="form-label">Partner</div><div class="text-sm font-medium" id="modal-lead-partner">—</div></div>
+          <div><div data-i18n="data" class="form-label">Date</div><div class="text-sm" id="modal-lead-date">—</div></div>
+          <div data-i18n="rozbicie_prowizji" data-i18n-attr="aria-label" class="commission-breakdown" aria-label="Commission breakdown">
+            <div><span data-i18n="leads_tier_rate">Tier rate</span><strong id="modal-commission-tier">—</strong></div>
+            <div><span data-i18n="leads_recurring_bonus">Recurring bonus</span><strong id="modal-commission-recurring">—</strong></div>
+            <div><span data-i18n="leads_cash_bonus">One-off bonus</span><strong id="modal-commission-cash">—</strong></div>
+            <div class="commission-total"><span data-i18n="leads_commission_projected" id="modal-commission-state">Projected commission</span><strong id="modal-commission-total">—</strong></div>
+          </div>
+          <!-- Two ways to correct one deal. The rate is the
+               one to reach for before a sale closes: it says WHAT was
+               agreed ("8% na tego leada") and the backend recomputes the
+               money, so no screen ever restates a rate of its own. The PLN
+               field remains for the case where a flat figure was agreed. -->
+          <div class="form-group">
+            <label data-i18n="leads_rate_override" class="form-label" for="modal-commission-pct">Rate adjustment (%)</label>
+            <div style="display:flex;gap:10px">
+              <input data-i18n="np_8" data-i18n-attr="placeholder" type="number" class="form-input" id="modal-commission-pct" min="0" max="100" step="0.5" placeholder="e.g. 8">
+              <button data-i18n="zapisz" class="btn btn-secondary" id="save-commission-pct-btn" type="button">Save</button>
+            </div>
+            <p data-i18n="puste_pole_stawka_z_poziomu_partnera" class="text-xs text-tertiary" style="margin:6px 0 0" id="modal-commission-pct-hint">
+              Leave empty = the partner's tier rate.
+            </p>
+          </div>
+          <div class="form-group">
+            <label data-i18n="korekta_prowizji_pln" class="form-label" for="modal-commission">Commission adjustment (PLN)</label>
+            <div style="display:flex;gap:10px"><input type="number" class="form-input" id="modal-commission" min="0" step="100"><button data-i18n="zapisz" class="btn btn-secondary" id="save-commission-btn" type="button">Save</button></div>
+          </div>
+        </div>
+      </div>
+      <div id="lead-reject-form" class="form-group" hidden>
+        <label data-i18n="powod_odrzucenia" class="form-label" for="lead-reject-reason">Reason for rejection</label>
+        <textarea id="lead-reject-reason" class="form-input" required></textarea>
+        <button data-i18n="potwierdz_odrzucenie" class="btn btn-danger" id="lead-reject-confirm-btn" type="button" disabled>Confirm rejection</button>
+      </div>
+      <div id="lead-more-info-form" class="form-group" hidden>
+        <fieldset><legend data-i18n="ktorych_danych_brakuje" class="form-label">Which details are missing?</legend>
+          <label><input type="checkbox" name="missing-field" value="company"> <span data-i18n="firma">Company</span></label>
+          <label><input type="checkbox" name="missing-field" value="contact"> <span data-i18n="pd_section_contact">Contact</span></label>
+          <label><input type="checkbox" name="missing-field" value="nip"> NIP</label>
+          <label><input type="checkbox" name="missing-field" value="website"> <span data-i18n="leads_field_website">Website</span></label>
+          <label><input type="checkbox" name="missing-field" value="product_quantity"> <span data-i18n="leads_field_product_qty">Product and quantity</span></label>
+        </fieldset>
+        <label data-i18n="leads_optional_note" class="form-label" for="lead-more-info-note">Optional note</label>
+        <textarea id="lead-more-info-note" class="form-input"></textarea>
+        <button data-i18n="wyslij_prosbe" class="btn btn-secondary" id="lead-more-info-confirm-btn" type="button">Send request</button>
+      </div>
+      <!-- Reopening a mistakenly won/lost lead. Hidden entirely unless the open lead is terminal AND the
+           session role is admin (js/admin-leads.js::renderReopenSection) --
+           only a producer admin may see or use this, matching the server's
+           own can_reopen_lead(). -->
+      <div id="lead-reopen-section" hidden>
+        <hr class="divider" style="margin:20px 0">
+        <div class="form-label" style="margin-bottom:8px" data-i18n="lead_reopen_heading">Reopen lead</div>
+        <p class="text-sm text-tertiary" id="lead-reopen-settlement-state" style="margin:0 0 10px"></p>
+
+        <div id="lead-reopen-review-form" class="form-group" hidden>
+          <label class="form-label" data-i18n="lead_reopen_review_result_label">Settlement status</label>
+          <div style="display:flex;gap:16px;margin-bottom:6px">
+            <label><input type="radio" name="reopen-review-result" value="unpaid" id="lead-reopen-review-unpaid">
+              <span data-i18n="lead_reopen_review_unpaid">Confirmed unpaid</span></label>
+            <label><input type="radio" name="reopen-review-result" value="paid" id="lead-reopen-review-paid">
+              <span data-i18n="lead_reopen_review_paid">Settled or paid</span></label>
+          </div>
+          <label class="form-label" for="lead-reopen-review-reason" data-i18n="lead_reopen_review_reason_label">Review reason</label>
+          <textarea id="lead-reopen-review-reason" class="form-input" maxlength="4000" required></textarea>
+          <label id="lead-reopen-review-confirm-label" style="display:flex;gap:8px;align-items:flex-start;margin-top:8px" hidden>
+            <input type="checkbox" id="lead-reopen-review-confirm">
+            <span data-i18n="lead_reopen_review_confirm_text">I confirm that this commission's settlements have been checked and it has not been settled or paid.</span>
+          </label>
+          <div style="margin-top:10px">
+            <button class="btn btn-secondary" id="lead-reopen-review-save-btn" type="button" disabled data-i18n="lead_reopen_review_save_btn">Save review result</button>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary" id="lead-reopen-check-btn" type="button" hidden data-i18n="lead_reopen_check_btn">Review settlement status</button>
+        <button class="btn btn-primary" id="lead-reopen-open-btn" type="button" hidden data-i18n="lead_reopen_open_btn">Reopen lead</button>
+      </div>
+      <hr class="divider" style="margin:20px 0">
+      <div data-i18n="leads_comments" class="form-label" style="margin-bottom:8px">Comments</div>
+      <div class="comments-container" id="modal-comments-container">
+        <div data-i18n="ladowanie_komentarzy" class="comments-empty">Loading comments...</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button data-i18n="action_close" class="btn btn-ghost" data-close-modal="lead-modal">Close</button>
+      <div id="lead-advance-controls" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <button data-i18n="popros_o_uzupelnienie" class="btn btn-secondary" id="lead-more-info-btn">Ask for more information</button>
+      <button class="btn btn-danger" id="lead-reject-btn">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span data-i18n="leads_reject_with_reason">Reject with a reason</span>
+      </button>
+      <button class="btn btn-success" id="lead-accept-btn">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span data-i18n="leads_accept_lead">Accept lead</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Assign a lead to a partner. New work
+     only: this creates a lead that belongs to the chosen partner and accepts
+     it into the first configured stage in one confirmed action. It never
+     moves an existing lead to somebody else. -->
+<div class="modal-overlay" id="assign-lead-modal">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="assign-modal-title">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="assign-modal-title" data-i18n="assign_modal_title">Assign a lead to a partner</div>
+        <div class="text-sm text-tertiary" style="margin-top:2px" data-i18n="assign_modal_subtitle">The lead is created on the chosen partner's account and goes straight into sales.</div>
+      </div>
+      <button class="modal-close" id="assign-close-btn" data-close-modal="assign-lead-modal" data-i18n="assign_close_aria" data-i18n-attr="aria-label" aria-label="Close the assignment form">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="assign-loading-state" aria-live="polite" hidden>
+        <p class="text-sm text-tertiary" data-i18n="assign_loading">Loading partners, products and form fields...</p>
+      </div>
+      <div id="assign-error-state" aria-live="polite" hidden>
+        <p class="text-sm" id="assign-error-message"></p>
+        <button class="btn btn-secondary" id="assign-retry-btn" type="button" data-i18n="assign_retry_btn">Try again</button>
+      </div>
+      <div id="assign-empty-state" aria-live="polite" hidden>
+        <p class="text-sm" id="assign-empty-message"></p>
+      </div>
+      <form id="assign-lead-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="assign-partner" data-i18n="assign_partner_label">Partner *</label>
+          <select class="form-select" id="assign-partner" required>
+            <option value="" data-i18n="assign_partner_placeholder">— choose a partner —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-client-name" data-i18n="assign_client_name_label">Contact person *</label>
+          <input type="text" class="form-input" id="assign-client-name" maxlength="200" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-company" data-i18n="assign_company_label">Client company *</label>
+          <input type="text" class="form-input" id="assign-company" maxlength="200" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-email" data-i18n="assign_email_label">Email *</label>
+          <input type="email" class="form-input" id="assign-email" maxlength="200" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-phone" data-i18n="assign_phone_label">Phone</label>
+          <input type="text" class="form-input" id="assign-phone" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-nip" data-i18n="assign_nip_label">Tax ID (NIP) *</label>
+          <input type="text" class="form-input" id="assign-nip" maxlength="20" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-website" data-i18n="assign_website_label">Website *</label>
+          <input type="text" class="form-input" id="assign-website" maxlength="200" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-product" data-i18n="assign_product_label">Product *</label>
+          <select class="form-select" id="assign-product" required>
+            <option value="" data-i18n="assign_product_placeholder">— choose a product —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-quantity" data-i18n="assign_quantity_label">Quantity *</label>
+          <input type="number" class="form-input" id="assign-quantity" min="1" step="1" value="1" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-value" data-i18n="assign_value_label">Contract value (PLN) *</label>
+          <input type="number" class="form-input" id="assign-value" min="0" step="100" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-sector" data-i18n="assign_sector_label">Industry</label>
+          <input type="text" class="form-input" id="assign-sector" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assign-notes" data-i18n="assign_notes_label">Notes</label>
+          <textarea class="form-textarea" id="assign-notes" rows="3" maxlength="5000"></textarea>
+        </div>
+        <!-- The producer's own questions, rendered by the same shared
+             component the partner's form uses (js/lead-fields.js). -->
+        <div id="assign-custom-fields"></div>
+      </form>
+      <hr class="divider" style="margin:16px 0">
+      <div class="form-label" style="margin-bottom:8px" data-i18n="assign_summary_heading">Summary</div>
+      <div id="assign-preview" class="text-sm">
+        <div><span class="assign-preview-label" data-i18n="assign_summary_company">Company</span>: <strong id="assign-preview-company">—</strong></div>
+        <div><span class="assign-preview-label" data-i18n="assign_summary_partner">Partner</span>: <strong id="assign-preview-partner">—</strong></div>
+        <div><span class="assign-preview-label" data-i18n="assign_summary_stage">First stage</span>: <strong id="assign-preview-stage">—</strong></div>
+        <!-- A contract value that was never entered says so in words. It is
+             never rendered as 0 PLN, which would be a number the producer did
+             not type. -->
+        <div><span class="assign-preview-label" data-i18n="assign_summary_value">Contract value</span>: <strong id="assign-preview-value" data-i18n="assign_value_missing">Not provided</strong></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="assign-cancel-btn" type="button" data-close-modal="assign-lead-modal" data-i18n="assign_cancel_btn">Cancel</button>
+      <button class="btn btn-primary" id="assign-submit-btn" type="button" aria-busy="false" disabled data-i18n="assign_submit_btn">Create and accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/admin-shell.js"></script>
+<script src="../../js/lead-fields.js"></script>
+<script src="../../js/admin-leads.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/comments.js"></script>
+<script src="../../js/leads6.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

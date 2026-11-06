@@ -1,0 +1,875 @@
+/* ============================================================
+   PARTNERTYPE — MAIN DESIGN SYSTEM
+   Brand: deep honey #da9348 on slate greys, Schibsted Grotesk typeface.
+   Text on honey is always dark.
+   ============================================================ */
+
+/* Fonts from this instance; files and the reason are in css/fonts.css. */
+@import url('fonts.css');
+
+/* ─── CSS VARIABLES ──────────────────────────────────────── */
+:root {
+  /* Brand — deep honey. 500 is the brand colour itself (button background),
+     600 its darker step (hover and border, 3.1 : 1 on white), 700+ are the
+     shades allowed for text on a light background. 400 is a text shade too,
+     as the commission and notification screens use it. */
+  --brand-50:  #fef5ed;
+  --brand-100: #feeddc;
+  --brand-200: #fbd9b9;
+  --brand-300: #c98232;
+  --brand-400: #8e5303;
+  --brand-500: #da9348;
+  --brand-600: #c98232;
+  --brand-700: #8e5303;
+  --brand-800: #6b3e02;
+  --brand-900: #442500;
+  --on-brand:  #181b1f;
+
+  /* Neutrals — cool slate greys. 500 is #6e7378 so small grey text keeps
+     4.5 : 1 on white. */
+  --gray-950: #181b1f;
+  --gray-900: #1c2127;
+  --gray-850: #22272d;
+  --gray-800: #282d33;
+  --gray-750: #30353b;
+  --gray-700: #3b4047;
+  --gray-600: #5a5e63;
+  --gray-500: #6e7378;
+  --gray-400: #888d92;
+  --gray-300: #b9bec4;
+  --gray-200: #dbe0e6;
+  --gray-100: #e8edf3;
+  --gray-50:  #f6f9ff;
+
+  /* Status — warnings are yellow, not orange, so they never look like the
+     brand colour. In light mode 400 and 600 are the same dark shade, because
+     some screens write text in step 400 on a white card; dark mode sets a
+     light 400 in theme-v1.1.2.css. */
+  --success-400: #146c43;
+  --success-500: #2f9e6a;
+  --success-600: #146c43;
+  --success-bg:  #e7f6ee;
+
+  --warning-400: #7a5d00;
+  --warning-500: #d4a72c;
+  --warning-600: #7a5d00;
+  --warning-bg:  #fdf3c4;
+
+  --error-400: #b42318;
+  --error-500: #d93a2b;
+  --error-600: #b42318;
+  --error-bg:  #fdecec;
+
+  --info-400: #1e4fae;
+  --info-500: #1e4fae;
+  --info-bg:  #e9f0fd;
+
+  /* Badge foregrounds — the tinted status badges read their text colour from
+     these so one theme swap covers every screen. Light mode needs the darker
+     end of each ramp to clear contrast on a white card. */
+  --badge-success-fg: var(--success-600);
+  --badge-warning-fg: var(--warning-600);
+  --badge-error-fg:   var(--error-600);
+  --badge-info-fg:    var(--info-500);
+
+  /* Surfaces — paper canvas, white card */
+  --bg-primary:   var(--gray-50);
+  --bg-secondary: #ffffff;
+  --bg-tertiary:  var(--gray-100);
+  --bg-elevated:  var(--gray-100);
+  --bg-hover:     var(--gray-100);
+
+  /* Borders */
+  --border-subtle:  var(--gray-100);
+  --border-default: var(--gray-200);
+  --border-strong:  var(--gray-300);
+  --border-brand:   var(--brand-600);
+
+  /* Text */
+  --text-primary:   var(--gray-950);
+  --text-secondary: var(--gray-600);
+  --text-tertiary:  var(--gray-500);
+  --text-inverse:   #ffffff;
+
+  /* Shadows — flattened to hairlines per Sharp Business direction */
+  --shadow-sm:  none;
+  --shadow-md:  0 1px 0 var(--gray-200);
+  --shadow-lg:  0 1px 0 var(--gray-200);
+  --shadow-xl:  0 1px 0 var(--gray-300);
+  --shadow-brand: none;
+
+  /* Glows */
+  --glow-brand: none;
+
+  /* Radius — buttons and fields 6px, cards 10px */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Spacing */
+  /* Scaled with the root size above; the menu is also narrower than that alone
+     would give, at the owner's request ("to menu z lewej powinno byc troche
+     wezsze"). 260 -> 208 is the scale, 196 is the extra trim. */
+  --sidebar-width: 196px;
+  --sidebar-width-collapsed: 52px;
+  --header-height: 52px;
+  /* The chat dock's share of the window. Zero until the chat is opened, so the
+     centre column simply owns the whole width until then. */
+  --chat-width: 0px;
+  --chat-width-open: 300px;
+
+  /* Form field background: white like the card, so dropdowns and text areas
+     match ordinary fields. */
+  --bg-field: #ffffff;
+}
+
+/* ─── RESET & BASE ───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Any display value -- a layout class or an inline style -- outranks the UA's
+   [hidden] { display: none }, so an element carrying the hidden attribute
+   still renders (an empty warning panel, a stray padded box). Restore the
+   attribute's meaning once, globally, instead of patching each offender. */
+[hidden] {
+  display: none !important;
+}
+
+/*
+   UI SCALE
+
+   The owner sent a screenshot of the Partners screen taken at 80% browser zoom
+   and said that density is the standard: "this screen is zoomed out (...)
+   this should be the standard for now."
+
+   Nearly all typography in this app is in rem, so the root size is the one place
+   that moves it. 13px is 81% of the browser default, which is the zoom level the
+   screenshot was taken at (its 64px header measured ~101 device pixels on a 2x
+   display: 64 x 0.8 x 2). The layout metrics below are in px and do not follow a
+   root size, so they are scaled by the same factor by hand.
+
+   Browser zoom still works on top of this, so anyone who wants the old size has
+   it with one Ctrl+.
+*/
+html {
+  font-size: 13px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6,
+.kpi-value,
+.commission-value {
+  font-family: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--brand-700);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--brand-800); }
+
+img, svg { display: block; }
+
+/* ─── TYPOGRAPHY ─────────────────────────────────────────── */
+.text-xs    { font-size: 0.75rem; line-height: 1.4; }
+.text-sm    { font-size: 0.875rem; line-height: 1.5; }
+.text-base  { font-size: 1rem; line-height: 1.6; }
+.text-lg    { font-size: 1.125rem; line-height: 1.5; }
+.text-xl    { font-size: 1.25rem; line-height: 1.4; }
+.text-2xl   { font-size: 1.5rem; line-height: 1.3; }
+.text-3xl   { font-size: 1.875rem; line-height: 1.25; }
+.text-4xl   { font-size: 2.25rem; line-height: 1.2; }
+
+.font-light    { font-weight: 300; }
+.font-normal   { font-weight: 400; }
+.font-medium   { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold     { font-weight: 700; }
+.font-extrabold{ font-weight: 800; }
+
+.text-primary   { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary  { color: var(--text-tertiary); }
+.text-brand     { color: var(--brand-400); }
+.text-success   { color: var(--success-400); }
+.text-warning   { color: var(--warning-400); }
+.text-error     { color: var(--error-400); }
+
+/* ─── LAYOUT UTILITIES ───────────────────────────────────── */
+.flex          { display: flex; }
+.flex-col      { flex-direction: column; }
+.items-center  { align-items: center; }
+.items-start   { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center  { justify-content: center; }
+.justify-end     { justify-content: flex-end; }
+.gap-1  { gap: 4px; }
+.gap-2  { gap: 8px; }
+.gap-3  { gap: 12px; }
+.gap-4  { gap: 16px; }
+.gap-6  { gap: 24px; }
+.gap-8  { gap: 32px; }
+.flex-1 { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+.grid { display: grid; }
+
+/* ─── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background var(--transition-fast);
+}
+.btn:hover::after { background: rgba(255,255,255,0.04); }
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--brand-500);
+  color: var(--on-brand);
+  border-color: var(--brand-600);
+  box-shadow: none;
+}
+.btn-primary:hover {
+  background: var(--brand-600);
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.btn-ghost:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: var(--error-bg);
+  color: var(--badge-error-fg);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.btn-success {
+  background: var(--success-bg);
+  color: var(--badge-success-fg);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+.btn-success:hover {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.btn-sm {
+  font-size: 0.8125rem;
+  padding: 7px 14px;
+}
+.btn-lg {
+  font-size: 1rem;
+  padding: 14px 28px;
+  border-radius: var(--radius-lg);
+}
+.btn-icon {
+  padding: 8px;
+  width: 36px;
+  height: 36px;
+}
+.btn-full { width: 100%; }
+
+/*
+   Row actions in a data table. The producer decides on a lead from the row
+   itself -- confirm, reject, ask for information -- so three controls plus a
+   details affordance have to fit beside the value and commission columns
+   without pushing them off screen: compact square icons.
+
+   At rest they are deliberately quiet and identical: a hairline square in the
+   secondary text colour. The meaning arrives on hover and focus, which is
+   also when the tooltip does, so nothing is carried by colour alone.
+*/
+.btn-row {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  overflow: visible;
+}
+.btn-row:hover { background: var(--bg-hover); color: var(--text-primary); }
+.btn-row-accept:hover,
+.btn-row-accept:focus-visible { border-color: var(--success-500); color: var(--badge-success-fg); }
+.btn-row-reject:hover,
+.btn-row-reject:focus-visible { border-color: var(--error-500);   color: var(--badge-error-fg); }
+.btn-row-info:hover,
+.btn-row-info:focus-visible   { border-color: var(--info-500);    color: var(--badge-info-fg); }
+.btn-row[aria-expanded="true"] {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/*
+   The reason for a rejection and the description of an information request are
+   typed in a row spliced in directly beneath the lead, so the decision never
+   costs a screen change. Both used to live only inside the detail modal.
+*/
+.row-inline-form td { background: var(--bg-elevated); }
+.row-inline-form-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0 6px;
+}
+.row-inline-form-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.row-inline-form-title span {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+.row-inline-form textarea {
+  width: 100%;
+  max-width: 620px;
+  min-height: 62px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+.row-inline-form-actions { display: flex; gap: 8px; align-items: center; }
+.row-inline-form-error {
+  font-size: 0.8125rem;
+  color: var(--badge-error-fg);
+}
+
+/* ─── CARDS ───────────────────────────────────────────────── */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.card:hover {
+  border-color: var(--border-default);
+}
+
+.card-elevated {
+  background: var(--bg-elevated);
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── BADGES / TAGS ───────────────────────────────────────── */
+/*
+   Square, not capsule. Every radius in this theme is already 0; the badge was
+   the one survivor on --radius-full, which is why status read as a "pill"
+   on every screen.
+
+   Two axes share this base and must never look alike:
+
+     .badge + a tone      the QUIET form — tinted, for anything descriptive
+                          (a category, a tier, "Live")
+     .badge-solid + tone  the LOUD form — filled, reserved for the producer's
+                          registration decision about a lead
+     inline stage colour  hairline outline in the producer's own stage colour,
+                          applied by Ui.stageBadge for the sales pipeline
+
+   Anything that needs a status badge goes through Ui.registrationBadge or
+   Ui.stageBadge in js/utils.js. Hand-rolling a seventh variant is how the
+   screens drifted apart the first time.
+*/
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+}
+
+.badge-success {
+  background: var(--success-bg);
+  color: var(--badge-success-fg);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+.badge-warning {
+  background: var(--warning-bg);
+  color: var(--badge-warning-fg);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.badge-error {
+  background: var(--error-bg);
+  color: var(--badge-error-fg);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.badge-info {
+  background: var(--info-bg);
+  color: var(--badge-info-fg);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+.badge-neutral {
+  background: var(--gray-100);
+  /* --text-secondary on --gray-100 is grey on grey: legible under a ruler,
+     washed out at 0.75rem on a paper card. The owner read it as "jasny" on
+     several partner screens, so the neutral badge takes the
+     darker ink — it carries real words ("Etap nieznany", "* pola wymagane"),
+     not decoration. */
+  color: var(--gray-700);
+  /* A fixed ramp value, like the background above: this chip is a light grey
+     block in BOTH themes, so a token that flips with the theme would put a
+     translucent-white hairline on a paper-coloured chip. */
+  border-color: var(--gray-200);
+}
+.badge-brand {
+  background: var(--brand-100);
+  color: var(--brand-700);
+  border-color: var(--brand-200);
+}
+
+/* The loud form: the registration decision, so it carries across a table of
+   thirty rows. As in IBM Carbon: a medium-saturated background with dark
+   text in the same colour. Still louder than the quiet form (.badge + tone),
+   which has a pale background. */
+.badge-solid { border-color: transparent; }
+.badge-solid.badge-success { background: #bfe9d2; color: #0d4a2e; }
+.badge-solid.badge-warning { background: #f7dc6f; color: #4d3b00; }
+.badge-solid.badge-error   { background: #f8c5c0; color: #7a1a12; }
+.badge-solid.badge-info    { background: #c9daf8; color: #163a80; }
+.badge-solid.badge-neutral { background: #d0d5db; color: #22272d; }
+.badge-solid.badge-brand   { background: var(--brand-200); color: var(--brand-900); }
+
+[data-theme="dark"] .badge-solid.badge-success { background: #1d4d38; color: #9be8be; }
+[data-theme="dark"] .badge-solid.badge-warning { background: #4d3f0f; color: #f3dd8a; }
+[data-theme="dark"] .badge-solid.badge-error   { background: #5a2422; color: #ffb3ab; }
+[data-theme="dark"] .badge-solid.badge-info    { background: #243a66; color: #bcd2ff; }
+[data-theme="dark"] .badge-solid.badge-neutral { background: #3b4047; color: #e2e8f1; }
+
+/* dot indicator — square, like every other corner in this theme */
+.badge .dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 0;
+  background: currentColor;
+}
+
+/* ─── FORM ELEMENTS ───────────────────────────────────────── */
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+.form-label .required { color: var(--error-400); margin-left: 2px; }
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  background: var(--bg-field);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 11px 14px;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--text-tertiary); }
+
+/* A select that has to live inside a table cell: the full-size control is
+   100% wide with 11px padding, which pushes every other column off screen.
+
+   This rule was once inserted INTO the focus selector list below, which made it
+   read as `.form-input:focus, .form-select-sm { width: auto; ... }` -- so every
+   text field in the app shrank the moment it was clicked, and inputs lost their
+   focus ring at the same time. Its own rule, with a blank line either side. */
+.form-select-sm {
+  width: auto;
+  min-width: 132px;
+  font-size: 0.8125rem;
+  padding: 5px 8px;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 3px var(--brand-100);
+  background: var(--bg-field);
+}
+.form-input.error,
+.form-select.error { border-color: var(--error-500); }
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239090b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.form-select option { background: var(--gray-800); }
+
+.form-textarea { resize: vertical; min-height: 100px; }
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+.form-error {
+  font-size: 0.75rem;
+  color: var(--error-400);
+}
+
+/* Input with icon */
+.input-wrapper {
+  position: relative;
+}
+.input-wrapper .input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  transition: color var(--transition-fast);
+}
+.input-wrapper .form-input {
+  padding-left: 42px;
+}
+.input-wrapper:focus-within .input-icon {
+  color: var(--brand-400);
+}
+
+/* ─── DIVIDERS ────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 0;
+}
+
+/* ─── SCROLLBAR ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--gray-700);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gray-600); }
+
+/* ─── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fadeIn    { animation: fadeIn var(--transition-normal) both; }
+.animate-slideIn   { animation: slideInLeft var(--transition-normal) both; }
+.animate-pulse     { animation: pulse 2s ease-in-out infinite; }
+.animate-spin      { animation: spin 0.8s linear infinite; }
+
+/* ─── LOADING SPINNER ─────────────────────────────────────── */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--brand-400);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ─── AVATAR ──────────────────────────────────────────────── */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--brand-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--on-brand);
+  flex-shrink: 0;
+  border: 1px solid var(--border-default);
+}
+.avatar-sm { width: 28px; height: 28px; font-size: 0.6875rem; }
+.avatar-lg { width: 48px; height: 48px; font-size: 1rem; }
+.avatar-xl { width: 64px; height: 64px; font-size: 1.25rem; }
+
+/* CRM records are identified by their names and companies, not decorative
+   initials. Keep the surrounding identity layout and accessible text, but
+   remove avatar circles everywhere: headers, tables, comments and profiles. */
+.avatar,
+.avatar-xl,
+.avatar-xl-ring,
+.comment-avatar {
+  display: none !important;
+}
+
+/* ─── EMPTY STATE ─────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 64px 24px;
+  text-align: center;
+}
+.empty-state[hidden] {
+  display: none;
+}
+.empty-state-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+/* ─── TOOLTIP ─────────────────────────────────────────────── */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gray-700);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  border: 1px solid var(--border-default);
+}
+[data-tooltip]:hover::after { opacity: 1; }
+
+/* ─── NAVIGATION WIDTH ────────────────────────────────────────
+   The owner's own choice wins above the breakpoints, and is remembered
+   (js/app.js writes ph_nav). Below 1180px the rail is forced regardless: that is
+   also roughly where a 1600px screen lands at 160% browser zoom, which is what
+   "zeby sie dobrze skalowalo jak dajemy control + i -" comes down to -- the
+   centre column has to keep its room rather than being squeezed by the menu.
+   It was 1180px while the menu was 260px wide; at 196px there is more room, so
+   forcing the rail that early was premature.
+   ─────────────────────────────────────────────────────────── */
+:root[data-nav="collapsed"] { --sidebar-width: var(--sidebar-width-collapsed); }
+:root[data-chat="open"] { --chat-width: var(--chat-width-open); }
+
+@media (max-width: 1000px) {
+  :root { --sidebar-width: var(--sidebar-width-collapsed); }
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root { --sidebar-width: 0px; }
+  /* No room to give the chat a column of its own; it covers the screen
+     instead of squeezing the content to nothing. */
+  :root[data-chat="open"] { --chat-width: 0px; }
+}
+
+/* Injected by injectGlobalToolbar() in js/app.js on every page, including
+   the auth screens, which do not load dashboard.css -- these rules must
+   stay here or the toolbar renders unstyled on index.html. */
+/* ─── GLOBAL TOOLBAR ──────────────────────────────────────── */
+.global-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.gt-group {
+  display: flex;
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  padding: 2px;
+}
+
+.gt-lang-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+.gt-lang-btn:hover {
+  color: var(--text-primary);
+}
+.gt-lang-btn.active {
+  /* A selected segment, not a second honey button next to "Submit a lead":
+     honey is kept for the one main action on a screen. */
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 1px var(--border-default);
+}
+
+.gt-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-default);
+  margin: 0 2px;
+}
+
+.gt-theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 5px 14px 5px 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.gt-theme-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-default);
+  background: var(--bg-hover);
+}
+
+.gt-theme-label {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .global-toolbar { margin-right: 0; gap: 4px; }
+  .gt-theme-label { display: none; }
+  .gt-theme-btn { padding: 5px 8px; }
+  .gt-lang-btn { padding: 4px 8px; font-size: 0.6875rem; }
+}
+
+/* ─── BRAND LOGO ─────────────────────────────────────────────
+   Two files, one per theme. Neither has an alpha channel --
+   "logo-light" carries a white ground and "logo-dark" a black one -- so the
+   wrong one shows a visible square of the opposite colour.
+
+   Two <img> elements toggled by `display`, not `content: url()` on one: that
+   property is Chromium-only on a replaced element, so Firefox kept painting
+   the light mark on a dark sidebar. This way the browser also fetches only the
+   image it shows. The dark copy carries an empty alt so a screen reader is not
+   told the name twice.
+
+   data-theme is always written by the anti-flash script in every page's
+   <head>, so the attribute selector is enough; there is no bare
+   prefers-color-scheme state to cover. */
+.brand-logo-dark { display: none; }
+
+[data-theme="dark"] .brand-logo-light { display: none; }
+[data-theme="dark"] .brand-logo-dark { display: block; }

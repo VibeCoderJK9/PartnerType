@@ -1,0 +1,23 @@
+.git
+.github
+.venv
+.env*
+instances
+backups
+**/*.db
+**/*.db-*
+**/__pycache__
+node_modules
+coverage
+htmlcov
+.coverage
+.pytest_cache
+.artifacts
+.planning
+.claude
+**/*.pem
+**/*.key
+**/secrets
+# Operator binaries fetched onto the workstation (age) belong to whoever runs
+# the CLI, not to the image the producer's server runs.
+tools/bin

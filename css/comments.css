@@ -1,0 +1,154 @@
+/* ============================================================
+   PARTNERTYPE — COMMENTS STYLES
+   ============================================================ */
+
+.comments-container {
+  margin-top: 16px;
+}
+
+.comments-loading {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  margin-bottom: 12px;
+}
+
+.comments-empty {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.comment-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  transition: background 0.15s;
+}
+
+.comment-item:hover { background: var(--bg-elevated); }
+
+.comment-item.comment-internal {
+  background: rgba(245, 158, 11, 0.04);
+  border: 1px solid rgba(245, 158, 11, 0.1);
+}
+
+.comment-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.comment-body { flex: 1; min-width: 0; }
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
+}
+
+.comment-author {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.comment-time {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+.comment-delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 2px;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.comment-item:hover .comment-delete-btn { opacity: 1; }
+.comment-delete-btn:hover { color: var(--error-400); }
+
+.comment-text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.comment-form {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+}
+
+/* ─── Modal tabs ──────────────────────────────────────── */
+
+.modal-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 12px 20px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.modal-tab {
+  padding: 8px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: none;
+  transition: all 0.15s;
+  margin-bottom: -1px;
+}
+
+.modal-tab:hover { color: var(--text-secondary); }
+
+.modal-tab.active {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border-color: var(--border-subtle);
+}
+
+.modal-tab-panel { display: none; }
+.modal-tab-panel.active { display: block; }
+
+/* The author's company beside their name. Small and quiet: it is
+   there to tell two people with the same name apart at a glance, not to compete with the name or
+   with what they actually wrote. */
+.comment-company {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}

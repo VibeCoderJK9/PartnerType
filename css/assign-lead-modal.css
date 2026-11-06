@@ -1,0 +1,38 @@
+/* ============================================================
+   PARTNERTYPE — ASSIGN LEAD MODAL
+   ============================================================
+
+   Narrow-screen and long-text rules for the producer's "przypisz leada"
+   dialog.
+
+   Scoped to #assign-lead-modal on purpose: these are this one dialog's
+   rules, and the shared components.css must not start behaving differently
+   for every other modal in the app. The shell already caps height and
+   scrolls (css/components.css .modal); what is added here is wrapping, tap
+   targets and a 320px-safe box.
+
+   Kept in a file, not an inline <style> block, so `style-src` never has to
+   allow inline styles -- CSS alone is enough to read out what a page
+   contains, one attribute selector at a time.
+   ============================================================ */
+
+#assign-lead-modal .modal-footer { flex-wrap: wrap; }
+#assign-lead-modal .modal-footer .btn { min-height: 44px; }
+#assign-lead-modal .form-input,
+#assign-lead-modal .form-select,
+#assign-lead-modal .form-textarea { max-width: 100%; box-sizing: border-box; }
+/* Long client, partner and product names wrap inside the panel instead of
+   widening it; the summary keeps the text exactly as typed. */
+#assign-lead-modal #assign-preview strong { overflow-wrap: anywhere; white-space: pre-wrap; }
+#assign-lead-modal #assign-preview div { min-width: 0; }
+#assign-lead-modal .form-label,
+#assign-lead-modal #assign-error-message,
+#assign-lead-modal #assign-empty-message { overflow-wrap: anywhere; }
+#assign-lead-modal #assign-error-state { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+@media (max-width: 420px) {
+  #assign-lead-modal.modal-overlay { padding: 8px; }
+  #assign-lead-modal .modal-header,
+  #assign-lead-modal .modal-body { padding-left: 16px; padding-right: 16px; }
+  #assign-lead-modal .modal-footer { padding: 0 16px 16px; }
+  #assign-lead-modal .modal-footer .btn { flex: 1 1 auto; }
+}

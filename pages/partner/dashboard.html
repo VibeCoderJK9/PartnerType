@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_pulpit_partnera">PartnerType — Partner dashboard</title>
+  <meta name="description" data-i18n="meta_partner_dashboard" data-i18n-attr="content" content="PartnerType partner panel: my leads, commissions and statistics.">
+
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+</head>
+<body data-page="partner-dashboard">
+
+<div class="app">
+  <!-- SIDEBAR (Partner) -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_leads_section">Leads</span>
+
+      <a href="new-lead.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-plus" aria-hidden="true"></svg>
+        <span data-i18n="nav_new_lead">Submit Lead</span>
+      </a>
+
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg>
+        <span data-i18n="nav_my_leads">My leads</span>
+      </a>
+      <a href="earnings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="wallet" aria-hidden="true"></svg>
+        <span data-i18n="nav_earnings">Earnings</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg>
+        <span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg>
+        <span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg>
+        <span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">KN</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left">
+        <div class="header-search">
+          <svg class="input-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input data-i18n="szukaj_leadow" data-i18n-attr="placeholder" type="text" placeholder="Search leads...">
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-lang">
+          <button class="header-lang-btn active" data-lang="pl">PL</button>
+          <button class="header-lang-btn" data-lang="en">EN</button>
+        </div>
+        <a href="new-lead.html" class="btn btn-primary btn-sm">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-i18n="nav_new_lead">Submit Lead</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 class="page-heading">
+            <span data-i18n="welcome_partner">Hello</span>, <span id="welcome-name">Alex</span>
+          </h1>
+          <p data-i18n="twoj_panel_partnera_sledz_swoje_wyniki_i_prowizj" class="page-subheading">Your partner dashboard — track your results and commissions</p>
+        </div>
+        <div id="partner-level"></div>
+      </div>
+
+      <!-- KPI Cards: four figures -- leads
+           needing the partner's own completion, decisions freshly made
+           by the producer, the commission amount due, and its payout
+           deadline. No comparison against a programme average. -->
+      <div class="kpi-grid">
+        <div class="kpi-card purple">
+          <div class="kpi-header">
+            <div class="kpi-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-total">—</div>
+          <div data-i18n="leady_wymagajace_uzupelnienia" class="kpi-label">Leads needing more information</div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-header">
+            <div class="kpi-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-pending">—</div>
+          <div data-i18n="pt_new_decisions" class="kpi-label">New decisions</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-header">
+            <div class="kpi-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-accepted">—</div>
+          <div data-i18n="earn_kpi_due" class="kpi-label">Awaiting payout</div>
+        </div>
+        <div class="kpi-card green" style="--kpi-color-a:var(--success-400);--kpi-color-b:var(--success-600)">
+          <div class="kpi-header">
+            <div class="kpi-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-earnings">—</div>
+          <div data-i18n="earn_kpi_awaiting" class="kpi-label">Wins to be confirmed</div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <!-- Recent leads -->
+        <div>
+          <div class="flex justify-between items-center" style="margin-bottom:16px">
+            <h2 data-i18n="ostatnie_leady" class="text-lg font-semibold">Recent leads</h2>
+            <a href="leads.html" class="btn btn-ghost btn-sm"><span data-i18n="pt_see_all">See all</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+          </div>
+          <div id="my-recent-leads" style="display:flex;flex-direction:column;gap:12px"></div>
+
+          <!-- CTA -->
+          <div style="margin-top:16px;padding:24px;background:var(--bg-card);border:1px solid var(--border-default);border-radius:var(--radius-xl);text-align:center">
+            <div data-i18n="masz_nowego_klienta" style="font-size:1.125rem;font-weight:700;color:var(--text-primary);margin-bottom:6px">Got a new client?</div>
+            <div data-i18n="zglos_lead_i_zarabiaj_prowizje_od_kazdej_zaakcep" style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:16px">Submit a lead and earn a commission on every accepted deal</div>
+            <a href="new-lead.html" class="btn btn-primary">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span data-i18n="zglos_nowy_lead">Submit a new lead</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Sidebar: stats -->
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <!-- Acceptance rate -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="wskaznik_akceptacji" class="panel-title">Acceptance rate</div>
+            </div>
+            <div class="panel-body">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span data-i18n="twoj_wynik" class="text-sm text-secondary">Your result</span>
+                <span class="text-sm font-bold text-primary" id="acceptance-rate">—%</span>
+              </div>
+              <div class="progress-bar" style="height:8px">
+                <div class="progress-fill" id="acceptance-rate-bar" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Commissions breakdown -->
+          <div class="panel">
+            <div class="panel-header">
+              <div data-i18n="prowizje_jak_dzialaja" class="panel-title">Commissions — how do they work?</div>
+            </div>
+            <div class="panel-body">
+              <!-- Filled from the partner's own tier + bonuses (js/partner.js).
+                   Never a static rate card: the rate shown here must be the
+                   one this partner is paid. -->
+              <div style="display:flex;flex-direction:column;gap:12px" id="dashboard-commission-rows">
+                <div class="stat-row">
+                  <span data-i18n="pt_your_rate" class="stat-row-label">Your rate</span>
+                  <span class="stat-row-value" style="color:var(--brand-400)">—</span>
+                </div>
+              </div>
+              <div data-i18n="prowizja_naliczana_jest_po_akceptacji_leadu_prze" style="margin-top:16px;padding:14px;background:var(--bg-elevated);border-radius:var(--radius-md);font-size:0.8125rem;color:var(--text-tertiary);line-height:1.6">
+                A commission is calculated once an administrator accepts the lead, and is paid monthly.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/partner.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+[run]
+branch = True
+
+[report]
+show_missing = True
+precision = 1
+fail_under = 70
+exclude_lines =
+    pragma: no cover
+include =
+    api/auth.py
+    api/http_security.py
+    api/invitations.py
+    api/leads.py
+    api/partners.py
+    api/payouts.py
+    api/router.py
+    api/users.py
+    api/settings_api.py
+    api/validation.py

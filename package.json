@@ -1,0 +1,17 @@
+{
+  "name": "partnertype",
+  "version": "0.1.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "test:all": "./run-tests.sh"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.1.11",
+    "happy-dom": "20.11.6",
+    "lucide-static": "^1.39.0",
+    "vitest": "4.1.11"
+  }
+}

@@ -1,0 +1,1257 @@
+/* ============================================================
+   PARTNERTYPE — COMPONENTS
+   Modals, charts, progress bars, lead cards, etc.
+   ============================================================ */
+
+/* ─── MODAL ───────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-2xl);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--transition-normal);
+}
+
+.modal-overlay.show .modal {
+  transform: scale(1) translateY(0);
+}
+
+.modal-sm { max-width: 420px; }
+/* The partner hub. Its own class, NOT a second .modal-lg rule: that class is
+   already defined further down this file at 720px for the leads detail and
+   assignment modals, so a duplicate here would silently lose to it.
+   A larger window for details: the figures, the funnel and the bonuses have to sit beside the
+   identity fields rather than below the fold. */
+.modal-hub { max-width: 880px; }
+
+/* Figure strip inside the hub. A row of plain numbers, not cards: these are
+   read across and compared, and six bordered boxes would each claim to be a
+   separate object. */
+.hub-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  margin: 0 0 20px;
+}
+.hub-figure { background: var(--bg-secondary); padding: 12px 14px; }
+.hub-figure-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: normal; /* Schibsted: tabular figures also widen the comma and dot ("88 , 9%") */
+}
+.hub-figure-label {
+  font-size: 0.6875rem;
+  text-transform: none; /* normal letter case */
+  letter-spacing: 0;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.hub-section-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: none; /* normal letter case */
+  letter-spacing: 0;
+  color: var(--text-tertiary);
+  margin: 20px 0 8px;
+}
+.hub-funnel { display: flex; flex-direction: column; gap: 6px; }
+.hub-funnel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+}
+.hub-funnel-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-tertiary);
+  min-width: 40px;
+}
+.hub-funnel-fill { height: 100%; }
+.hub-funnel-count {
+  font-variant-numeric: normal; /* Schibsted: tabular figures also widen the comma and dot ("88 , 9%") */
+  color: var(--text-secondary);
+  min-width: 28px;
+  text-align: right;
+}
+.hub-funnel-name { min-width: 132px; color: var(--text-primary); }
+.hub-bonus-list { display: flex; flex-direction: column; gap: 4px; }
+.hub-bonus-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.8125rem;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.hub-bonus-row:last-child { border-bottom: 0; }
+.hub-bonus-row span:last-child {
+  font-weight: 600;
+  font-variant-numeric: normal; /* Schibsted: tabular figures also widen the comma and dot ("88 , 9%") */
+  white-space: nowrap;
+}
+.modal-lg { max-width: 720px; }
+
+/* Partner details: keep long customer text and actions inside the viewport. */
+.partner-detail-overlay { padding: 16px; }
+.partner-detail { min-width: 0; font-size: 16px; line-height: 1.5; }
+.partner-detail .modal-title { font-size: 20px; font-weight: 600; }
+.partner-detail h3 { font-size: 16px; font-weight: 600; margin-top: 24px; }
+.partner-detail .modal-body, .partner-detail .modal-header,
+.partner-detail .modal-footer { padding: 16px; }
+.partner-detail .modal-footer { flex-wrap: wrap; gap: 8px; }
+.partner-detail p, .partner-detail label, .partner-detail h2,
+.partner-detail button, .partner-detail summary { overflow-wrap: anywhere; white-space: pre-wrap; }
+.partner-detail button { min-height: 44px; max-width: 100%; }
+.partner-detail input, .partner-detail textarea { max-width: 100%; box-sizing: border-box; }
+.partner-detail .detail-draft, .partner-detail .detail-confirm { padding: 16px; border-top: 1px solid var(--border-default); }
+
+/* Partner lead details — named sections with a label/value grid. */
+.partner-detail .detail-header {
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.partner-detail .detail-header-identity { min-width: 0; }
+.partner-detail .detail-header-id {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.partner-detail .detail-header-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.partner-detail .detail-section { margin-bottom: 24px; }
+.partner-detail .detail-section:last-of-type { margin-bottom: 0; }
+.partner-detail .detail-section-title {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none; /* normal letter case */
+  color: var(--text-tertiary);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Two columns on a desktop, stacked on a phone. `dt`/`dd` rather than a table:
+   these are label/value pairs, not rows of a dataset. */
+.partner-detail .detail-grid {
+  display: grid;
+  grid-template-columns: minmax(120px, 34%) 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .partner-detail .detail-grid { grid-template-columns: 1fr; gap: 2px 0; }
+  .partner-detail .detail-grid .detail-dd { margin-bottom: 10px; }
+}
+.partner-detail .detail-dt {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  overflow-wrap: anywhere;
+}
+.partner-detail .detail-dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.partner-detail .detail-money {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.partner-detail .detail-money-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: normal; /* Schibsted: tabular figures also widen the comma and dot ("88 , 9%") */
+}
+
+.partner-detail .detail-callout {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.partner-detail .detail-callout.is-warning {
+  background: var(--warning-bg);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.partner-detail .detail-callout-title {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.partner-detail .detail-callout p { margin: 0; }
+
+.partner-detail .detail-note {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.field-error { color: var(--error-600); font-size: 14px; margin-top: 4px; }
+[aria-invalid="true"] { border-color: var(--error-600); }
+.partner-detail :focus-visible { outline: 2px solid var(--brand-500); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .partner-detail-overlay, .partner-detail { transition: none; transform: none; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px 0;
+  gap: 16px;
+}
+
+.modal-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  background: transparent;
+  flex-shrink: 0;
+}
+.modal-close:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 24px 28px;
+}
+
+/* The commission breakdown in the lead detail had no rules at all, so each
+   row rendered as one run-on line -- "Tier ratePLN 100". It is a label/value
+   list: the label reads left, the figure reads right, and the total is set
+   apart because it is the number the producer is actually looking for. */
+.commission-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.commission-breakdown > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.commission-breakdown strong {
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.commission-breakdown .commission-total {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 28px 24px;
+}
+
+/* ─── PROGRESS BAR ────────────────────────────────────────── */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--brand-500);
+}
+
+.progress-fill.green  { background: var(--success-500); }
+.progress-fill.orange { background: var(--warning-500); }
+.progress-fill.red    { background: var(--error-500); }
+
+/* ─── MINI CHART (sparkline) ──────────────────────────────── */
+.sparkline-chart {
+  position: relative;
+  width: 80px;
+  height: 32px;
+}
+
+/* ─── STAT ROW ────────────────────────────────────────────── */
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.stat-row:last-child { border-bottom: none; }
+
+.stat-row-label { flex: 1; font-size: 0.875rem; color: var(--text-secondary); }
+.stat-row-value { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.stat-row-bar { flex: 2; }
+
+/* ─── LEAD CARD ───────────────────────────────────────────── */
+.lead-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.lead-card:hover {
+  border-color: var(--border-default);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.lead-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.lead-card-id {
+  font-size: 0.75rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--text-tertiary);
+}
+
+.lead-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.lead-card-company {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.lead-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.lead-card-value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--success-400);
+}
+
+.lead-card-partner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* ─── PARTNER LEVEL BADGE ─────────────────────────────────── */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  /* The neutral base an assigned tier wears when the producer set no colour;
+     a tier WITH a colour overrides colour and border inline.
+
+     Theme tokens, not fixed ramp values: the inline colour is picked per theme
+     by Ui.readableInk (dark ink on paper, light ink on graphite), so a
+     hard-coded light-grey chip would put the dark theme's LIGHT ink on a LIGHT
+     background — which is how the tier badge went unreadable in the first
+     place, just the other way round. */
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+/* The badge for an assigned tier carries no colour class: name and colour both
+   come from commission_tiers, so the producer's own colour is set inline (see
+   js/profile.js and js/partner.js). The four classes that used to live here
+   were named after the legacy users.level words and could not represent a
+   level the producer named themselves. */
+
+/* No tier assigned. Deliberately colourless: the badge should not imply a
+   standing the partner has not been given. */
+.level-badge.none {
+  background: var(--bg-elevated);
+  color: var(--text-tertiary);
+  border: 1px dashed var(--border-strong);
+  font-weight: 600;
+}
+
+/* ─── NOTIFICATION / TOAST ────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+/* ─── CUSTOM SEARCHABLE DROPDOWN ────────────────────────── */
+.custom-select-wrapper {
+  position: relative;
+  width: 280px;
+  max-width: 100%;
+}
+/* Chevron drawn with borders so these typeahead filters match the stroked
+   chevron the dropdown component uses, instead of a solid triangle. */
+.custom-select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--text-tertiary);
+  border-bottom: 2px solid var(--text-tertiary);
+  border-radius: 1px;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+  transition: transform 0.2s;
+}
+.custom-select-wrapper.open::after {
+  transform: translateY(-30%) rotate(225deg);
+}
+.custom-select-wrapper input.form-input {
+  width: 100%;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: all 0.2s ease;
+}
+.custom-select-dropdown.open {
+  display: block;
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.custom-select-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.custom-select-option:hover, .custom-select-option.active {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+.custom-select-option.empty-msg {
+  cursor: default;
+  color: var(--text-tertiary);
+}
+.custom-select-option.empty-msg:hover {
+  background: transparent;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  min-width: 280px;
+  max-width: 400px;
+  pointer-events: all;
+  animation: slideInToast 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  backdrop-filter: blur(8px);
+}
+
+@keyframes slideInToast {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast-icon { flex-shrink: 0; }
+.toast-body { flex: 1; min-width: 0; }
+.toast-title { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.toast-msg   { font-size: 0.8125rem; color: var(--text-secondary); }
+
+.toast.success { border-color: rgba(16, 185, 129, 0.3); }
+.toast.error   { border-color: rgba(239, 68, 68, 0.3); }
+.toast.warning { border-color: rgba(245, 158, 11, 0.3); }
+
+/* ─── STEP INDICATOR ──────────────────────────────────────── */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 32px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-default);
+  color: var(--text-secondary);
+  transition: all var(--transition-normal);
+}
+
+.step.active .step-dot {
+  background: var(--brand-500);
+  border-color: var(--brand-400);
+  color: var(--on-brand);
+  box-shadow: 0 0 0 4px var(--brand-100);
+}
+
+.step.done .step-dot {
+  background: var(--success-500);
+  border-color: var(--success-400);
+  color: #fff;
+}
+
+.step-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.step.active .step-label { color: var(--text-primary); }
+.step.done .step-label   { color: var(--success-400); }
+
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--border-subtle);
+  margin: 0 8px;
+}
+
+/* ─── COMMISSION DISPLAY ──────────────────────────────────── */
+.commission-box {
+  /* A grey surface, not honey: the brand colour is only for small elements. */
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.commission-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: none; /* normal letter case */
+  letter-spacing: 0;
+  color: var(--success-400);
+  margin-bottom: 8px;
+}
+
+.commission-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--success-400);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.commission-sub {
+  font-size: 0.875rem;
+  color: var(--success-500);
+  margin-top: 6px;
+}
+
+/* ─── CHART CONTAINER ─────────────────────────────────────── */
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ─── DROPDOWN MENU ───────────────────────────────────────── */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  min-width: 180px;
+  z-index: 200;
+  padding: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px) scale(0.97);
+  transition: all var(--transition-fast);
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-family: inherit;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.dropdown-item.danger { color: var(--error-400); }
+.dropdown-item.danger:hover { background: var(--error-bg); }
+
+.dropdown-separator {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 6px 0;
+}
+
+/* ─── PARTNER CARD (list view) ────────────────────────────── */
+.partner-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+.partner-card:last-child { border-bottom: none; }
+.partner-card:hover { background: var(--bg-tertiary); }
+
+.partner-card-info { flex: 1; min-width: 0; }
+
+.partner-card-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.partner-card-email {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.partner-card-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.partner-stat {
+  text-align: right;
+}
+
+.partner-stat-value {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.partner-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* ─── DROPDOWN ────────────────────────────────────────────────
+   Replacement rendering for <select> (js/dropdown.js). The native
+   element stays in the DOM for value/name/change, hidden here. */
+.ph-select {
+  position: relative;
+  width: 100%;
+}
+
+.ph-select-native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(50%);
+}
+
+.ph-select-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  text-align: left;
+  color: var(--text-primary);
+  background: var(--bg-field);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 11px 14px;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+.ph-select-toggle:hover:not(:disabled) { border-color: var(--border-strong, var(--border-default)); }
+.ph-select-toggle:focus-visible,
+.ph-select.is-open .ph-select-toggle {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-100);
+  background: var(--bg-hover);
+}
+.ph-select.is-disabled .ph-select-toggle,
+.ph-select-toggle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ph-select-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ph-select-label.is-placeholder { color: var(--text-tertiary); }
+
+.ph-select-caret {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  transition: transform var(--transition-fast);
+}
+.ph-select.is-open .ph-select-caret { transform: rotate(180deg); }
+
+.ph-select-menu {
+  position: absolute;
+  z-index: 300;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ph-select-item {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  text-align: left;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  cursor: pointer;
+  outline: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.ph-select-item:hover:not(:disabled),
+.ph-select-item:focus-visible {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+.ph-select-item.is-selected {
+  background: var(--brand-100);
+  color: var(--brand-700);
+  font-weight: 600;
+}
+.ph-select-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── DATE PICKER ─────────────────────────────────────────────
+   Calendar replacement for <input type="date"> (js/datepicker.js).
+   The native input stays in the DOM for value/name/change, hidden here. */
+.datepicker { position: relative; width: 100%; }
+
+.datepicker-native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(50%);
+}
+
+.datepicker-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+.datepicker-field:focus-visible,
+.datepicker.is-open .datepicker-field {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-100);
+  background: var(--bg-hover);
+}
+.datepicker-label.is-empty { color: var(--text-tertiary); }
+.datepicker-glyph { display: inline-flex; flex-shrink: 0; color: var(--text-tertiary); }
+
+.datepicker-popover {
+  position: absolute;
+  z-index: 300;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 268px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
+}
+
+.datepicker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.datepicker-title { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.datepicker-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.datepicker-nav:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.datepicker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.datepicker-weekday {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: center;
+  padding-bottom: 4px;
+}
+.datepicker-day {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  height: 32px;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.datepicker-day:hover { background: var(--bg-hover); color: var(--text-primary); }
+.datepicker-day.is-today { border-color: var(--brand-300); color: var(--brand-700); font-weight: 600; }
+.datepicker-day.is-selected {
+  background: var(--brand-500);
+  border-color: var(--brand-500);
+  color: var(--on-brand);
+  font-weight: 700;
+}
+
+.datepicker-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+.datepicker-action {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--brand-700);
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.datepicker-action:hover { background: var(--bg-hover); }
+
+/* Open menus are re-parented to <body> so panel overflow cannot clip them;
+   coordinates are set inline by the component. */
+.ph-select-menu.is-floating,
+.datepicker-popover.is-floating {
+  position: fixed;
+  z-index: 1200;
+}
+
+/* ─── PARTNER KANBAN ─────────────────────────
+   Board scrolls horizontally inside itself only; columns hold a fixed 288px width, shrinking to the
+   viewport under 640px so the PAGE never gains a horizontal scrollbar. */
+.view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+.view-toggle-btn {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  min-height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.view-toggle-btn[aria-pressed="true"] {
+  background: var(--brand-500);
+  color: var(--text-inverse, #fff);
+}
+
+/* Settled leads leave the partner's kanban board; this is the line that says
+   where they went, so their disappearance never reads as data loss. */
+.kanban-settled-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+.kanban-settled-note a {
+  color: var(--brand-700);
+  font-weight: 600;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.kanban-column {
+  flex: 0 0 288px;
+  width: 288px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 640px) {
+  .kanban-column {
+    flex-basis: min(288px, calc(100vw - 32px));
+    width: min(288px, calc(100vw - 32px));
+  }
+}
+
+.kanban-column-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+}
+.kanban-column-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.kanban-column-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+.kanban-column-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.kanban-column-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 80px;
+  padding: 4px;
+  border-radius: var(--radius-md);
+}
+.kanban-column-body.is-drag-over {
+  outline: 2px dashed var(--brand-500);
+  outline-offset: -2px;
+  background: var(--bg-hover);
+}
+.kanban-column-empty {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  padding: 12px 4px;
+}
+
+.kanban-card { padding: 12px; }
+.kanban-card-header { margin-bottom: 8px; gap: 8px; }
+.kanban-card-name {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.kanban-card-id { overflow-wrap: anywhere; }
+.kanban-card-handle {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: grab;
+}
+.kanban-card-meta { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 8px; }
+.kanban-card-footer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.kanban-card-stage-select { flex: 1 1 auto; min-width: 0; }
+.kanban-card-readonly-note {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+}
+
+.kanban-unknown {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-default);
+}
+.kanban-unknown-heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kanban-card { transition: none; transform: none; }
+}
+
+/* ─── Toggle switch (settings) ──────────────────────── */
+/* Moved here from comments.css: Settings never loaded that file,
+   so every switch there rendered as a bare checkbox. */
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  top: 3px;
+  background: var(--text-tertiary);
+  border-radius: var(--radius-full);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--brand-500);
+  border-color: var(--brand-500);
+}
+
+.toggle-switch input:checked + .toggle-slider::after {
+  transform: translateX(20px);
+  background: white;
+}
+
+.toggle-switch input:focus-visible + .toggle-slider {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
+/* A disabled button must look disabled, not merely ignore the click. */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

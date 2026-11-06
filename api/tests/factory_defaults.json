@@ -1,0 +1,178 @@
+{
+  "commission_tiers": [
+    {
+      "id": 1,
+      "name": "Bronze",
+      "base_rate": 5.0,
+      "color": "#cd7f32",
+      "sort_order": 0,
+      "active": 1
+    },
+    {
+      "id": 2,
+      "name": "Silver",
+      "base_rate": 6.0,
+      "color": "#a8a9ad",
+      "sort_order": 1,
+      "active": 1
+    },
+    {
+      "id": 3,
+      "name": "Gold",
+      "base_rate": 7.0,
+      "color": "#d4af37",
+      "sort_order": 2,
+      "active": 1
+    },
+    {
+      "id": 4,
+      "name": "Platinum",
+      "base_rate": 10.0,
+      "color": "#6246ea",
+      "sort_order": 3,
+      "active": 1
+    },
+    {
+      "id": 5,
+      "name": "Diamond",
+      "base_rate": 15.0,
+      "color": "#38bdf8",
+      "sort_order": 4,
+      "active": 1
+    }
+  ],
+  "bonus_definitions": [
+    {
+      "id": 1,
+      "name": "Bonus za webinar",
+      "type": "percent",
+      "default_value": 2.0,
+      "description": "Prowadzenie lub udzia\u0142 w webinarze",
+      "sort_order": 0,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 2,
+      "name": "Bonus za szkolenie",
+      "type": "percent",
+      "default_value": 1.5,
+      "description": "Uko\u0144czenie certyfikowanego szkolenia",
+      "sort_order": 1,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 3,
+      "name": "Bonus kwartalny",
+      "type": "percent",
+      "default_value": 1.0,
+      "description": "Osi\u0105gni\u0119cie celu kwartalnego",
+      "sort_order": 2,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 4,
+      "name": "Bonus za referencje",
+      "type": "percent",
+      "default_value": 0.5,
+      "description": "Polecenie nowego partnera do programu",
+      "sort_order": 3,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 5,
+      "name": "Bonus za event",
+      "type": "percent",
+      "default_value": 2.5,
+      "description": "Aktywny udzia\u0142 w wydarzeniu partnerskim",
+      "sort_order": 4,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 6,
+      "name": "Nagroda kwartalna",
+      "type": "cash",
+      "default_value": 500.0,
+      "description": "Got\u00f3wkowa nagroda za wyniki kwartalne",
+      "sort_order": 10,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 7,
+      "name": "Bonus za top leady",
+      "type": "cash",
+      "default_value": 1000.0,
+      "description": "Nagroda za zamkni\u0119cie top 3 lead\u00f3w",
+      "sort_order": 11,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 8,
+      "name": "Refundacja koszt\u00f3w",
+      "type": "cash",
+      "default_value": 250.0,
+      "description": "Zwrot koszt\u00f3w szkole\u0144 lub konferencji",
+      "sort_order": 12,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 9,
+      "name": "Nagroda roczna",
+      "type": "cash",
+      "default_value": 2000.0,
+      "description": "Roczna nagroda lojalno\u015bciowa",
+      "sort_order": 13,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    },
+    {
+      "id": 10,
+      "name": "Jednorazowy bonus specjalny",
+      "type": "cash",
+      "default_value": 750.0,
+      "description": "Specjalna nagroda przyznawana przez admina",
+      "sort_order": 14,
+      "active": 1,
+      "name_en": "",
+      "description_en": ""
+    }
+  ],
+  "settings": [
+    {
+      "key": "lead_duplicate_policy",
+      "value": "queue",
+      "updated_at": "2026-09-16 17:09:02"
+    },
+    {
+      "key": "lead_queue_shares",
+      "value": "100,50,25,10,0",
+      "updated_at": "2026-09-16 17:09:02"
+    },
+    {
+      "key": "lead_queue_max",
+      "value": "5",
+      "updated_at": "2026-09-16 17:09:02"
+    },
+    {
+      "key": "lead_action_days",
+      "value": "2",
+      "updated_at": "2026-09-16 17:09:02"
+    }
+  ]
+}

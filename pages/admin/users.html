@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="../../js/theme-boot.js"></script>
+  <link rel="stylesheet" href="../../css/theme-boot.css">
+  <title data-i18n="partner_center_zarzadzanie_uzytkownikami">PartnerType — User management</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/profile.css">
+  <link rel="stylesheet" href="../../css/notifications.css">
+  <link rel="stylesheet" href="../../css/agent.css">
+  <link rel="stylesheet" href="../../css/theme-v1.1.2.css">
+</head>
+<body data-page="admin-users">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <img class="brand-logo brand-logo-light" src="../../img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;"><img class="brand-logo brand-logo-dark" src="../../img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 4px;">
+      </div>
+      <span data-i18n="partner_center" class="sidebar-logo-text">PartnerType</span>
+    </div>
+        <nav class="sidebar-nav">
+      <span class="sidebar-section-label" data-i18n="nav_menu">Menu</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" data-icon="layout-dashboard" aria-hidden="true"></svg><span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <svg class="nav-icon" data-icon="bar-chart-3" aria-hidden="true"></svg><span data-i18n="nav_analytics">Analytics</span>
+      </a>
+      
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_management">Management</span>
+      <a href="leads.html" class="nav-item">
+        <svg class="nav-icon" data-icon="clipboard-list" aria-hidden="true"></svg><span data-i18n="nav_leads">Leads</span>
+      </a>
+      <a href="partners.html" class="nav-item">
+        <svg class="nav-icon" data-icon="handshake" aria-hidden="true"></svg><span data-i18n="nav_partners">Partners</span>
+      </a>
+      <a href="commissions.html" class="nav-item">
+        <svg class="nav-icon" data-icon="coins" aria-hidden="true"></svg><span data-i18n="nav_commissions">Commissions</span>
+      </a>
+      <a href="affiliate.html" class="nav-item">
+        <svg class="nav-icon" data-icon="link" aria-hidden="true"></svg><span data-i18n="nav_affiliate">Affiliate</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_system">System</span>
+      <a href="audit.html" class="nav-item">
+        <svg class="nav-icon" data-icon="history" aria-hidden="true"></svg><span data-i18n="nav_audit">Audit Log</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg class="nav-icon" data-icon="settings" aria-hidden="true"></svg><span data-i18n="nav_settings">Settings</span>
+      </a>
+      <a href="settings.html#plugins" class="nav-item">
+        <svg class="nav-icon" data-icon="puzzle" aria-hidden="true"></svg><span data-i18n="nav_plugins">Plugins</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px" data-i18n="nav_account">Account</span>
+      <a href="profile.html" class="nav-item">
+        <svg class="nav-icon" data-icon="circle-user" aria-hidden="true"></svg><span data-i18n="nav_profile">My Profile</span>
+      </a>
+      <a href="users.html" class="nav-item active">
+        <svg class="nav-icon" data-icon="users" aria-hidden="true"></svg><span data-i18n="nav_users">Users</span>
+      </a>
+      <a href="knowledge.html" class="nav-item">
+        <svg class="nav-icon" data-icon="book-open" aria-hidden="true"></svg><span data-i18n="nav_knowledge_base">Knowledge base</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="logout-btn">
+        <div class="avatar" id="sidebar-avatar">MK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">—</div>
+          <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+        </div>
+        <svg width="16" height="16" fill="none" stroke="var(--text-tertiary)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="top-header">
+      <div class="header-left"><span data-i18n="uzytkownicy" class="page-title">Users</span></div>
+      <div class="header-right">
+        <div class="header-lang">
+          <button class="header-lang-btn active" data-lang="pl">PL</button>
+          <button class="header-lang-btn" data-lang="en">EN</button>
+        </div>
+        <div class="avatar avatar-sm" id="header-avatar" style="cursor:pointer">MK</div>
+      </div>
+    </header>
+
+    <div class="page-content animate-fadeIn">
+      <div class="page-header">
+        <div>
+          <h1 data-i18n="uzytkownicy" class="page-heading">Users</h1>
+          <p data-i18n="osoby_z_twojej_firmy_ktore_obsluguja_kanal_partn" class="page-subheading">People from your company who run the partner channel. Partners live under Partners.</p>
+        </div>
+        <div class="page-header-actions">
+          <button data-i18n="zapros_do_zespolu" class="btn btn-primary" id="team-invite-btn" type="button">Invite to the team</button>
+        </div>
+      </div>
+
+      <!-- The producer's own team, under the profile block; staff only. Partner
+           accounts — invitation, details, acceptance, suspension — belong to
+           pages/admin/partners.html and never appear here. -->
+      <div class="table-container">
+        <div class="table-header">
+          <div>
+            <div data-i18n="zespol" class="table-title">Team</div>
+            <div class="text-xs text-tertiary" id="team-count-label">—</div>
+          </div>
+        </div>
+
+        <div style="padding:0 24px 16px">
+          <p data-i18n="administratorzy_moderatorzy_i_obserwatorzy_twoje" class="text-sm text-secondary" style="margin:0">
+            Administrators, moderators and observers. Your own account is always on this list.
+          </p>
+        </div>
+
+        <div id="team-loading-state" class="empty-state">
+          <div class="spinner"></div>
+          <p data-i18n="ladowanie_zespolu" class="text-tertiary">Loading team…</p>
+        </div>
+
+        <div id="team-empty-state" class="empty-state" hidden>
+          <h3 data-i18n="brak_osob_na_liscie">Nobody on the list</h3>
+          <p data-i18n="to_nie_powinno_sie_zdarzyc_twoje_wlasne_konto_je" class="text-tertiary">This should not happen — your own account is always visible on this list.</p>
+        </div>
+
+        <div id="team-error-state" class="empty-state" role="alert" hidden>
+          <p data-i18n="nie_udalo_sie_zaladowac_zespolu_sprobuj_ponownie" class="text-tertiary">Could not load the team. Please try again.</p>
+          <button data-i18n="sprobuj_ponownie" type="button" id="team-retry-btn" class="btn btn-secondary btn-sm">Try again</button>
+        </div>
+
+        <div id="team-table-wrapper" class="table-scroll" hidden>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-i18n="label_person">Person</th>
+                <th data-i18n="label_role">Role</th>
+                <th data-i18n="label_account_state">Account state</th>
+                <th data-i18n="dolaczyl_a">Joined</th>
+                <th style="width:120px"></th>
+              </tr>
+            </thead>
+            <tbody id="team-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Invite Partner Modal: identity only. No password field, no
+     account-status selector — the producer supplies neither. The partner
+     redeems the returned link to set their own password on set-password.html. -->
+<div class="modal-overlay" id="team-invite-modal" role="dialog" aria-modal="true" aria-labelledby="team-invite-modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <div data-i18n="zapros_do_zespolu" class="modal-title" id="team-invite-modal-title">Invite to the team</div>
+      <button data-i18n="zamknij_okno_zaproszenia_do_zespolu" data-i18n-attr="aria-label" type="button" class="modal-close" id="team-invite-modal-close" aria-label="Close team invitation window"></button>
+    </div>
+    <div class="modal-body">
+      <p data-i18n="osoba_dostanie_link_ktorym_sama_ustawi_sobie_has" class="text-sm text-secondary" style="margin-bottom:16px">
+        They get a link to set their own password — you never need to know it.
+      </p>
+      <div class="form-group">
+        <label data-i18n="imie_i_nazwisko" class="form-label" for="team-invite-name">Full name *</label>
+        <input type="text" id="team-invite-name" class="form-input" data-i18n="ph_full_name" data-i18n-attr="placeholder" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="team-invite-email">E-mail *</label>
+        <input data-i18n="jan_firma_pl" data-i18n-attr="placeholder" type="email" id="team-invite-email" class="form-input" placeholder="john@company.com">
+      </div>
+      <div class="form-group">
+        <label data-i18n="label_role_required" class="form-label" for="team-invite-role">Role *</label>
+        <select id="team-invite-role" class="form-select">
+          <option value="manager" data-i18n="users_invite_role_manager">Manager — runs the channel and the settings</option>
+          <option value="observer" data-i18n="users_invite_role_observer">Observer — lead read-only access</option>
+        </select>
+        <p data-i18n="ani_moderator_ani_obserwator_nie_widzi_dziennika" class="text-xs text-tertiary" style="margin:6px 0 0">
+          Neither a moderator nor an observer can see the audit log or invite further users.
+        </p>
+      </div>
+      <div id="team-invite-error" class="text-sm" role="alert" aria-live="assertive" style="color:var(--error-400);display:none;margin-top:8px"></div>
+
+      <div id="team-invite-result" hidden style="margin-top:16px;padding:16px;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-lg)">
+        <div id="team-invite-mail-status" class="text-sm" style="margin-bottom:10px"></div>
+        <label data-i18n="users_invite_link" class="form-label" for="team-invite-link">Invitation link</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="team-invite-link" class="form-input" readonly>
+          <button type="button" class="btn btn-secondary" id="team-invite-copy-btn" data-i18n="action_copy">Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button data-i18n="action_close" type="button" class="btn btn-ghost" id="team-invite-cancel">Close</button>
+      <button data-i18n="wyslij_zaproszenie" type="button" class="btn btn-primary" id="team-invite-send-btn">Send invitation</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/icons.js"></script>
+<script src="../../js/dropdown.js"></script>
+<script src="../../js/datepicker.js"></script>
+<script src="../../js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/admin-shell.js"></script>
+<script src="../../js/users.js"></script>
+<script src="../../js/charts.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/agent.js"></script>
+<script src="../../js/branding.js"></script>
+</body>
+</html>

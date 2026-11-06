@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Anti-flash: set theme before render -->
+  <script src="js/theme-boot.js"></script>
+  <link rel="stylesheet" href="css/theme-boot.css">
+  <title data-i18n="partner_center_zaloguj_sie">PartnerType — Sign in</title>
+  <meta name="description" data-i18n="meta_login" data-i18n-attr="content" content="PartnerType — a platform for managing relationships with business partners. Sign in as a vendor or a partner.">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#da9348">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="stylesheet" href="css/theme-v1.1.2.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <!-- LEFT: Brand panel -->
+  <div class="auth-brand">
+    <!-- Particles -->
+    <div class="particle" style="width:180px;height:180px;top:10%;left:-60px;animation-delay:0s"></div>
+    <div class="particle" style="width:120px;height:120px;top:60%;left:30%;animation-delay:2s;opacity:0.5"></div>
+    <div class="particle" style="width:80px;height:80px;bottom:15%;right:10%;animation-delay:4s"></div>
+
+    <!-- Logo -->
+    <div class="auth-brand-logo">
+      <div class="auth-brand-logo-icon" style="background: transparent !important; padding: 0;">
+        <img class="brand-logo brand-logo-light" src="img/logo-light-128.png" alt="PartnerType" style="width:100%; height:100%; object-fit:contain; border-radius: 8px;"><img class="brand-logo brand-logo-dark" src="img/logo-dark-128.png" alt="" style="width:100%; height:100%; object-fit:contain; border-radius: 8px;">
+      </div>
+      <span data-i18n="partner_center" class="auth-brand-name">PartnerType</span>
+    </div>
+
+    <!-- Main content -->
+    <div class="auth-brand-content">
+      <h1 class="auth-brand-tagline">
+        <span data-i18n="auth_hero_manage">Manage relationships</span><br><span data-i18n="auth_hero_with_partners">with partners</span><br><span data-i18n="skuteczniej_niz_kiedykolwiek">more effectively than ever</span>
+      </h1>
+      <p data-i18n="kompleksowa_platforma_saas_do_zarzadzania_progra" class="auth-brand-desc">
+        A complete SaaS platform for running a partner programme. Leads, commissions and results in one place.
+      </p>
+    </div>
+
+    <!-- Abstract background mesh -->
+    <div class="auth-tree-bg"></div>
+  </div>
+
+  <!-- RIGHT: Form panel -->
+  <div class="auth-form-panel">
+    <!-- Language switcher -->
+    <div class="auth-lang-switcher">
+      <button class="lang-btn lang-switcher-btn active" data-lang="pl">PL</button>
+      <button class="lang-btn lang-switcher-btn" data-lang="en" style="margin-left:6px">EN</button>
+    </div>
+
+    <div class="auth-form-container">
+      <!-- Header -->
+      <div class="auth-form-header">
+        <h2 class="auth-form-title" data-i18n="login_title">Welcome back</h2>
+        <p class="auth-form-subtitle" data-i18n="login_subtitle">Sign in to your account</p>
+      </div>
+
+      <!-- Role tabs — two doors, not one per role. Everyone on the producer's
+           side (owner, moderator, observer) comes in through the Vendor door;
+           their role is already recorded on the account. See LOGIN_DOORS in
+           api/auth.py. -->
+      <div class="role-tabs">
+        <button class="role-tab active" data-role="producent" id="tab-producent">
+          <div class="role-tab-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span class="role-tab-label" data-i18n="tab_producer">Producer</span>
+        </button>
+        <button class="role-tab" data-role="partner" id="tab-partner">
+          <div class="role-tab-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+              <path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <span class="role-tab-label" data-i18n="tab_partner">Partner</span>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form class="auth-form" id="auth-form" novalidate>
+        <!-- Error -->
+        <div class="auth-error" id="auth-error">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span data-i18n="login_error">Invalid email or password</span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="auth-email" data-i18n="email_label">Email address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input
+              type="email"
+              id="auth-email"
+              class="form-input"
+              data-i18n-attr="placeholder"
+              data-i18n="email_placeholder"
+              placeholder="admin@company.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="flex justify-between items-center">
+            <label class="form-label" for="auth-password" data-i18n="password_label">Password</label>
+            <a href="#" class="forgot-link" data-i18n="forgot_password">Forgot password</a>
+          </div>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+            <input
+              type="password"
+              id="auth-password"
+              class="form-input"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" id="toggle-password" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-tertiary);cursor:pointer;padding:4px;transition:color 0.15s">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="login-btn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          <span data-i18n="login_btn">Sign in</span>
+        </button>
+        <p class="text-sm text-tertiary" style="text-align:center;margin-top:16px">
+          <span data-i18n="auth_no_account">No account?</span> <a href="register.html" style="display:inline-flex;align-items:center;gap:4px;color:var(--brand-700);font-weight:600;text-decoration:none"><span data-i18n="auth_register_partner">Register as a partner</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/dropdown.js"></script>
+<script src="js/datepicker.js"></script>
+<script src="js/api.js"></script>
+<script src="/locales.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/sw-register.js"></script>
+<script src="js/branding.js"></script>
+</body>
+</html>

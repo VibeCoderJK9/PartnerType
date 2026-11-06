@@ -1,0 +1,353 @@
+/* ============================================================
+   PARTNERTYPE — THEME
+   Deep honey on slate greys, white cards, dark text on honey buttons.
+   The file name stays because the pages load it by this name.
+   Supports Light & Dark modes.
+   ============================================================ */
+
+:root {
+  /* Light. The brand and grey ramps are defined in main.css; here only the
+     roles (backgrounds, text, borders). */
+  --accent-400: var(--brand-400);
+  --accent-500: var(--brand-500);
+  --accent-600: var(--brand-600);
+
+  --primary:       var(--brand-500);
+  --primary-bg:    var(--brand-500);
+  --primary-text:  var(--on-brand);
+  --primary-hover: var(--brand-600);
+
+  --bg-primary:   #f6f9ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary:  #eef3f9;
+  --bg-elevated:  #eef3f9;
+  --bg-hover:     #e8edf3;
+  --bg-body:      #f6f9ff;
+  --bg-surface:   #ffffff;
+
+  --bg-main: var(--bg-primary);
+  --bg-card: var(--bg-secondary);
+
+  --text-primary:   #181b1f;
+  --text-secondary: #5a5e63;
+  --text-tertiary:  #6e7378;
+  --text-inverse:   #ffffff;
+
+  --border-default: #dbe0e6;
+  --border-subtle:  #e8edf3;
+  --border-strong:  #b9bec4;
+  --border-brand:   #c98232;
+
+  --shadow-sm: none;
+  --shadow-md: 0 1px 2px rgba(24, 27, 31, 0.06);
+  --shadow-lg: 0 4px 12px rgba(24, 27, 31, 0.08);
+  --shadow-xl: 0 12px 32px rgba(24, 27, 31, 0.14);
+  --shadow-brand: none;
+}
+
+[data-theme="dark"] {
+  /* Dark — background #10141a instead of black, text #e2e8f1 instead of white.
+     Honey stays the same; the brand's text shades are light. */
+  --brand-50:  #1e1711;
+  --brand-100: #2d2217;
+  --brand-200: #51371d;
+  --brand-300: #8a5e31;
+  --brand-400: #f8bd84;
+  --brand-500: #da9348;
+  --brand-600: #e5a15c;
+  --brand-700: #f8bd84;
+  --brand-800: #ffd3a8;
+  --brand-900: #ffebd8;
+  --on-brand:  #10141a;
+
+  --accent-400: var(--brand-400);
+  --accent-500: var(--brand-500);
+  --accent-600: var(--brand-600);
+
+  --primary:       var(--brand-500);
+  --primary-bg:    var(--brand-500);
+  --primary-text:  var(--on-brand);
+  --primary-hover: var(--brand-600);
+
+  --bg-primary:   #10141a;
+  --bg-secondary: #151a1f;
+  --bg-tertiary:  #1c2127;
+  --bg-elevated:  #22272d;
+  --bg-hover:     #22272d;
+  --bg-body:      #10141a;
+  --bg-surface:   #151a1f;
+
+  --bg-main: var(--bg-primary);
+  --bg-card: var(--bg-secondary);
+
+  --text-primary:   #e2e8f1;
+  --text-secondary: #b2b8c0;
+  --text-tertiary:  #9aa0a7;
+  --text-inverse:   #10141a;
+
+  --border-default: #30353b;
+  --border-subtle:  #282d33;
+  --border-strong:  #51565d;
+  --border-brand:   #8a5e31;
+  --bg-field:       #1c2127;
+
+  --shadow-sm: none;
+  --shadow-md: 0 1px 0 #30353b;
+  --shadow-lg: 0 1px 0 #30353b;
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-brand: none;
+
+  --success-400: #74d9a5;
+  --warning-400: #ecd27a;
+  --error-400:   #ff8a80;
+  --info-400:    #9dbcff;
+
+  --success-bg: #16302a;
+  --warning-bg: #352e14;
+  --error-bg:   #3a1d1d;
+  --info-bg:    #1b2742;
+
+  /* Tinted badges need the light end of each status ramp on a graphite card;
+     main.css sets the dark end for the white card. */
+  --badge-success-fg: var(--success-400);
+  --badge-warning-fg: var(--warning-400);
+  --badge-error-fg:   var(--error-400);
+  --badge-info-fg:    var(--info-400);
+}
+
+/* ─── Base Transitions ───────────────────────────────── */
+body, .sidebar, .top-header, .panel, .form-input, .form-select, .btn {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ─── Inputs ─────────────────────────────────────────── */
+.form-input, .form-select, .form-textarea {
+  background-color: var(--bg-field);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 3px var(--brand-100);
+}
+[data-theme="dark"] .form-input:focus, [data-theme="dark"] .form-select:focus {
+  box-shadow: 0 0 0 3px var(--brand-100);
+}
+.form-select option { background: var(--bg-card); }
+
+/* ─── Panels ─────────────────────────────────────────── */
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-default);
+}
+
+.top-header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ─── Data Table ─────────────────────────────────────── */
+.data-table th {
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-default);
+}
+[data-theme="dark"] .data-table th {
+  background: var(--bg-elevated);
+}
+.data-table td {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ─── Modals ─────────────────────────────────────────── */
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ─── Buttons ────────────────────────────────────────── */
+.btn-primary {
+  background: var(--brand-500) !important;
+  color: var(--on-brand) !important;
+  border: 1px solid var(--brand-600) !important;
+  font-weight: 600;
+  box-shadow: var(--shadow-brand);
+}
+.btn-primary:hover {
+  background: var(--brand-600) !important;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .btn-primary {
+  background: var(--brand-500) !important;
+  color: var(--on-brand) !important;
+}
+[data-theme="dark"] .btn-primary:hover {
+  background: var(--brand-600) !important;
+}
+
+.btn-secondary, .btn-outline {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-default) !important;
+}
+.btn-secondary:hover, .btn-outline:hover {
+  background: var(--bg-hover) !important;
+  border-color: var(--border-strong) !important;
+}
+
+/* ─── Nav Active State ───────────────────────────────── */
+.nav-item.active {
+  background: var(--brand-100);
+  color: var(--brand-700);
+  border-color: var(--brand-200);
+}
+[data-theme="dark"] .nav-item.active {
+  background: var(--brand-100);
+  color: var(--brand-400);
+  border-color: var(--brand-200);
+}
+.nav-item.active .nav-icon {
+  color: var(--brand-700);
+}
+[data-theme="dark"] .nav-item.active .nav-icon {
+  color: var(--brand-400);
+}
+
+/* ─── KPI Cards: Accent bar ──────────────────────────── */
+.kpi-card.purple { --kpi-color-a: var(--brand-500); --kpi-color-b: var(--brand-600); }
+
+/* ─── Badge Brand ────────────────────────────────────── */
+/* ─── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* ─── Logo ───────────────────────────────────────────── */
+.auth-brand-logo-icon, .sidebar-logo-icon {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ─── Custom Dropdowns ───────────────────────────────── */
+.custom-select-dropdown {
+  background: var(--bg-elevated);
+  border-color: var(--border-default);
+}
+.custom-select-option:hover {
+  background: var(--bg-hover);
+}
+
+/* ─── Avatars ────────────────────────────────────────── */
+.avatar {
+  background: var(--brand-100) !important;
+  color: var(--brand-700) !important;
+}
+
+#sidebar-avatar, #header-avatar {
+  background: var(--brand-100) !important;
+  color: var(--brand-700) !important;
+}
+
+/* Avatar identity palette — flat fills, no gradients */
+.bg-nebula-indigo  { background: var(--gray-700) !important; color: #fff !important; }
+.bg-nebula-cyan    { background: var(--gray-500) !important; color: #fff !important; }
+.bg-nebula-rose    { background: oklch(0.55 0.18 27) !important; color: #fff !important; }
+.bg-nebula-amber   { background: var(--brand-500) !important; color: var(--on-brand) !important; }
+.bg-nebula-emerald { background: var(--gray-900) !important; color: #fff !important; }
+
+[data-theme="dark"] .bg-nebula-indigo  { background: var(--gray-600) !important; }
+[data-theme="dark"] .bg-nebula-cyan    { background: var(--gray-500) !important; }
+[data-theme="dark"] .bg-nebula-rose    { background: oklch(0.60 0.18 27) !important; }
+[data-theme="dark"] .bg-nebula-amber   { background: var(--brand-400) !important; }
+[data-theme="dark"] .bg-nebula-emerald { background: var(--gray-700) !important; }
+
+/* ─── Header Language Toggle ─────────────────────────── */
+.header-lang-btn.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* ─── Auth Page Overrides ────────────────────────────── */
+body.auth-page, .auth-page {
+  background: var(--bg-main) !important;
+}
+.auth-page .particle, .auth-page .blob {
+  display: none !important;
+}
+.auth-brand {
+  background: var(--bg-main) !important;
+  border-right: 1px solid var(--border-default);
+}
+.auth-brand::before, .auth-brand::after {
+  display: none !important;
+}
+.auth-brand-tagline span {
+  color: var(--text-primary) !important;
+}
+.auth-brand-tagline span:last-child {
+  color: var(--brand-700) !important;
+}
+.auth-form-panel {
+  background: var(--bg-card) !important;
+}
+.auth-box {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-default) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+.auth-logo-icon {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+/* ─── Demo Box ───────────────────────────────────────── */
+.demo-box {
+  background: var(--brand-100);
+  border-color: var(--brand-200);
+}
+.demo-box-title {
+  color: var(--brand-700);
+}
+[data-theme="dark"] .demo-box {
+  background: var(--brand-100);
+  border-color: var(--brand-200);
+}
+[data-theme="dark"] .demo-box-title {
+  color: var(--brand-400);
+}
+
+/* ─── Notification dot ───────────────────────────────── */
+.notif-dot {
+  background: var(--accent-500);
+}
+
+/* ─── Page button active ─────────────────────────────── */
+.page-btn.active {
+  background: var(--brand-500);
+  color: var(--on-brand);
+  border-color: var(--brand-600);
+}
+[data-theme="dark"] .page-btn.active {
+  background: var(--brand-600);
+}
+
+/* ─── Accent Stripe (for special elements) ────────────── */
+.gradient-stripe {
+  background: var(--brand-500);
+}
+
+/* ─── Focus ring for accessibility ───────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand-600);
+  outline-offset: 2px;
+}

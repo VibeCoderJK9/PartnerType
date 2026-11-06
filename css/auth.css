@@ -1,0 +1,409 @@
+/* ============================================================
+   PARTNERTYPE — AUTH STYLES
+   Login / Register pages
+   ============================================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+/* ─── LEFT PANEL (brand) ─────────────────────────────────── */
+.auth-brand {
+  flex: 1;
+  background: var(--bg-secondary) !important;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 48px;
+}
+
+/* Decorative mesh-gradient background from the old Nebula theme — removed,
+   not recoloured: Sharp Business is flat, no glow/blob decoration. */
+.auth-tree-bg {
+  display: none;
+}
+
+.auth-brand::before,
+.auth-brand::after {
+  display: none;
+}
+
+.auth-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+.auth-brand-logo-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--brand-500);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-brand);
+}
+
+.auth-brand-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.auth-brand-content {
+  margin-top: 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.auth-brand-tagline {
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.auth-brand-tagline span {
+  color: var(--brand-700);
+}
+
+.auth-brand-desc {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+
+/* ─── RIGHT PANEL (form) ─────────────────────────────────── */
+.auth-form-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 48px;
+  background: var(--bg-primary);
+  position: relative;
+  overflow-y: auto;
+}
+
+.auth-lang-switcher {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+.lang-btn:hover {
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+.auth-form-container {
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 0.4s both;
+}
+
+.auth-form-header {
+  margin-bottom: 36px;
+}
+
+.auth-form-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.auth-form-subtitle {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+/* Role tabs */
+.role-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 4px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.role-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  font-family: inherit;
+  background: transparent;
+}
+
+.role-tab:hover {
+  background: var(--bg-hover);
+}
+
+.role-tab.active {
+  background: var(--bg-secondary);
+  border-color: var(--border-brand);
+  box-shadow: var(--shadow-sm);
+}
+
+.role-tab-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.role-tab.active .role-tab-label {
+  color: var(--brand-700);
+}
+
+.role-tab-icon {
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast);
+}
+
+.role-tab.active .role-tab-icon {
+  color: var(--brand-700);
+}
+
+/* Auth form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-form .btn-primary {
+  height: 48px;
+  font-size: 0.9375rem;
+  margin-top: 4px;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* Demo credentials box */
+.demo-box {
+  background: var(--brand-100);
+  border: 1px solid var(--brand-200);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-top: 4px;
+}
+
+.demo-box-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand-700);
+  text-transform: none; /* normal letter case */
+  letter-spacing: 0;
+  margin-bottom: 12px;
+}
+
+.demo-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-cred-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.demo-cred-row span:first-child {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.demo-cred-value {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.demo-fill-btn {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  height: auto;
+}
+
+/* Forgot link */
+.forgot-link {
+  font-size: 0.8125rem;
+  color: var(--brand-400);
+  text-align: right;
+  display: block;
+  transition: color var(--transition-fast);
+}
+.forgot-link:hover { color: var(--brand-700); }
+
+/* Error message */
+.auth-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--error-bg);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-md);
+  color: var(--error-400);
+  font-size: 0.875rem;
+  animation: fadeIn 0.2s both;
+  display: none;
+}
+.auth-error.show { display: flex; }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+  .auth-brand {
+    display: none;
+  }
+  .auth-form-panel {
+    padding: 48px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-panel {
+    padding: 32px 20px;
+  }
+}
+
+/* ─── BACK LINK ───────────────────────────────────────────
+
+   The "Back to sign-in" link above the registration form. The hover is a
+   CSS pseudo-class rather than JavaScript, and :focus-visible covers somebody
+   navigating by keyboard.
+   ───────────────────────────────────────────────────────── */
+.auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.2s;
+}
+
+.auth-back-link:hover,
+.auth-back-link:focus-visible {
+  color: var(--text-primary);
+}
+
+/* ─── LOGIN BACKGROUND PARTICLES ──────────────────────────
+
+   The three drifting circles behind the brand panel on the login screen.
+   Kept here so no page carries a style element of its own and
+   `style-src-elem` does not have to allow them. Each circle's size and position still travel as style
+   attributes on the elements themselves — those are per-instance values, not
+   a rule.
+   ───────────────────────────────────────────────────────── */
+.auth-brand {
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.12);
+  animation: float 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-20px) scale(1.05); }
+}
+
+/* ─── FAILED SIGN-IN SHAKE ────────────────────────────────
+
+   js/auth.js starts this animation on a rejected login. The keyframes used to
+   be built there too — a <style> element created in code and appended to the
+   head, which is exactly what `style-src-elem 'self'` refuses. A keyframe is a
+   stylesheet's job; only starting it is the script's.
+   ───────────────────────────────────────────────────────── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+/* ─── BRAND PANEL ───────────────────────────────
+   The left side of the sign-in and partner sign-up pages: a large logo, the
+   headline's last line in the brand colour. It follows the theme -- light in
+   the light theme, dark in the dark one. */
+.auth-brand .auth-brand-logo-icon {
+  width: 56px;
+  height: 56px;
+  box-shadow: none;
+}
+.auth-brand .auth-brand-name { font-size: 1.375rem; }
+.auth-brand .auth-brand-content { margin-top: 72px; }
+.auth-brand .auth-brand-tagline { font-size: 2.75rem; }
+.register-brand .register-brand-logo {
+  width: 56px !important;
+  height: 56px !important;
+}
+
+/* The producer's own terms (Settings -> Partner links). Without an
+   address the <a> has no href and reads as plain text (js/branding.js). */
+a[data-partner-terms][href] { color: var(--brand-700); text-decoration: underline; }
