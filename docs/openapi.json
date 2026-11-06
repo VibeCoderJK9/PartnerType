@@ -180,15 +180,15 @@
         "type": "http"
       },
       "oauth2": {
-        "description": "OAuth 2.1 authorization code flow with PKCE; the server accepts only code_challenge_method S256. Public clients register at https://firma.partnertype.com/oauth/register.",
+        "description": "OAuth 2.1 authorization code flow with PKCE; the server accepts only code_challenge_method S256. Public clients register at https://crm.example.com/oauth/register.",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "https://firma.partnertype.com/oauth/authorize",
-            "refreshUrl": "https://firma.partnertype.com/oauth/token",
+            "authorizationUrl": "https://crm.example.com/oauth/authorize",
+            "refreshUrl": "https://crm.example.com/oauth/token",
             "scopes": {
               "read": "Read PartnerType data within your role"
             },
-            "tokenUrl": "https://firma.partnertype.com/oauth/token"
+            "tokenUrl": "https://crm.example.com/oauth/token"
           }
         },
         "type": "oauth2"
@@ -706,7 +706,7 @@
   },
   "servers": [
     {
-      "url": "https://firma.partnertype.com/api/v1"
+      "url": "https://crm.example.com/api/v1"
     }
   ]
 }

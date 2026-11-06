@@ -19,7 +19,7 @@ _spec.loader.exec_module(demo)
 
 @pytest.mark.parametrize("url", [
     "http://firma.example",
-    "http://firma.partnertype.com/",
+    "http://crm.example.com/",
     "http://10.0.0.5:8000",
     "ftp://firma.example",
     "firma.example",
@@ -35,7 +35,7 @@ def test_refuses_anything_but_https_off_loopback(url):
 
 
 @pytest.mark.parametrize("url", [
-    "https://firma.partnertype.com",
+    "https://crm.example.com",
     "http://localhost:8000",
     "http://127.0.0.1:8000/",
     "http://[::1]:8000",
@@ -44,7 +44,7 @@ def test_accepts_https_and_plain_http_on_loopback(url):
     assert demo.check_base_url(url) == url.rstrip("/")
 
 
-@pytest.mark.parametrize("url", ["https://firma.partnertype.com", "https://192.168.1.10"])
+@pytest.mark.parametrize("url", ["https://crm.example.com", "https://192.168.1.10"])
 def test_skipping_certificate_checks_is_refused_off_loopback(url):
     with pytest.raises(ValueError):
         demo.check_base_url(url, insecure_tls=True)

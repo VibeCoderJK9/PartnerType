@@ -34,7 +34,7 @@ Zero dependencies, Python 3.9+. Speaks MCP over stdio (newline-delimited
 JSON-RPC 2.0).
 
 Environment:
-  PARTNERTYPE_URL        e.g. https://firma.partnertype.com
+  PARTNERTYPE_URL        e.g. https://crm.example.com
   PARTNERTYPE_EMAIL      staff account e-mail
   PARTNERTYPE_PASSWORD   its password (demo only -- see above)
   PARTNERTYPE_ROLE       admin (default) or manager

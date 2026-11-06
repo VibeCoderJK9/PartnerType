@@ -2,8 +2,8 @@
    PARTNERTYPE — THE PRODUCER'S BRAND
    ============================================================
 
-   Every screen of a producer's system -- the login page a partner opens at
-   acme.partnertype.com first of all -- carries the producer's name and logo
+   Every screen of a producer's system -- the login page a partner opens
+   first of all -- carries the producer's name and logo
    in place of PartnerType's. They come from the open
    /api/branding (api/branding.py), so this works before anybody signs in.
 

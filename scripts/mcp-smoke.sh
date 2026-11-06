@@ -3,7 +3,7 @@
 # discovery, /api/v1) with curl. Read-only: it creates, changes and deletes
 # nothing on the instance.
 #
-#   PARTNERTYPE_KEY=ptk_... scripts/mcp-smoke.sh https://vendor.partnertype.com
+#   PARTNERTYPE_KEY=ptk_... scripts/mcp-smoke.sh https://crm.example.com
 #
 # The key comes ONLY from the PARTNERTYPE_KEY environment variable, never
 # from the command line (argv is visible in the process list and the shell
@@ -23,7 +23,7 @@ set -eu
 
 usage() {
     echo "Usage: PARTNERTYPE_KEY=ptk_… $0 <instance-address>" >&2
-    echo "  e.g.  PARTNERTYPE_KEY=ptk_… $0 https://vendor.partnertype.com" >&2
+    echo "  e.g.  PARTNERTYPE_KEY=ptk_… $0 https://crm.example.com" >&2
 }
 
 if [ "$#" -ne 1 ]; then
