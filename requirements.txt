@@ -2,14 +2,14 @@
 # requirements-dev.txt.
 bcrypt==5.0.0
 Flask==3.1.3
-gunicorn==23.0.0
-psycopg[binary,pool]==3.2.10
-alembic==1.16.5
-SQLAlchemy==2.0.43
+gunicorn==26.2.0
+psycopg[binary,pool]==3.3.7
+alembic==1.20.1
+SQLAlchemy==2.1.6
 # Second factor: pyotp implements RFC 6238 so the six-digit code is not
 # hand-rolled, cryptography keeps the shared secret unreadable in the database,
 # and segno draws the enrolment QR server-side so no JavaScript library has to
 # handle the secret.
 pyotp==2.10.0
-cryptography==50.0.1
+cryptography==50.0.2
 segno==1.6.6
