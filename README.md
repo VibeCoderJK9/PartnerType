@@ -188,6 +188,7 @@ how complete each language is.
 
 Bug reports, fixes, documentation, translations and new blocks are welcome.
 
+- Questions and ideas: [Discussions](https://github.com/VibeCoderJK9/PartnerType/discussions).
 - Read [CONTRIBUTING.md](CONTRIBUTING.md) for how to run the tests and the rules for code.
 - Open an issue first for bigger changes.
 - Every change goes through a pull request, which runs CI and is reviewed by the maintainer.

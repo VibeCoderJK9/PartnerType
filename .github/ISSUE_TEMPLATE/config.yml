@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Ask a question or share an idea
+    url: https://github.com/VibeCoderJK9/PartnerType/discussions
+    about: Questions about installing or using PartnerType, and ideas, go to Discussions.
   - name: Report a security vulnerability
     url: https://github.com/VibeCoderJK9/PartnerType/security/advisories/new
     about: Please report security problems privately, never in a public issue.
-  - name: Questions and paid customisation
+  - name: Hosting and paid customisation
     url: https://partnertype.com
     about: Ask about hosting, support or a feature built for you.
