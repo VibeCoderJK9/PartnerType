@@ -9,9 +9,9 @@
     "test:all": "./run-tests.sh"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "4.1.11",
-    "happy-dom": "20.11.6",
-    "lucide-static": "^1.39.0",
-    "vitest": "4.1.11"
+    "@vitest/coverage-v8": "5.1.0",
+    "happy-dom": "21.0.4",
+    "lucide-static": "^1.67.0",
+    "vitest": "5.1.0"
   }
 }
