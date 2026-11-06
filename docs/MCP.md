@@ -7,7 +7,7 @@ operator and their AI agent.
 ## What it is
 
 - **One door per instance.** Every instance has its own gateway at its own address, for example
-  `https://company.partnertype.com`. Claude connects to `…/mcp`, scripts to `…/api/v1`.
+  `https://crm.example.com`. Claude connects to `…/mcp`, scripts to `…/api/v1`.
 - **Read-only.** The gateway has no operation that writes, changes or sends anything. Claude can
   read leads, statistics, products, partners and reminders, nothing more.
 - **The same permissions as in the app.** The gateway checks the role when it lists the tools and
@@ -48,7 +48,7 @@ for Claude Code, and their own keys and connections to revoke.
 ## Connecting: claude.ai, Claude Desktop, mobile app
 
 1. In Claude: Settings › Connectors › **Add custom connector**.
-2. Address: `https://<company>.partnertype.com/mcp` (copy it with the "Copy address" button).
+2. Address: `https://<your-address>/mcp` (copy it with the "Copy address" button).
 3. Click **Connect**. The PartnerType sign-in page opens. Sign in (+ second factor).
 4. The consent screen shows the application name (declared by the application, not verified) and
    **the host the answer returns to** (`claude.ai`) — that is the part that matters. Click
@@ -70,11 +70,11 @@ account.
 
 ```sh
 export PARTNERTYPE_KEY=ptk_…        # key from Settings › Integrations or from your profile
-claude mcp add --transport http partnertype https://<company>.partnertype.com/mcp \
+claude mcp add --transport http partnertype https://<your-address>/mcp \
   --header "Authorization: Bearer $PARTNERTYPE_KEY"
 ```
 
-**Through OAuth** (no key): `claude mcp add --transport http partnertype https://<company>.partnertype.com/mcp`,
+**Through OAuth** (no key): `claude mcp add --transport http partnertype https://<your-address>/mcp`,
 then in Claude Code run `/mcp` → choose `partnertype` → sign in in the browser and click "Allow".
 The consent screen warns you when the answer returns to an application on this computer
 (`localhost`).
@@ -82,10 +82,10 @@ The consent screen warns you when the answer returns to an application on this c
 ## Your own scripts: `/api/v1`
 
 ```sh
-curl -H "Authorization: Bearer $PARTNERTYPE_KEY" "https://<company>.partnertype.com/api/v1/leads?per_page=10"
+curl -H "Authorization: Bearer $PARTNERTYPE_KEY" "https://<your-address>/api/v1/leads?per_page=10"
 ```
 
-Full description (OpenAPI 3.1, no sign-in needed): `https://<company>.partnertype.com/api/v1/openapi.json`.
+Full description (OpenAPI 3.1, no sign-in needed): `https://<your-address>/api/v1/openapi.json`.
 The same document is in the repository as `docs/openapi.json`.
 
 Every list has an envelope: `untrusted_data` (the records), `security_note`, `count`, `total`,
@@ -194,7 +194,7 @@ audit log.
 The script checks the gateway with plain `curl`, read-only, and changes nothing:
 
 ```sh
-PARTNERTYPE_KEY=ptk_… scripts/mcp-smoke.sh https://company.partnertype.com
+PARTNERTYPE_KEY=ptk_… scripts/mcp-smoke.sh https://crm.example.com
 # local instance with a `tls internal` certificate:
 PARTNERTYPE_KEY=ptk_… SMOKE_INSECURE_TLS=1 scripts/mcp-smoke.sh https://<local-instance-address>
 ```

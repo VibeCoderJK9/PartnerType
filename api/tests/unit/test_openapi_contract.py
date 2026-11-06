@@ -109,7 +109,7 @@ def test_render_is_deterministic_and_needs_no_database(mocker):
     second = openapi.render(openapi.DOCS_BASE_URL)
     assert first == second
     assert first.startswith("{") and first.endswith("}\n")
-    assert json.loads(first)["servers"] == [{"url": "https://firma.partnertype.com/api/v1"}]
+    assert json.loads(first)["servers"] == [{"url": "https://crm.example.com/api/v1"}]
 
 
 def test_committed_docs_file_matches_the_generator():

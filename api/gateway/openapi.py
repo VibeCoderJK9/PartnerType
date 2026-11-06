@@ -25,7 +25,7 @@ import sys
 from api import agent_tools
 from api.gateway import rest_v1
 
-DOCS_BASE_URL = "https://firma.partnertype.com"
+DOCS_BASE_URL = "https://crm.example.com"
 
 _JSON = "application/json"
 _SECURITY = [{"bearer": []}, {"oauth2": ["read"]}]
