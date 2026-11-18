@@ -342,7 +342,7 @@ describe("the invite modal's role selector", () => {
     await invoke(window, "loadTeam()");
 
     const roleCell = window.document.querySelector("#team-tbody tr td:nth-child(2)");
-    expect(roleCell.firstChild.textContent.trim()).toBe("Obserwator");
+    expect(roleCell.firstChild.textContent.trim()).toBe("Przeglądający");
     expect(roleCell.textContent).not.toContain("observer");
   });
 });

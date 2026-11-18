@@ -1034,3 +1034,205 @@ class TestPartialTranslationBatchIsHonest:
         assert translations["failed"] is None
         assert translations["outcome_unknown"]["kind"] == "bonus_name"
         assert translations["outcome_unknown"]["code"] == "outcome_unknown"
+
+
+class TestChangingTheDealSize:
+    """"Kowalski needs 5 more licences, move LD-004 to Offer": the agent
+    proposes the new quantity, the value recalculated from the deal's own
+    price per unit, and the commission that follows -- and writes nothing
+    until the administrator clicks the card."""
+
+    def _accepted_lead(self, admin_user, partner, **overrides):
+        product_id = _insert_product()
+        data = {
+            "client_name": "Jan Kowalski",
+            "client_email": "jan@kowalski.pl",
+            "company": "Kowalski Logistyka",
+            "value": 18000,
+            "product_id": product_id,
+            "quantity": 1,
+        }
+        data.update(overrides)
+        lead = create_lead(partner, data)
+        update_lead(lead["id"], admin_user, {"registration_status": "accepted"})
+        return get_lead(lead["id"], admin_user)
+
+    def _other_open_stage(self, current):
+        return next(
+            s for s in lead_stages.get_all()
+            if not s["is_terminal"] and s["key"] != current
+        )
+
+    def test_a_partner_is_never_offered_the_quantity_tool(self, partner_user):
+        assert "prepare_update_lead_quantity" not in _tool_names(partner_user)
+        refused = execute_tool(
+            partner_user, "prepare_update_lead_quantity",
+            {"lead_id": "LD-001", "quantity": 6},
+        )
+        assert refused["result"]["code"] == "forbidden_tool"
+        assert refused["action"] is None
+
+    def test_preparing_writes_nothing_and_confirming_resizes_and_moves_the_stage(
+        self, admin_user, partner_user_tiered
+    ):
+        lead = self._accepted_lead(admin_user, partner_user_tiered)
+        stage = self._other_open_stage(lead["status"])
+
+        prepared = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6, "new_status": stage["key"]},
+            lang="en",
+        )
+        assert prepared["result"]["requires_confirmation"] is True
+        unchanged = get_lead(lead["id"], admin_user)
+        assert (unchanged["quantity"], unchanged["value"], unchanged["status"]) == (
+            1, 18000, lead["status"]
+        )
+
+        card = prepared["action"]
+        assert card["kind"] == "update_lead_size"
+        assert card["risk"] == "write"
+        rows = {row["label"]: row["value"] for row in card["summary"]}
+        assert rows["Quantity"] == "Pakiet Demo × 1 → × 6"
+        assert rows["Value"] == "18,000.00 PLN → 108,000.00 PLN"
+        assert rows["Stage"].endswith(f"→ {stage['name']}")
+        # 108 000 × the partner's 7% Gold rate, before the win records it.
+        assert rows["Expected commission"] == "7,560.00 PLN"
+
+        done = confirm_action(admin_user, card["id"])
+        assert done["result"]["quantity"] == 6
+        assert done["result"]["value"] == 108000
+        assert done["result"]["status"] == stage["key"]
+        # An open deal records no commission; it is still a forecast.
+        assert done["result"]["commission"] is None
+        saved = get_lead(lead["id"], admin_user)
+        assert (saved["quantity"], saved["value"], saved["status"]) == (
+            6, 108000, stage["key"]
+        )
+
+    def test_winning_in_the_same_step_records_the_commission_of_the_new_size(
+        self, admin_user, partner_user_tiered
+    ):
+        lead = self._accepted_lead(admin_user, partner_user_tiered)
+        prepared = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6, "new_status": "won"},
+            lang="en",
+        )
+        card = prepared["action"]
+        assert card["risk"] == "financial"
+        rows = {row["label"]: row["value"] for row in card["summary"]}
+        assert rows["Commission after the change"] == "7,560.00 PLN"
+
+        done = confirm_action(admin_user, card["id"])
+        assert done["result"]["commission"] == 7560.0
+
+    def test_a_lead_without_units_takes_the_products_base_price(
+        self, admin_user, partner_user
+    ):
+        lead = self._accepted_lead(admin_user, partner_user, quantity=0)
+        prepared = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 3}, lang="en",
+        )
+        rows = {row["label"]: row["value"] for row in prepared["action"]["summary"]}
+        assert rows["Value"] == "18,000.00 PLN → 30,000.00 PLN"
+        assert "Stage" not in rows
+
+    def test_a_value_the_user_states_wins_over_the_recalculation(
+        self, admin_user, partner_user
+    ):
+        lead = self._accepted_lead(admin_user, partner_user)
+        prepared = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6, "value": 99000},
+        )
+        confirm_action(admin_user, prepared["action"]["id"])
+        assert get_lead(lead["id"], admin_user)["value"] == 99000
+
+    def test_without_any_price_per_unit_the_agent_asks_instead_of_guessing(
+        self, admin_user, partner_user
+    ):
+        lead = self._accepted_lead(
+            admin_user, partner_user, quantity=0, product_id=None
+        )
+        refused = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 3},
+        )
+        assert refused["result"]["code"] == "validation_error"
+        assert refused["action"] is None
+
+    @pytest.mark.parametrize("quantity", [0, -2, 2.5, True, "six", None])
+    def test_the_quantity_must_be_a_whole_number_of_at_least_one(
+        self, admin_user, partner_user, quantity
+    ):
+        lead = self._accepted_lead(admin_user, partner_user)
+        refused = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": quantity},
+        )
+        assert refused["result"]["code"] == "validation_error"
+        assert refused["action"] is None
+
+    def test_a_field_outside_the_schema_is_refused(self, admin_user, partner_user):
+        lead = self._accepted_lead(admin_user, partner_user)
+        refused = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6, "commission": 1},
+        )
+        assert refused["result"]["code"] == "validation_error"
+        assert refused["action"] is None
+
+    def test_a_closed_deal_cannot_be_resized(self, admin_user, partner_user_tiered):
+        lead = self._accepted_lead(admin_user, partner_user_tiered)
+        update_lead(lead["id"], admin_user, {"status": "won"})
+        refused = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6},
+        )
+        assert refused["result"]["code"] == "lead_read_only"
+        assert get_lead(lead["id"], admin_user)["quantity"] == 1
+
+    def test_a_deal_with_a_recorded_commission_cannot_be_resized(
+        self, admin_user, partner_user
+    ):
+        lead = self._accepted_lead(admin_user, partner_user)
+        update_lead(lead["id"], admin_user, {"commission": 500})
+        refused = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6},
+        )
+        assert refused["result"]["code"] == "commission_recorded"
+        assert get_lead(lead["id"], admin_user)["value"] == 18000
+
+    def test_a_lead_resized_after_the_proposal_refuses_the_click(
+        self, admin_user, partner_user
+    ):
+        lead = self._accepted_lead(admin_user, partner_user)
+        prepared = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6},
+        )
+        update_lead(lead["id"], admin_user, {"quantity": 2, "value": 36000})
+
+        with pytest.raises(ActionError) as stale:
+            confirm_action(admin_user, prepared["action"]["id"])
+
+        assert stale.value.code == "stale_action"
+        assert get_lead(lead["id"], admin_user)["quantity"] == 2
+
+    def test_the_card_reads_in_polish_for_a_polish_reader(
+        self, admin_user, partner_user
+    ):
+        lead = self._accepted_lead(admin_user, partner_user)
+        prepared = execute_tool(
+            admin_user, "prepare_update_lead_quantity",
+            {"lead_id": lead["id"], "quantity": 6}, lang="pl",
+        )
+        card = prepared["action"]
+        assert card["title"] == "Potwierdź zmianę ilości"
+        assert card["confirm_label"] == "Zmień ilość"
+        assert {row["label"] for row in card["summary"]} >= {"Ilość", "Wartość"}
+        done = confirm_action(admin_user, card["id"])
+        assert done["response"].startswith(f"Lead {lead['id']}: ilość 6")

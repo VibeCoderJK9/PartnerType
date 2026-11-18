@@ -361,7 +361,7 @@ def handle_create_team_invite(handler, user: dict, body: dict):
     requested_role = body.get("role") or "manager"
     if requested_role not in users.TEAM_ROLES:
         return 400, {
-            "error": t("The role must be one of: Moderator, Observer.")
+            "error": t("The role must be one of: Moderator, Viewer.")
         }
     body["role"] = requested_role
     # The invitee is by definition a person from the producer's own

@@ -5,6 +5,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- AI assistant: the administrator can ask it to change how many units (for example licences) an
+  open lead covers. The card shows the new quantity, the value recalculated from the deal's price
+  per unit, the expected commission and, if asked, the new sales stage; nothing changes until the
+  administrator confirms it.
+
+### Changed
+
+- The read-only team role is now called "Viewer" ("Przeglądający" in Polish), formerly "Observer".
+
 ## [0.1.0] - 2026-11-06
 
 First public release.

@@ -109,7 +109,8 @@ def _system_instruction(user, lang="en"):
     language = _reply_language(lang)
     role_rules = (
         "The user is the administrator. He may read every lead, prepare a "
-        "change of a lead's stage, and prepare the English names of the "
+        "change of a lead's stage, prepare a change of how many units "
+        "(licences) an open lead covers, and prepare the English names of the "
         "stages, fields, bonuses, commission tiers and products the vendor "
         "named himself. Nothing changes until he clicks. To translate names "
         "you MUST call list_custom_labels first -- it returns every name with "

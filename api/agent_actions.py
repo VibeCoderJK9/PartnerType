@@ -141,6 +141,48 @@ def _same_update_preview(payload, current):
     return all(expected.get(key) == fresh.get(key) for key in keys)
 
 
+def _same_size_preview(payload, current):
+    """A quantity change also stands on the deal size and the commission it
+    was shown, so a lead resized or repriced since the card is stale."""
+    if not _same_update_preview(payload, current):
+        return False
+    expected = payload.get("preview", {})
+    fresh = current.get("preview", {})
+    keys = ("old_quantity", "new_quantity", "old_value", "new_value", "commission_forecast")
+    return all(expected.get(key) == fresh.get(key) for key in keys)
+
+
+def _confirm_lead_size(user, token, payload, lang):
+    current = leads.preview_lead_update(payload["lead_id"], user, payload["data"])
+    if not _same_size_preview(payload, current):
+        raise ActionError(
+            t("The lead or the commission figure changed. Ask for a new proposal.", lang=lang),
+            409,
+            "stale_action",
+        )
+    result = leads.update_lead(
+        payload["lead_id"], user, current["data"],
+        operation_id=f"agent-{_stored_key(token)}",
+    )
+    response = t("Lead {lead}: quantity {quantity}, value {value} PLN.", lang=lang,
+                 lead=result["id"], quantity=result["quantity"],
+                 value=f"{result['value']:,.2f}")
+    if "status" in current["data"]:
+        response += t(" Stage: {stage}.", lang=lang, stage=result["status"])
+    if result.get("commission") is not None:
+        response += t(" Commission: {amount} PLN.", lang=lang,
+                      amount=f"{result['commission']:,.2f}")
+    public_result = {
+        "id": result["id"],
+        "status": result["status"],
+        "quantity": result["quantity"],
+        "value": result["value"],
+        "commission": result.get("commission"),
+        "commission_projected": result.get("commission_projected"),
+    }
+    return response, public_result
+
+
 # ─── translate_labels: PL/EN names of stages, fields, bonuses, tiers and
 #     products the producer named himself ─────────────────────
 
@@ -458,6 +500,8 @@ def confirm_action(user, token):
                 "commission": commission,
                 "commission_projected": result.get("commission_projected"),
             }
+        elif action_type == "update_lead_size":
+            response, public_result = _confirm_lead_size(user, token, payload, lang)
         elif action_type == "translate_labels":
             response, public_result = _confirm_translate_labels(user, payload, lang)
         else:
