@@ -69,6 +69,10 @@ _LEAD_ASSIGN_FIELDS = tuple(
 _LEAD_UPDATE_FIELDS = (
     "status", "registration_status", "commission", "commission_override_pct",
     "registration_message",
+    # The deal's size: how many units of the product and what they are worth.
+    # Staff only, like every field here, and only while the deal is open
+    # (see _guard_deal_size_change).
+    "quantity", "value",
 )
 _LEAD_FILTER_FIELDS = (
     "status", "registration_status", "partner_id", "q", "date_from", "date_to",
@@ -293,9 +297,55 @@ def _validate_lead_update(data):
                 raw, "commission_override_pct", minimum=0, maximum=100
             )
         )
+    if "quantity" in values:
+        normalized["quantity"] = parse_non_negative_integer(
+            values["quantity"], N_("Quantity"), maximum=_MAX_LEAD_QUANTITY
+        )
+    if "value" in values:
+        normalized["value"] = parse_finite_number(
+            values["value"], N_("Value"), minimum=0, maximum=_MAX_MONEY
+        )
     if not normalized:
         raise ValueError(t("No data to update."))
     return normalized
+
+
+_DEAL_SIZE_FIELDS = ("quantity", "value")
+
+
+def _guard_deal_size_change(row, data):
+    """Refuse a quantity or value change the deal can no longer take.
+
+    A closed deal is read-only, and a deal whose commission is already
+    recorded would keep the old amount while showing a new value, so both
+    are refused here, in the one core every writer shares.
+    """
+    if not any(field in data for field in _DEAL_SIZE_FIELDS):
+        return
+    current_stage = lead_stages.get_by_key(row["status"]) if row["status"] else None
+    if current_stage and current_stage["is_terminal"]:
+        raise LeadWorkflowConflict(
+            t("The lead is read-only. The vendor can reopen it."),
+            "lead_read_only",
+        )
+    if row["commission"] is not None:
+        raise LeadWorkflowConflict(
+            t("The commission for this deal is already recorded. Correct the "
+              "commission instead of the deal size."),
+            "commission_recorded",
+        )
+
+
+def _with_deal_size(row, data):
+    """The lead as it will be after this update's quantity and value, so the
+    commission projection works from the new size of the deal."""
+    if not any(field in data for field in _DEAL_SIZE_FIELDS):
+        return row
+    effective = dict(row)
+    for field in _DEAL_SIZE_FIELDS:
+        if field in data:
+            effective[field] = data[field]
+    return effective
 
 
 def _validate_lead_filters(filters):
@@ -1504,15 +1554,20 @@ def preview_lead_update(lead_id: str, user: dict, data: dict):
                 "lead_read_only",
             )
         _guard_commission_correction(row, clean, user)
+        _guard_deal_size_change(row, clean)
+        effective = _with_deal_size(row, clean)
         target_stage = lead_stages.get_by_key(clean["status"]) if "status" in clean else None
-        projection = _commission_projection(row, clean, target_stage)
+        projection = _commission_projection(effective, clean, target_stage)
         current_stage = lead_stages.get_by_key(row["status"])
+        resized = any(field in clean for field in _DEAL_SIZE_FIELDS)
         return {
             "data": clean,
             "snapshot": {
                 "updated_at": row["updated_at"],
                 "status": row["status"],
                 "commission": row["commission"],
+                "quantity": row["quantity"],
+                "value": row["value"],
             },
             "preview": {
                 "lead_id": lead_id,
@@ -1535,6 +1590,17 @@ def preview_lead_update(lead_id: str, user: dict, data: dict):
                 "tier_name_en": projection["tier_name_en"],
                 "total_percent": projection["total_percent"],
                 "queue_share": projection["queue_share"],
+                "product": row["product"],
+                "old_quantity": row["quantity"],
+                "new_quantity": clean.get("quantity", row["quantity"]),
+                "old_value": row["value"],
+                "new_value": clean.get("value", row["value"]),
+                # What the deal will earn at its new size, shown before the
+                # win records it. Only for a resize: a plain stage change
+                # keeps the preview it always had.
+                "commission_forecast": (
+                    _projected_commission(effective)["amount"] if resized else None
+                ),
             },
         }
     finally:
@@ -1604,6 +1670,7 @@ def update_lead(lead_id: str, user: dict, data: dict,
                     "lead_read_only",
                 )
             _guard_commission_correction(row, data, user)
+            _guard_deal_size_change(row, data)
 
             updates = []
             params  = []
@@ -1622,7 +1689,14 @@ def update_lead(lead_id: str, user: dict, data: dict,
             new_registration = data.get("registration_status")
             current_registration = row["registration_status"]
 
-            commission_projection = _commission_projection(row, data, target_stage)
+            commission_projection = _commission_projection(
+                _with_deal_size(row, data), data, target_stage
+            )
+
+            for field in _DEAL_SIZE_FIELDS:
+                if field in data:
+                    updates.append(f"{field} = ?")
+                    params.append(data[field])
 
             if "registration_status" in data:
                 updates.append("registration_status = ?")
@@ -3061,7 +3135,8 @@ def handle_update(handler, user: dict, lead_id: str, body: dict):
         # Deciding and moving the sale are different questions. Answering both
         # in one request would make the outcome depend on statement order, so
         # the request is refused whole rather than half-applied.
-        conflicting = [f for f in ("status", "commission", "commission_override_pct")
+        conflicting = [f for f in ("status", "commission", "commission_override_pct",
+                                   "quantity", "value")
                        if f in body]
         if conflicting:
             return 400, {

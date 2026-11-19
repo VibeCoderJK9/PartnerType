@@ -194,6 +194,26 @@ TOOL_REGISTRY = {
             },
         }, ("lead_id", "new_status")),
     },
+    "prepare_update_lead_quantity": {
+        "roles": ("admin",),
+        "risk": "write_confirmation",
+        "description": (
+            "Prepare a change of how many units (e.g. licences) of the product "
+            "one open lead covers. The new value is recalculated from the "
+            "lead's current price per unit; pass value only when the user "
+            "states the new value himself. new_status optionally moves the "
+            "lead to another sales stage in the same step. Saves nothing; the "
+            "administrator must click the confirmation card."
+        ),
+        "parameters": _object_schema({
+            "lead_id": {"type": "string", "description": "ID, e.g. LD-004"},
+            "quantity": {"type": "integer", "minimum": 1,
+                         "description": "The new total number of units, not the difference"},
+            "value": {"type": "number", "minimum": 0,
+                      "description": "Optional new value in PLN, only when the user gives it"},
+            "new_status": {"type": "string", "description": "Optional active stage key"},
+        }, ("lead_id", "quantity")),
+    },
 }
 
 
@@ -541,6 +561,8 @@ def _list_affiliate_orders(user, args, lang="en"):
 
 
 def _currency(value):
+    if value is None:
+        return "—"
     return f"{float(value):,.2f} PLN"
 
 
@@ -873,6 +895,107 @@ def _prepare_update_lead_status(user, args, lang="en"):
     )
     return {"result": _prepared_result(lang), "action": card}
 
+def _new_quantity(raw, lang):
+    if isinstance(raw, bool):
+        raw = None
+    if isinstance(raw, str) and raw.strip().isdigit():
+        raw = int(raw.strip())
+    if isinstance(raw, float) and raw.is_integer():
+        raw = int(raw)
+    if not isinstance(raw, int) or raw < 1:
+        raise ValueError(t("The quantity must be a whole number of at least 1.", lang=lang))
+    return raw
+
+
+def _recalculated_value(lead, quantity, lang):
+    """The deal's value at its new quantity, from the price per unit it
+    already carries: its own value per unit, or else the product's base
+    price. Never a guess -- with neither, the user is asked for the value."""
+    old_quantity = lead.get("quantity") or 0
+    old_value = lead.get("value")
+    if old_quantity > 0 and old_value is not None:
+        return round(float(old_value) / old_quantity * quantity, 2)
+    product = products.get_by_id(lead["product_id"]) if lead.get("product_id") else None
+    if product and product.get("base_price") is not None:
+        return round(float(product["base_price"]) * quantity, 2)
+    raise ValueError(t(
+        "The lead has no price per unit to recalculate its value from. "
+        "Ask the user for the new value of the deal.", lang=lang,
+    ))
+
+
+def _quantity_text(product, quantity):
+    amount = "—" if quantity in (None, "") else str(quantity)
+    return f"{product} × {amount}" if product else amount
+
+
+def _prepare_update_lead_quantity(user, args, lang="en"):
+    declared = TOOL_REGISTRY["prepare_update_lead_quantity"]["parameters"]["properties"]
+    undeclared = sorted(set(args) - set(declared))
+    if undeclared:
+        raise ValueError(t("Unknown fields: {fields}", lang=lang, fields=', '.join(undeclared)))
+    quantity = _new_quantity(args.get("quantity"), lang)
+    lead = leads.get_lead(args.get("lead_id"), user)
+    if lead is None:
+        raise ValueError(t("The lead does not exist.", lang=lang))
+    value = args.get("value")
+    if value is None:
+        value = _recalculated_value(lead, quantity, lang)
+    data = {"quantity": quantity, "value": value}
+    if args.get("new_status") not in (None, "", lead.get("status")):
+        data["status"] = args["new_status"]
+
+    prepared = leads.preview_lead_update(lead["id"], user, data)
+    preview = prepared["preview"]
+    moves_stage = "status" in prepared["data"]
+    high_risk = bool(
+        preview["is_win_transition"]
+        or preview["new_status_kind"] in ("win", "lose")
+    )
+    summary = [
+        {"label": "Lead", "value": f"{preview['lead_id']} — {preview['client_name']}"},
+        {"label": t("Quantity", lang=lang),
+         "value": (f"{_quantity_text(preview['product'], preview['old_quantity'])} → "
+                   f"× {preview['new_quantity']}")},
+        {"label": t("Value", lang=lang),
+         "value": f"{_currency(preview['old_value'])} → {_currency(preview['new_value'])}"},
+    ]
+    if moves_stage:
+        summary.append({
+            "label": t("Stage", lang=lang),
+            "value": f"{preview['old_status_name'] or '—'} → {preview['new_status_name'] or '—'}",
+        })
+    if preview["is_win_transition"] and preview["commission"] is not None:
+        summary.append({"label": t("Commission after the change", lang=lang),
+                        "value": _currency(preview["commission"])})
+    elif preview["commission_forecast"] is not None:
+        summary.append({"label": t("Expected commission", lang=lang),
+                        "value": _currency(preview["commission_forecast"])})
+
+    card = create_pending_action(
+        user,
+        "update_lead_size",
+        {
+            "lead_id": preview["lead_id"],
+            "data": prepared["data"],
+            "snapshot": prepared["snapshot"],
+            "preview": preview,
+            "lang": lang,
+        },
+        {
+            "kind": "update_lead_size",
+            "risk": "financial" if high_risk else "write",
+            "title": t("Confirm the quantity change", lang=lang),
+            "summary": summary,
+            "confirm_label": (
+                t("Change the quantity and the stage", lang=lang) if moves_stage
+                else t("Change the quantity", lang=lang)
+            ),
+        },
+    )
+    return {"result": _prepared_result(lang), "action": card}
+
+
 _HANDLERS = {
     "list_leads": _list_leads,
     "get_lead_details": _get_lead_details,
@@ -884,6 +1007,7 @@ _HANDLERS = {
     "prepare_translate_labels": _prepare_translate_labels,
     "prepare_create_lead": _prepare_create_lead,
     "prepare_update_lead_status": _prepare_update_lead_status,
+    "prepare_update_lead_quantity": _prepare_update_lead_quantity,
 }
 
 

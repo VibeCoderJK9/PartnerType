@@ -95,5 +95,5 @@ def test_local_agent_registry_is_untouched():
         "list_leads", "get_lead_details", "get_lead_stats", "list_products",
         "get_partners_count_by_tier", "list_affiliate_orders", "list_custom_labels",
         "prepare_translate_labels",
-        "prepare_create_lead", "prepare_update_lead_status",
+        "prepare_create_lead", "prepare_update_lead_status", "prepare_update_lead_quantity",
     }
